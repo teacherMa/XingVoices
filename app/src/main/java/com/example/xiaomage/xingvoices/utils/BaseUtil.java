@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.support.annotation.ColorInt;
 import android.support.annotation.ColorRes;
 import android.text.TextUtils;
@@ -11,7 +12,13 @@ import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.widget.Toast;
 
+import com.bumptech.glide.DrawableRequestBuilder;
+import com.bumptech.glide.GifRequestBuilder;
+import com.bumptech.glide.Glide;
 import com.example.xiaomage.xingvoices.App;
+import com.example.xiaomage.xingvoices.utils.GlideCircleTransform.GlideCircleTransform;
+
+import java.io.File;
 
 /**
  * Put some static functions that can be use everywhere
@@ -62,6 +69,33 @@ public class BaseUtil {
             e.printStackTrace();
         }
         return result;
+    }
+
+    public static DrawableRequestBuilder<String> load(String url) {
+        return Glide.with(App.getAppContext()).load(url).centerCrop();
+    }
+
+    public static DrawableRequestBuilder<String> loadCirclePic(String url) {
+        return Glide.with(App.getAppContext()).load(url).
+                transform(new GlideCircleTransform(App.getAppContext()));
+    }
+
+    public static DrawableRequestBuilder<Uri> load(Uri uri){
+        return Glide.with(App.getAppContext()).load(uri).centerCrop();
+    }
+
+    public static DrawableRequestBuilder<Uri> loadCirclePic(Uri uri){
+        return Glide.with(App.getAppContext()).load(uri).
+                transform(new GlideCircleTransform(App.getAppContext()));
+    }
+
+    public static DrawableRequestBuilder<File> load(File file) {
+        return Glide.with(App.getAppContext()).load(file).centerCrop();
+    }
+
+    public static DrawableRequestBuilder<File> loadCirclePic(File file) {
+        return Glide.with(App.getAppContext()).load(file).
+                transform(new GlideCircleTransform(App.getAppContext()));
     }
 
     public static String getVersion() {
