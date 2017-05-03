@@ -1,26 +1,29 @@
-package com.example.xiaomage.xingvoices.feature.main.collection;
+package com.example.xiaomage.xingvoices.feature.main.menu;
 
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import com.example.xiaomage.xingvoices.R;
 import com.example.xiaomage.xingvoices.framework.BaseFragment;
 import com.example.xiaomage.xingvoices.utils.Injection;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
-public class CollectionFragment extends BaseFragment<CollectionPresenter> {
+public class MenuFragment extends BaseFragment<MenuPresenter> {
 
-    public static CollectionFragment getNewInstance(Context context){
-        return new CollectionFragment();
+    public static MenuFragment getNewInstance(Context context){
+        return new MenuFragment();
     }
 
-
-    @BindView(R.id.main_collection_view)
-    CollectionView mMainCollectionView;
-
+    @BindView(R.id.main_menu_view)
+    MenuView mMainMenuView;
 
     @Override
     protected void initView(@Nullable Bundle savedInstanceState) {
@@ -29,16 +32,15 @@ public class CollectionFragment extends BaseFragment<CollectionPresenter> {
 
     @NonNull
     @Override
-    protected CollectionPresenter createPresenter() {
-        return new CollectionPresenter(
+    protected MenuPresenter createPresenter() {
+        return new MenuPresenter(
                 Injection.provideMainRepository(),
-                mMainCollectionView
+                mMainMenuView
         );
     }
 
     @Override
     protected int getLayoutResId() {
-        return R.layout.main_collection_frag;
+        return R.layout.main_menu_frag;
     }
-
 }
