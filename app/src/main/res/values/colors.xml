@@ -3,4 +3,9 @@
     <color name="colorPrimary">#fafafa</color>
     <color name="colorPrimaryDark">#eeeeee</color>
     <color name="colorAccent">#FF4081</color>
+
+    <color name="colorTextSelected">#6C6C6C</color>
+    <color name="colorTextUnselected">#A9A7A7</color>
+
+    <color name="colorMenuOpenedBackground">#11FFFFFF</color>
 </resources>

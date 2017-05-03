@@ -8,7 +8,8 @@ import java.util.List;
 /**
  * Collect and control all the activities
  */
-public class ActivityController {
+public class
+ActivityController {
 
     /**
      * List of activities alive

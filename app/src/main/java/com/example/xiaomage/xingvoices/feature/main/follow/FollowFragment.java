@@ -1,5 +1,6 @@
 package com.example.xiaomage.xingvoices.feature.main.follow;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -11,9 +12,13 @@ import com.example.xiaomage.xingvoices.utils.Injection;
 import butterknife.BindView;
 
 public class FollowFragment extends BaseFragment<FollowPresenter> {
+
+    public static FollowFragment getNewInstance(Context context){
+        return new FollowFragment();
+    }
+
     @BindView(R.id.main_follow_view)
     FollowView mMainFollowView;
-
 
     @Override
     protected void initView(@Nullable Bundle savedInstanceState) {
