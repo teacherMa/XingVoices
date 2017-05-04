@@ -18,34 +18,34 @@
         android:orientation="horizontal">
 
         <com.example.xiaomage.xingvoices.custom.view.CircleImageView
-            android:id="@+id/user_avatar"
+            android:id="@+id/civ_user_avatar"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_centerVertical="true"
             android:layout_marginStart="25dp"
-            android:src="@drawable/avatar"
-            android:contentDescription="@string/app_name"/>
-        
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/avatar"/>
+
         <TextView
-            android:id="@+id/user_name"
+            android:id="@+id/tv_user_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/app_name"
             android:layout_centerVertical="true"
-            android:textSize="14sp"
+            android:layout_marginStart="12dp"
+            android:layout_toEndOf="@id/civ_user_avatar"
+            android:text="@string/app_name"
             android:textColor="@color/colorTextSelected"
-            android:layout_toEndOf="@id/user_avatar"
-            android:layout_marginStart="12dp"/>
+            android:textSize="14sp"/>
 
         <ImageView
             android:id="@+id/iv_follow"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
             android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
             android:layout_marginEnd="25dp"
-            android:src="@drawable/hot_btn_follow"
-            android:contentDescription="@string/iv_con_des"/>
+            android:contentDescription="@string/iv_con_des"
+            android:src="@drawable/hot_btn_follow"/>
 
     </RelativeLayout>
 
@@ -58,8 +58,8 @@
             android:id="@+id/iv_pic_of_voice"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:contentDescription="@string/iv_con_des"
-            android:background="@color/colorAccent"/>
+            android:background="@color/colorAccent"
+            android:contentDescription="@string/iv_con_des"/>
     </com.example.xiaomage.xingvoices.custom.view.RatioLayout>
 
     <RelativeLayout
@@ -73,30 +73,30 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:src="@drawable/hot_icon_browse"
             android:layout_marginStart="25dp"
-            android:contentDescription="@string/iv_con_des"/>
+            android:contentDescription="@string/iv_con_des"
+            android:src="@drawable/hot_icon_browse"/>
 
         <TextView
             android:id="@+id/tv_browsed_times"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toEndOf="@id/iv_browsed"
             android:layout_centerVertical="true"
+            android:layout_marginStart="8dp"
+            android:layout_toEndOf="@id/iv_browsed"
             android:text="@string/main_default_watch_times"
             android:textColor="@color/colorTextUnselected"
-            android:textSize="12sp"
-            android:layout_marginStart="8dp"/>
+            android:textSize="12sp"/>
 
         <ImageView
             android:id="@+id/iv_more"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
             android:layout_alignParentEnd="true"
-            android:src="@drawable/hot_btn_more"
+            android:layout_centerVertical="true"
             android:layout_marginEnd="28dp"
-            android:contentDescription="@string/iv_con_des"/>
+            android:contentDescription="@string/iv_con_des"
+            android:src="@drawable/hot_btn_more"/>
 
     </RelativeLayout>
 
@@ -104,9 +104,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingStart="25dp"
-        android:paddingEnd="25dp"
         android:paddingBottom="25dp"
+        android:paddingEnd="25dp"
+        android:paddingStart="25dp"
         android:paddingTop="4dp">
 
         <RelativeLayout
@@ -118,8 +118,8 @@
                 android:id="@+id/tv_text_com"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
                 android:layout_centerVertical="true"
+                android:layout_marginStart="8dp"
                 android:text="@string/main_text_comments"
                 android:textColor="@color/colorTextUnselected"
                 android:textSize="12sp"/>
@@ -128,15 +128,41 @@
                 android:id="@+id/tv_voice_com"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toEndOf="@id/tv_text_com"
-                android:layout_marginStart="12dp"
                 android:layout_centerVertical="true"
+                android:layout_marginStart="12dp"
+                android:layout_toEndOf="@id/tv_text_com"
                 android:text="@string/main_voice_comments"
                 android:textColor="@color/colorTextUnselected"
                 android:textSize="12sp"/>
 
         </RelativeLayout>
 
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_text_com_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            </android.support.v7.widget.RecyclerView>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_voice_com_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone">
+            </android.support.v7.widget.RecyclerView>
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/tv_more_com"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="@string/main_more_comments"
+            android:textColor="@color/colorTextUnselected"
+            android:textSize="9sp"/>
 
 
     </LinearLayout>
