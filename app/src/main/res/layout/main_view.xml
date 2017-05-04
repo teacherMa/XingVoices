@@ -30,81 +30,85 @@ app:rightPadding="100dp">
         android:orientation="vertical"
         android:background="@color/colorTextSelected">
 
-        <android.support.design.widget.AppBarLayout
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/main_view_toolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            app:contentInsetStart="0dp">
 
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/main_view_toolbar"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:contentInsetStart="0dp">
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
 
                 <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="30dp"
                     android:orientation="horizontal">
 
                     <ImageView
                         android:id="@+id/iv_main_nav"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:padding="1dp"
                         android:src="@drawable/main_nav_sidebar"
-                        android:layout_marginStart="30dp"
-                        android:contentDescription="@string/app_name"
-                        android:layout_centerVertical="true"/>
-
-                    <TextView
-                        android:id="@+id/tv_main_follow"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/main_follow"
-                        android:layout_centerInParent="true"
-                        android:textSize="14sp"
-                        android:textColor="@color/colorTextUnselected"/>
-
-                    <TextView
-                        android:id="@+id/tv_main_popular"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/main_popular"
-                        android:layout_toStartOf="@id/tv_main_follow"
-                        android:layout_marginEnd="60dp"
-                        android:textSize="14sp"
-                        android:textColor="@color/colorTextUnselected"/>
-
-                    <TextView
-                        android:id="@+id/tv_main_collection"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/main_collection"
-                        android:layout_toEndOf="@id/tv_main_follow"
-                        android:layout_marginStart="60dp"
-                        android:textSize="14sp"
-                        android:textColor="@color/colorTextUnselected"/>
-
-                    <ImageView
-                        android:id="@+id/iv_main_record"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/main_btn_record"
-                        android:layout_alignParentEnd="true"
-                        android:layout_marginEnd="30dp"
                         android:contentDescription="@string/app_name"/>
+
+                    <FrameLayout
+                        android:id="@+id/nav_new_message"
+                        android:layout_width="4dp"
+                        android:layout_height="4dp"
+                        android:layout_toEndOf="@id/iv_main_nav"
+                        android:layout_alignTop="@id/iv_main_nav"
+                        android:background="@drawable/bg_new_message_noti"/>
 
                 </RelativeLayout>
 
+                <TextView
+                    android:id="@+id/tv_main_follow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/main_follow"
+                    android:layout_centerInParent="true"
+                    android:textSize="14sp"
+                    android:textColor="@color/colorTextUnselected"/>
+
+                <TextView
+                    android:id="@+id/tv_main_popular"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/main_popular"
+                    android:layout_toStartOf="@id/tv_main_follow"
+                    android:layout_marginEnd="60dp"
+                    android:textSize="14sp"
+                    android:textColor="@color/colorTextUnselected"/>
+
+                <TextView
+                    android:id="@+id/tv_main_collection"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/main_collection"
+                    android:layout_toEndOf="@id/tv_main_follow"
+                    android:layout_marginStart="60dp"
+                    android:textSize="14sp"
+                    android:textColor="@color/colorTextUnselected"/>
+
+                <ImageView
+                    android:id="@+id/iv_main_record"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/main_btn_record"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="30dp"
+                    android:contentDescription="@string/app_name"/>
+
+            </RelativeLayout>
 
 
-            </android.support.v7.widget.Toolbar>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="0.7dp"
-                android:background="@color/colorPrimaryDark">
-            </LinearLayout>
-
-        </android.support.design.widget.AppBarLayout>
+        </android.support.v7.widget.Toolbar>
 
         <android.support.v4.view.ViewPager
             android:id="@+id/main_view_vp"

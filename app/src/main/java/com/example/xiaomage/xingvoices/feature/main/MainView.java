@@ -4,9 +4,10 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.Toolbar;
 import android.util.AttributeSet;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -14,7 +15,6 @@ import android.widget.TextView;
 import com.example.xiaomage.xingvoices.R;
 import com.example.xiaomage.xingvoices.custom.view.SlidingMenu;
 import com.example.xiaomage.xingvoices.framework.BaseView;
-import com.example.xiaomage.xingvoices.utils.BaseUtil;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -38,6 +38,10 @@ public class MainView extends BaseView<MainContract.Presenter> implements MainCo
     LinearLayout mLeftMenu;
     @BindView(R.id.main_sliding_menu)
     SlidingMenu mMainSlidingMenu;
+    @BindView(R.id.nav_new_message)
+    FrameLayout mNavNewMessage;
+    @BindView(R.id.content)
+    LinearLayout mContent;
 
 
     public MainView(@NonNull Context context, @Nullable AttributeSet attrs) {
@@ -57,9 +61,9 @@ public class MainView extends BaseView<MainContract.Presenter> implements MainCo
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_main_nav:
-                if(mMainSlidingMenu.isOpen()){
+                if (mMainSlidingMenu.isOpen()) {
                     mMainSlidingMenu.closeMenu();
-                }else {
+                } else {
                     mMainSlidingMenu.openMenu();
                 }
                 break;
