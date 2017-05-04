@@ -8,4 +8,6 @@
     <color name="colorTextUnselected">#A9A7A7</color>
 
     <color name="colorMenuOpenedBackground">#11FFFFFF</color>
+
+    <color name="colorNewMessageNotification">#FF5722</color>
 </resources>
