@@ -1,7 +1,172 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
               android:layout_width="match_parent"
-              android:layout_height="match_parent">
+              android:layout_height="wrap_content"
+              android:orientation="vertical">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.8dp"
+        android:background="@color/colorPrimaryDark">
+    </View>
+
+    <RelativeLayout
+        android:id="@+id/item_head"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal">
+
+        <com.example.xiaomage.xingvoices.custom.view.CircleImageView
+            android:id="@+id/civ_user_avatar"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="25dp"
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/avatar"/>
+
+        <TextView
+            android:id="@+id/tv_user_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="12dp"
+            android:layout_toEndOf="@id/civ_user_avatar"
+            android:text="@string/app_name"
+            android:textColor="@color/colorTextSelected"
+            android:textSize="14sp"/>
+
+        <ImageView
+            android:id="@+id/iv_follow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="25dp"
+            android:contentDescription="@string/iv_con_des"
+            android:src="@drawable/hot_btn_follow"/>
+
+    </RelativeLayout>
+
+    <com.example.xiaomage.xingvoices.custom.view.RatioLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:ratio="0.5625">
+
+        <ImageView
+            android:id="@+id/iv_pic_of_voice"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/pic"
+            android:scaleType="centerCrop"
+            android:contentDescription="@string/iv_con_des"/>
+    </com.example.xiaomage.xingvoices.custom.view.RatioLayout>
+
+    <RelativeLayout
+        android:id="@+id/bar_basic_state"
+        android:layout_width="match_parent"
+        android:layout_height="25dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/iv_browsed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="25dp"
+            android:contentDescription="@string/iv_con_des"
+            android:src="@drawable/hot_icon_browse"/>
+
+        <TextView
+            android:id="@+id/tv_browsed_times"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="8dp"
+            android:layout_toEndOf="@id/iv_browsed"
+            android:text="@string/main_default_watch_times"
+            android:textColor="@color/colorTextUnselected"
+            android:textSize="12sp"/>
+
+        <ImageView
+            android:id="@+id/iv_more"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="28dp"
+            android:contentDescription="@string/iv_con_des"
+            android:src="@drawable/hot_btn_more"/>
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingBottom="25dp"
+        android:paddingEnd="25dp"
+        android:paddingStart="25dp"
+        android:paddingTop="4dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="28dp"
+            android:background="@color/colorPrimaryDark">
+
+            <TextView
+                android:id="@+id/tv_text_com"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="8dp"
+                android:text="@string/main_text_comments"
+                android:textColor="@color/colorTextUnselected"
+                android:textSize="12sp"/>
+
+            <TextView
+                android:id="@+id/tv_voice_com"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="12dp"
+                android:layout_toEndOf="@id/tv_text_com"
+                android:text="@string/main_voice_comments"
+                android:textColor="@color/colorTextUnselected"
+                android:textSize="12sp"/>
+
+        </RelativeLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_text_com_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            </android.support.v7.widget.RecyclerView>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_voice_com_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone">
+            </android.support.v7.widget.RecyclerView>
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/tv_more_com"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="@string/main_more_comments"
+            android:textColor="@color/colorTextUnselected"
+            android:textSize="9sp"/>
+
+
+    </LinearLayout>
+
 
 </LinearLayout>

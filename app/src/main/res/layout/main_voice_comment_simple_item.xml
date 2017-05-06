@@ -26,7 +26,45 @@
             android:layout_marginStart="8dp"
             android:textSize="10sp"
             android:layout_centerVertical="true"
-            android:text="@string/app_name"/>
+            android:text="@string/app_name"
+            android:textColor="@color/colorTextUnselected"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/rl_com_basic_info">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="14dp"
+            android:layout_marginStart="46dp"
+            android:layout_marginEnd="90dp"
+            android:layout_centerVertical="true"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_voice_com_length"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="2dp"
+                android:layout_alignParentTop="true"
+                android:text="@string/main_default_voice_length"
+                android:textSize="10sp"
+                android:textColor="@color/colorTextUnselected"/>
+
+            <ImageView
+                android:id="@+id/tv_com_content"
+                android:layout_width="match_parent"
+                android:layout_height="12dp"
+                android:layout_toStartOf="@id/tv_voice_com_length"
+                android:background="@drawable/bg_voice_bar"
+                android:layout_centerVertical="true"/>
+
+
+        </RelativeLayout>
 
         <TextView
             android:id="@+id/tv_com_like_num"
@@ -34,7 +72,6 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:layout_marginStart="8dp"
             android:text="@string/main_default_watch_times"/>
 
         <ImageView
@@ -43,17 +80,10 @@
             android:layout_height="wrap_content"
             android:layout_toStartOf="@id/tv_com_like_num"
             android:layout_centerVertical="true"
-            android:src="@drawable/hot__normal_like"/>
+            android:layout_marginEnd="8dp"
+            android:src="@drawable/hot__normal_like"
+            android:contentDescription="@string/iv_con_des"/>
     </RelativeLayout>
 
-    <TextView
-        android:id="@+id/tv_com_content"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/rl_com_basic_info"
-        android:layout_marginStart="46dp"
-        android:text="@string/main_default_comment"
-        android:textSize="12sp"
-        android:textColor="@color/colorCommentTextColor"/>
 
 </RelativeLayout>

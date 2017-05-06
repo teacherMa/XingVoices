@@ -58,7 +58,8 @@
             android:id="@+id/iv_pic_of_voice"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/colorAccent"
+            android:src="@drawable/pic"
+            android:scaleType="centerCrop"
             android:contentDescription="@string/iv_con_des"/>
     </com.example.xiaomage.xingvoices.custom.view.RatioLayout>
 
