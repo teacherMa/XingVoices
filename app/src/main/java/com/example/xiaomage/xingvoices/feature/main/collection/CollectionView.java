@@ -10,6 +10,9 @@ import android.util.AttributeSet;
 
 import com.example.xiaomage.xingvoices.R;
 import com.example.xiaomage.xingvoices.framework.BaseView;
+import com.example.xiaomage.xingvoices.model.bean.RemoteVoice;
+
+import java.util.List;
 
 import butterknife.BindView;
 
@@ -35,5 +38,10 @@ public class CollectionView extends BaseView<CollectionContract.Presenter> imple
     @Override
     protected int getLayoutResId() {
         return R.layout.main_collection_view;
+    }
+
+    @Override
+    public void loadData(List<RemoteVoice> data) {
+        ((CollectionAdapter)mMainCollectionRv.getAdapter()).refreshData(data);
     }
 }

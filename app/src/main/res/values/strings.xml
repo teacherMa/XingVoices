@@ -8,8 +8,9 @@
     <string name="main_collection">收藏</string>
 
     <string name="main_default_watch_times">666</string>
-    <string name="main_default_comment">66666666666666666</string>
-    
+    <string name="main_default_comment">666666666666666666666666666666666666666666666666666666666666666666666666666666666</string>
+    <string name="main_default_voice_length">15</string>
+
     <string name="main_text_comments">文字评论</string>
     <string name="main_voice_comments">语音评论</string>
     <string name="main_more_comments">更多评论</string>

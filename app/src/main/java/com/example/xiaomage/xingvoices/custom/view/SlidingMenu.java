@@ -33,6 +33,8 @@ public class SlidingMenu extends HorizontalScrollView {
     private boolean mIsOpen = false;
     private boolean mDrawerType = false;
 
+    private boolean mCanScroll = true;
+
     public SlidingMenu(Context context) {
         super(context);
     }
@@ -45,26 +47,26 @@ public class SlidingMenu extends HorizontalScrollView {
 
         super(context, attrs, defStyleAttr);
 
-        WindowManager windowManager = (WindowManager)context.getSystemService(Context.WINDOW_SERVICE);
+        WindowManager windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         DisplayMetrics metrics = new DisplayMetrics();
         windowManager.getDefaultDisplay().getMetrics(metrics);
         mScreenWidth = metrics.widthPixels;
 
         TypedArray typedArray = context.getTheme().obtainStyledAttributes(attrs,
-                R.styleable.SlidingMenu,defStyleAttr,0);
+                R.styleable.SlidingMenu, defStyleAttr, 0);
 
         int n = typedArray.getIndexCount();
 
         for (int i = 0; i < n; i++) {
             int attr = typedArray.getIndex(i);
-            switch (attr){
+            switch (attr) {
                 case R.styleable.SlidingMenu_rightPadding:
                     mMenuRightPadding = typedArray.getDimensionPixelSize(attr,
                             (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
                                     mMenuRightPadding, context.getResources().getDisplayMetrics()));
                     break;
                 case R.styleable.SlidingMenu_drawerType:
-                    mDrawerType = typedArray.getBoolean(attr,false);
+                    mDrawerType = typedArray.getBoolean(attr, false);
                     break;
                 default:
                     break;
@@ -78,9 +80,9 @@ public class SlidingMenu extends HorizontalScrollView {
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
 
-        if(!mIsOnce){
+        if (!mIsOnce) {
             mIsOnce = true;
-            mWapper = (LinearLayout)getChildAt(0);
+            mWapper = (LinearLayout) getChildAt(0);
             mMenu = (LinearLayout) mWapper.getChildAt(0);
             mContent = (LinearLayout) mWapper.getChildAt(1);
 
@@ -96,8 +98,8 @@ public class SlidingMenu extends HorizontalScrollView {
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
         super.onLayout(changed, l, t, r, b);
-        if(changed){
-            this.scrollTo(mScreenWidth,0);
+        if (changed) {
+            this.scrollTo(mMenuWidth, 0);
         }
     }
 
@@ -105,12 +107,12 @@ public class SlidingMenu extends HorizontalScrollView {
     public boolean onTouchEvent(MotionEvent ev) {
 
         int action = ev.getAction();
-        switch (action){
+        switch (action) {
             case MotionEvent.ACTION_UP:
                 int scrollX = getScrollX();
-                if(scrollX>mScreenWidth/2){
+                if (scrollX > mScreenWidth / 2) {
                     closeMenu();
-                }else {
+                } else {
                     openMenu();
                 }
                 return true;
@@ -123,37 +125,64 @@ public class SlidingMenu extends HorizontalScrollView {
     }
 
     @Override
+    public boolean onInterceptTouchEvent(MotionEvent ev) {
+        boolean isIntercept = false;
+        int action = ev.getAction();
+        switch (action) {
+            case MotionEvent.ACTION_DOWN:
+                isIntercept = false;
+                break;
+            case MotionEvent.ACTION_MOVE:
+                isIntercept = isOpen();
+                break;
+            case MotionEvent.ACTION_UP:
+                isIntercept = false;
+                break;
+
+        }
+        return isIntercept;
+    }
+
+    @Override
     protected void onScrollChanged(int l, int t, int oldl, int oldt) {
-        super.onScrollChanged(l, t, oldl, oldt);
-        if (mDrawerType){
+
+        if (mDrawerType) {
             float scale = l * 1.0f / mMenuWidth;  //1 ~ 0
             //调用属性动画,设TranslationX
             mMenu.setTranslationX(mMenuWidth * scale);
         }
+
+        super.onScrollChanged(l, t, oldl, oldt);
     }
 
-    public boolean isOpen(){
+    @Override
+    public boolean canScrollHorizontally(int direction) {
+        return mCanScroll && super.canScrollHorizontally(direction);
+    }
+
+    public boolean isOpen() {
         return mIsOpen;
     }
 
-    public void openMenu(){
-        this.smoothScrollTo(0, 0);
+    public void openMenu() {
         mIsOpen = true;
-        mContent.setBackgroundColor(BaseUtil.getColorInt(R.color.colorMenuOpenedBackground));
+        this.smoothScrollTo(0, 0);
     }
 
-    public void closeMenu(){
-        this.smoothScrollTo(mMenuWidth, 0);
+    public void closeMenu() {
         mIsOpen = false;
-        mContent.setBackgroundColor(BaseUtil.getColorInt(R.color.colorPrimary));
+        this.smoothScrollTo(mMenuWidth, 0);
     }
 
-    public void toggleMenu(){
-        if (mIsOpen){
+    public void toggleMenu() {
+        if (mIsOpen) {
             closeMenu();
-        }else{
+        } else {
             openMenu();
         }
     }
 
+    public void setCanScroll(boolean canScroll) {
+        mCanScroll = canScroll;
+    }
 }
