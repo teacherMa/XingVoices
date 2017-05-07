@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import com.example.xiaomage.xingvoices.R;
 import com.example.xiaomage.xingvoices.utils.BaseUtil;
@@ -23,7 +24,7 @@ public class SlidingMenu extends HorizontalScrollView {
 
     private LinearLayout mWapper;
     private LinearLayout mMenu;
-    private LinearLayout mContent;
+    private RelativeLayout mContent;
 
     private int mScreenWidth;
     private int mMenuRightPadding = 50;
@@ -32,8 +33,6 @@ public class SlidingMenu extends HorizontalScrollView {
     private boolean mIsOnce = false;
     private boolean mIsOpen = false;
     private boolean mDrawerType = false;
-
-    private boolean mCanScroll = true;
 
     public SlidingMenu(Context context) {
         super(context);
@@ -84,7 +83,7 @@ public class SlidingMenu extends HorizontalScrollView {
             mIsOnce = true;
             mWapper = (LinearLayout) getChildAt(0);
             mMenu = (LinearLayout) mWapper.getChildAt(0);
-            mContent = (LinearLayout) mWapper.getChildAt(1);
+            mContent = (RelativeLayout) mWapper.getChildAt(1);
 
             mMenu.getLayoutParams().width = mScreenWidth - mMenuRightPadding;
             mMenuWidth = mMenu.getLayoutParams().width;
@@ -115,6 +114,11 @@ public class SlidingMenu extends HorizontalScrollView {
                 } else {
                     openMenu();
                 }
+                if(ev.getX()>mMenuWidth){
+                    if(isOpen()){
+                        closeMenu();
+                    }
+                }
                 return true;
             default:
                 break;
@@ -126,6 +130,7 @@ public class SlidingMenu extends HorizontalScrollView {
 
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
+
         boolean isIntercept = false;
         int action = ev.getAction();
         switch (action) {
@@ -155,11 +160,6 @@ public class SlidingMenu extends HorizontalScrollView {
         super.onScrollChanged(l, t, oldl, oldt);
     }
 
-    @Override
-    public boolean canScrollHorizontally(int direction) {
-        return mCanScroll && super.canScrollHorizontally(direction);
-    }
-
     public boolean isOpen() {
         return mIsOpen;
     }
@@ -182,7 +182,4 @@ public class SlidingMenu extends HorizontalScrollView {
         }
     }
 
-    public void setCanScroll(boolean canScroll) {
-        mCanScroll = canScroll;
-    }
 }

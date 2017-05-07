@@ -14,4 +14,9 @@
     <string name="main_text_comments">文字评论</string>
     <string name="main_voice_comments">语音评论</string>
     <string name="main_more_comments">更多评论</string>
+
+    <string name="main_menu_default_follow">66</string>
+    <string name="main_menu_default_fans">88</string>
+    <string name="main_menu_follow">关注</string>
+    <string name="main_menu_fans">粉丝</string>
 </resources>
