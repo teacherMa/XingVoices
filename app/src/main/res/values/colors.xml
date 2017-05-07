@@ -10,4 +10,6 @@
     <color name="colorNewMessageNotification">#FF5722</color>
 
     <color name="colorCommentTextColor">#515151</color>
+
+    <color name="colorMenuOpenContentBackground">#33515151</color>
 </resources>

@@ -57,11 +57,6 @@ public class RatioLayout extends LinearLayout {
         }
     }
 
-    /**
-     * ratio==100.0f，width=parent.getWidth/2;height=window.widthPixels/3
-     * ratio == -1.0f，使长宽相等且取小值。
-     */
-
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         setMeasuredDimension(getDefaultSize(0, widthMeasureSpec),

@@ -1,7 +1,148 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-</LinearLayout>
+    <com.example.xiaomage.xingvoices.custom.view.RatioLayout
+        android:id="@+id/rl_ph_head"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:ratio="1">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="12dp">
+
+            <ImageView
+                android:id="@+id/iv_back_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:src="@drawable/ic_keyboard_arrow_right"
+                android:contentDescription="@string/iv_con_des"/>
+
+            <com.example.xiaomage.xingvoices.custom.view.CircleImageView
+                android:id="@+id/menu_user_avatar"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_below="@id/iv_back_content"
+                android:layout_centerInParent="true"
+
+                android:src="@drawable/avatar"/>
+
+            <TextView
+                android:id="@+id/menu_user_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/menu_user_avatar"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="20dp"
+                android:text="@string/app_name"
+                android:textSize="14sp"
+                android:textColor="@color/colorTextSelected"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/tv_follow_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/menu_user_name"
+                android:layout_marginTop="40dp"
+                android:layout_marginStart="56dp"
+                android:text="@string/main_menu_default_follow"
+                android:textSize="20sp"
+                android:textColor="@color/colorTextSelected"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/tv_follow_string"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_follow_number"
+                android:layout_marginTop="4dp"
+                android:layout_marginStart="56dp"
+                android:text="@string/main_menu_follow"
+                android:textSize="12sp"
+                android:textColor="@color/colorTextUnselected"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/tv_fans_num"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/menu_user_name"
+                android:layout_marginTop="40dp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="56dp"
+                android:text="@string/main_menu_default_fans"
+                android:textSize="20sp"
+                android:textColor="@color/colorTextSelected"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/tv_fans_string"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_follow_number"
+                android:layout_marginTop="4dp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="56dp"
+                android:text="@string/main_menu_fans"
+                android:textSize="12sp"
+                android:textColor="@color/colorTextUnselected"
+                android:textStyle="bold"/>
+
+        </RelativeLayout>
+    </com.example.xiaomage.xingvoices.custom.view.RatioLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_menu_setting_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/rl_ph_head"
+        android:padding="24dp"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/menu_my_publish"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/set_my_publish"
+            android:contentDescription="@string/iv_con_des"/>
+
+        <ImageView
+            android:id="@+id/menu_my_draft"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/set_my_draft"
+            android:layout_below="@id/menu_my_publish"
+            android:layout_marginTop="24dp"
+            android:contentDescription="@string/iv_con_des"/>
+
+        <ImageView
+            android:id="@+id/menu_sys_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/menu_my_draft"
+            android:src="@drawable/set_sys_message"
+            android:layout_marginTop="24dp"
+            android:contentDescription="@string/iv_con_des"/>
+
+        <ImageView
+            android:id="@+id/menu_my_setting"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/set_setting"
+            android:layout_below="@id/menu_sys_message"
+            android:layout_marginTop="24dp"
+            android:contentDescription="@string/iv_con_des"/>
+
+    </RelativeLayout>
+
+</RelativeLayout>

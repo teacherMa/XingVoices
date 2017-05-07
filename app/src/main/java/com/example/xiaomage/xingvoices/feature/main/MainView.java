@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.xiaomage.xingvoices.R;
@@ -55,7 +56,7 @@ public class MainView extends BaseView<MainContract.Presenter> implements MainCo
     @BindView(R.id.main_view_toolbar)
     Toolbar mMainViewToolbar;
     @BindView(R.id.content)
-    LinearLayout mContent;
+    RelativeLayout mContent;
 
     private List<Fragment> mVpFragments;
     private TextView mTvLastItem;
@@ -104,7 +105,7 @@ public class MainView extends BaseView<MainContract.Presenter> implements MainCo
             case R.id.iv_main_record:
                 break;
             case R.id.content:
-                if(mMainSlidingMenu.isOpen()){
+                if (mMainSlidingMenu.isOpen()) {
                     mMainSlidingMenu.closeMenu();
                 }
                 break;
