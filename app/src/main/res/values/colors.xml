@@ -12,4 +12,9 @@
     <color name="colorCommentTextColor">#515151</color>
 
     <color name="colorMenuOpenContentBackground">#33515151</color>
+    
+    <color name="colorRecordBackground">#FF6F6F</color>
+    <color name="colorRecordLengthHint">#FFFFFF</color>
+    <color name="colorRecordTimeColor">#5D5D5D</color>
+    <color name="colorAuditionProgressBar">#DD191D</color>
 </resources>

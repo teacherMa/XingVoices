@@ -24,7 +24,8 @@
         </activity>
 
         <activity android:name=".feature.record.RecordActivity"
-                  android:screenOrientation="portrait">
+                  android:screenOrientation="portrait"
+            android:parentActivityName=".feature.main.MainActivity">
 
         </activity>
 

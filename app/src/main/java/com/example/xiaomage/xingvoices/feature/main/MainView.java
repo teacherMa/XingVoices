@@ -1,6 +1,7 @@
 package com.example.xiaomage.xingvoices.feature.main;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -18,12 +19,18 @@ import android.widget.TextView;
 
 import com.example.xiaomage.xingvoices.R;
 import com.example.xiaomage.xingvoices.custom.view.SlidingMenu;
+import com.example.xiaomage.xingvoices.event.MenuCloseEvent;
+import com.example.xiaomage.xingvoices.event.EmptyEvent;
 import com.example.xiaomage.xingvoices.feature.main.collection.CollectionFragment;
 import com.example.xiaomage.xingvoices.feature.main.follow.FollowFragment;
 import com.example.xiaomage.xingvoices.feature.main.menu.MenuFragment;
 import com.example.xiaomage.xingvoices.feature.main.popular.PopularFragment;
-import com.example.xiaomage.xingvoices.framework.BaseView;
+import com.example.xiaomage.xingvoices.feature.record.RecordActivity;
+import com.example.xiaomage.xingvoices.framework.BaseBusView;
 import com.example.xiaomage.xingvoices.utils.BaseUtil;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +38,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class MainView extends BaseView<MainContract.Presenter> implements MainContract.View {
+public class MainView extends BaseBusView<MainContract.Presenter> implements MainContract.View {
 
     private static final String MENU_FRAGMENT = "menu fragment";
 
@@ -63,6 +70,23 @@ public class MainView extends BaseView<MainContract.Presenter> implements MainCo
 
     public MainView(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
+    }
+
+    @Override
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(EmptyEvent event) {
+
+        if(null == event){
+            return;
+        }
+
+        if (event instanceof MenuCloseEvent){
+            MenuCloseEvent menuCloseEvent = (MenuCloseEvent) event;
+            if(menuCloseEvent.isClosed()){
+                return;
+            }
+            mMainSlidingMenu.closeMenu();
+        }
     }
 
     @Override
@@ -103,6 +127,8 @@ public class MainView extends BaseView<MainContract.Presenter> implements MainCo
                 mTvLastItem = mTvMainCollection;
                 break;
             case R.id.iv_main_record:
+                Intent intent = RecordActivity.getNewIntent(getContext());
+                (getContext()).startActivity(intent);
                 break;
             case R.id.content:
                 if (mMainSlidingMenu.isOpen()) {

@@ -131,7 +131,7 @@ public class SlidingMenu extends HorizontalScrollView {
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
 
-        boolean isIntercept = false;
+        /*boolean isIntercept = false;
         int action = ev.getAction();
         switch (action) {
             case MotionEvent.ACTION_DOWN:
@@ -145,7 +145,8 @@ public class SlidingMenu extends HorizontalScrollView {
                 break;
 
         }
-        return isIntercept;
+        return isIntercept;*/
+        return false;
     }
 
     @Override
