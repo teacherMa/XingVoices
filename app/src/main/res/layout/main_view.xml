@@ -58,7 +58,7 @@ app:rightPadding="100dp">
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="1dp"
-                        android:src="@drawable/main_nav_sidebar"
+                        android:src="@drawable/ic_main_nav_sidebar"
                         android:contentDescription="@string/app_name"/>
 
                     <FrameLayout
@@ -75,6 +75,7 @@ app:rightPadding="100dp">
                     android:id="@+id/tv_main_follow"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:padding="4dp"
                     android:text="@string/main_follow"
                     android:layout_centerInParent="true"
                     android:textSize="14sp"
@@ -85,9 +86,10 @@ app:rightPadding="100dp">
                     android:id="@+id/tv_main_popular"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:padding="4dp"
                     android:text="@string/main_popular"
                     android:layout_toStartOf="@id/tv_main_follow"
-                    android:layout_marginEnd="60dp"
+                    android:layout_marginEnd="35dp"
                     android:textSize="14sp"
                     android:textColor="@color/colorTextUnselected"
                     android:textStyle="bold"/>
@@ -96,9 +98,10 @@ app:rightPadding="100dp">
                     android:id="@+id/tv_main_collection"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:padding="4dp"
                     android:text="@string/main_collection"
                     android:layout_toEndOf="@id/tv_main_follow"
-                    android:layout_marginStart="60dp"
+                    android:layout_marginStart="35dp"
                     android:textSize="14sp"
                     android:textColor="@color/colorTextUnselected"
                     android:textStyle="bold"/>
@@ -107,14 +110,13 @@ app:rightPadding="100dp">
                     android:id="@+id/iv_main_record"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/main_btn_record"
+                    android:padding="4dp"
+                    android:src="@drawable/ic_main_btn_record"
                     android:layout_alignParentEnd="true"
-                    android:layout_marginEnd="30dp"
+                    android:layout_marginEnd="26dp"
                     android:contentDescription="@string/app_name"/>
 
             </RelativeLayout>
-
-
 
         </android.support.v7.widget.Toolbar>
 
