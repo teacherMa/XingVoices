@@ -18,13 +18,14 @@ public abstract class BaseBusView<P extends BasePresenterApi> extends BaseView<P
 
     public BaseBusView(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
+        if (!EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().register(this);
+        }
     }
 
     public BaseBusView(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        if (!EventBus.getDefault().isRegistered(this)) {
-            EventBus.getDefault().register(this);
-        }
+
     }
 
     @Override
@@ -36,5 +37,5 @@ public abstract class BaseBusView<P extends BasePresenterApi> extends BaseView<P
     }
 
     @Subscribe
-    protected abstract void onEvent(EmptyEvent event);
+    public abstract void onEvent(EmptyEvent event);
 }

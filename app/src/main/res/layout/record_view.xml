@@ -1,7 +1,170 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent">
+    
+    <RelativeLayout
+        android:id="@+id/rl_operating_area"
+        android:layout_width="match_parent"
+        android:layout_height="320dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/colorRecordBackground">
 
-</LinearLayout>
+        <ImageView
+            android:id="@+id/iv_start_record"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="100dp"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/ic_start_record"
+            android:contentDescription="@string/iv_con_des"/>
+
+        <TextView
+            android:id="@+id/tv_record_time_hint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="110dp"
+            android:text="@string/record_time_hint"
+            android:textColor="@color/colorRecordLengthHint"
+            android:textSize="14sp"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/tv_record_again"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="110dp"
+            android:layout_marginStart="52dp"
+            android:text="@string/record_again"
+            android:textColor="@color/colorRecordLengthHint"
+            android:textStyle="bold"
+            android:visibility="gone"/>
+
+        <ImageView
+            android:id="@+id/iv_record_again"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_record_again"
+            android:layout_above="@id/tv_record_again"
+            android:layout_marginStart="32dp"
+            android:padding="20dp"
+            android:contentDescription="@string/iv_con_des"
+            android:visibility="gone"/>
+
+        <TextView
+            android:id="@+id/tv_record_save"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginBottom="110dp"
+            android:layout_marginEnd="52dp"
+            android:text="@string/record_save"
+            android:textColor="@color/colorRecordLengthHint"
+            android:textStyle="bold"
+            android:visibility="gone"/>
+
+        <ImageView
+            android:id="@+id/iv_record_save"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_record_save"
+            android:layout_above="@id/tv_record_again"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="32dp"
+            android:padding="20dp"
+            android:contentDescription="@string/iv_con_des"
+            android:visibility="gone"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_show_time"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/rl_operating_area">
+
+        <ImageView
+            android:id="@+id/iv_cancel_record"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:padding="15dp"
+            android:src="@drawable/ic_close_record"
+            android:contentDescription="@string/iv_con_des"/>
+
+        <LinearLayout
+            android:id="@+id/ll_record_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="138dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:orientation="horizontal"
+            android:padding="8dp">
+
+            <Chronometer
+                android:id="@+id/voice_timer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="36sp"
+                android:textColor="@color/colorRecordTimeColor"
+                android:textStyle="bold"/>
+
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/iv_audition"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_audition"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="96dp"
+            android:layout_marginStart="30dp"
+            android:contentDescription="@string/iv_con_des"
+            android:visibility="gone"/>
+
+        <View
+            android:id="@+id/audition_progress_bar"
+            android:layout_width="180dp"
+            android:layout_height="2dp"
+            android:background="@drawable/bg_audition_progress"
+            android:layout_alignParentBottom="true"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="12dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="64dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_audition_length_min"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/main_default_voice_length"/>
+
+            <TextView
+                android:id="@+id/tv_audition_length_split"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/record_split_time"/>
+
+            <TextView
+                android:id="@+id/tv_audition_length_sec"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/main_default_voice_length"/>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</RelativeLayout>

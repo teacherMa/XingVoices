@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
 
     <com.example.xiaomage.xingvoices.custom.view.RatioLayout
         android:id="@+id/rl_ph_head"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        app:ratio="0.9">
+        app:ratio="0.6">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -23,26 +22,25 @@
                 android:id="@+id/iv_back_content"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:src="@drawable/ic_keyboard_arrow_right"
+                android:layout_alignParentStart="true"
+                android:src="@drawable/ic_keyboard_arrow_left"
                 android:contentDescription="@string/iv_con_des"/>
 
             <com.example.xiaomage.xingvoices.custom.view.CircleImageView
-                android:id="@+id/menu_user_avatar"
+                android:id="@+id/personal_user_avatar"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:layout_below="@id/iv_back_content"
                 android:layout_centerInParent="true"
-
                 android:src="@drawable/avatar"/>
 
             <TextView
-                android:id="@+id/menu_user_name"
+                android:id="@+id/personal_user_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/menu_user_avatar"
+                android:layout_below="@id/personal_user_avatar"
                 android:layout_centerInParent="true"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="10dp"
                 android:text="@string/app_name"
                 android:textSize="14sp"
                 android:textColor="@color/colorTextSelected"
@@ -52,8 +50,7 @@
                 android:id="@+id/tv_follow_number"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/menu_user_name"
-                android:layout_marginTop="28dp"
+                android:layout_below="@id/personal_user_avatar"
                 android:layout_marginStart="56dp"
                 android:text="@string/main_menu_default_follow"
                 android:textSize="20sp"
@@ -67,7 +64,7 @@
                 android:layout_below="@id/tv_follow_number"
                 android:layout_marginTop="4dp"
                 android:layout_marginStart="56dp"
-                android:text="@string/main_menu_follow"
+                android:text="@string/personal_follow"
                 android:textSize="12sp"
                 android:textColor="@color/colorTextUnselected"
                 android:textStyle="bold"/>
@@ -76,8 +73,7 @@
                 android:id="@+id/tv_fans_num"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/menu_user_name"
-                android:layout_marginTop="28dp"
+                android:layout_below="@id/personal_user_avatar"
                 android:layout_alignParentEnd="true"
                 android:layout_marginEnd="56dp"
                 android:text="@string/main_menu_default_fans"
@@ -93,56 +89,27 @@
                 android:layout_marginTop="4dp"
                 android:layout_alignParentEnd="true"
                 android:layout_marginEnd="56dp"
-                android:text="@string/main_menu_fans"
+                android:text="@string/personal_fans"
                 android:textSize="12sp"
                 android:textColor="@color/colorTextUnselected"
                 android:textStyle="bold"/>
 
+            <ImageView
+                android:id="@+id/iv_to_follow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerInParent="true"
+                android:layout_marginBottom="20dp"
+                android:src="@drawable/ic_personal_to_follow"/>
+
         </RelativeLayout>
     </com.example.xiaomage.xingvoices.custom.view.RatioLayout>
 
-    <RelativeLayout
-        android:id="@+id/rl_menu_setting_list"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_personal_voices"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/rl_ph_head"
-        android:padding="24dp"
-        android:orientation="vertical">
+        android:layout_height="wrap_content">
+    </android.support.v7.widget.RecyclerView>
 
-        <ImageView
-            android:id="@+id/menu_my_publish"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_menu_my_publish"
-            android:contentDescription="@string/iv_con_des"/>
-
-        <ImageView
-            android:id="@+id/menu_my_draft"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_menu_my_draft"
-            android:layout_below="@id/menu_my_publish"
-            android:layout_marginTop="24dp"
-            android:contentDescription="@string/iv_con_des"/>
-
-        <ImageView
-            android:id="@+id/menu_sys_message"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/menu_my_draft"
-            android:src="@drawable/ic_menu_sys_message"
-            android:layout_marginTop="24dp"
-            android:contentDescription="@string/iv_con_des"/>
-
-        <ImageView
-            android:id="@+id/menu_my_setting"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_menu_setting"
-            android:layout_below="@id/menu_sys_message"
-            android:layout_marginTop="24dp"
-            android:contentDescription="@string/iv_con_des"/>
-
-    </RelativeLayout>
-
-</RelativeLayout>
+</LinearLayout>

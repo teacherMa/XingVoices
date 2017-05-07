@@ -64,7 +64,7 @@
             android:layout_toStartOf="@id/tv_com_like_num"
             android:layout_marginEnd="8dp"
             android:layout_centerVertical="true"
-            android:src="@drawable/hot__normal_like"/>
+            android:src="@drawable/ic_hot__normal_like"/>
     </RelativeLayout>
 
 
