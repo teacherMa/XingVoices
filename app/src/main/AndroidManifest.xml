@@ -15,17 +15,33 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".feature.main.MainActivity"
-                  android:screenOrientation="portrait">
-            <intent-filter>
+        <activity
+            android:name=".feature.main.MainActivity"
+            android:screenOrientation="portrait">
+            <intent-filter>4
+
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
 
-        <activity android:name=".feature.record.RecordActivity"
-                  android:screenOrientation="portrait"
-            android:parentActivityName=".feature.main.MainActivity">
+        <activity
+            android:name=".feature.record.RecordActivity"
+            android:parentActivityName=".feature.main.MainActivity"
+            android:screenOrientation="portrait">
+
+        </activity>
+
+        <activity
+            android:name=".feature.record.publish.PublishActivity"
+            android:parentActivityName=".feature.main.MainActivity"
+            android:screenOrientation="portrait">
+
+        </activity>
+
+        <activity
+            android:name=".feature.personal.PersonalActivity"
+            android:screenOrientation="portrait">
 
         </activity>
 

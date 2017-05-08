@@ -45,7 +45,7 @@
             android:layout_centerVertical="true"
             android:layout_marginEnd="25dp"
             android:contentDescription="@string/iv_con_des"
-            android:src="@drawable/ic_hot_btn_follow"/>
+            android:src="@drawable/ic_main_btn_follow"/>
 
     </RelativeLayout>
 
@@ -76,7 +76,7 @@
             android:layout_centerVertical="true"
             android:layout_marginStart="25dp"
             android:contentDescription="@string/iv_con_des"
-            android:src="@drawable/ic_hot_browse"/>
+            android:src="@drawable/ic_main_voice_browse"/>
 
         <TextView
             android:id="@+id/tv_browsed_times"
@@ -97,7 +97,7 @@
             android:layout_centerVertical="true"
             android:layout_marginEnd="28dp"
             android:contentDescription="@string/iv_con_des"
-            android:src="@drawable/ic_hot_btn_more"/>
+            android:src="@drawable/ic_main_btn_more"/>
 
     </RelativeLayout>
 
