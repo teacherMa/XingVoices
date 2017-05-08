@@ -39,4 +39,11 @@ public class Constants {
                 LOCAL = 1024,
                 REMOTE = 1025;
     }
+
+    public interface RecordState{
+        int PREPARE_RECORD = 0;
+        int IS_RECORDING = 1;
+        int PREPARE_AUDITION = 2;
+        int IS_AUDITION = 3;
+    }
 }

@@ -23,7 +23,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
-                android:src="@drawable/ic_keyboard_arrow_left"
+                android:src="@drawable/ic_arrow_left"
                 android:contentDescription="@string/iv_con_des"/>
 
             <com.example.xiaomage.xingvoices.custom.view.CircleImageView

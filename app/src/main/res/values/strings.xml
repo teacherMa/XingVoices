@@ -26,7 +26,9 @@
     <string name="record_again">重录</string>
     <string name="record_save">保存</string>
     <string name="record_pause">暂停</string>
+    <string name="record_stop">停止</string>
     <string name="record_continue">继续录制</string>
+    <string name="record_publish_name_hint">在此为音频输入一个名称吧！</string>
 
     <string name="personal_follow">关注</string>
     <string name="personal_fans">粉丝</string>

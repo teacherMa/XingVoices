@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.support.annotation.ColorInt;
 import android.support.annotation.ColorRes;
@@ -16,6 +17,7 @@ import com.bumptech.glide.DrawableRequestBuilder;
 import com.bumptech.glide.GifRequestBuilder;
 import com.bumptech.glide.Glide;
 import com.example.xiaomage.xingvoices.App;
+import com.example.xiaomage.xingvoices.R;
 import com.example.xiaomage.xingvoices.utils.GlideCircleTransform.GlideCircleTransform;
 
 import java.io.File;
@@ -69,6 +71,16 @@ public class BaseUtil {
             e.printStackTrace();
         }
         return result;
+    }
+
+    public static Drawable getDrawable(int draId){
+        Drawable drawable = App.getAppContext().getDrawable(R.drawable.avatar);
+        try {
+            drawable = App.getAppContext().getDrawable(draId);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return drawable;
     }
 
     public static DrawableRequestBuilder<String> load(String url) {
