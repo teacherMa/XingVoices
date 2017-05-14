@@ -1,110 +1,105 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
-              android:orientation="vertical"
               android:layout_width="match_parent"
-              android:layout_height="match_parent">
+              android:layout_height="match_parent"
+              android:background="@drawable/bg_personal_head"
+              android:orientation="vertical">
 
-    <com.example.xiaomage.xingvoices.custom.view.RatioLayout
-        android:id="@+id/rl_ph_head"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:ratio="0.6">
+        android:padding="12dp">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:padding="12dp">
+        <ImageView
+            android:id="@+id/iv_back_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:contentDescription="@string/iv_con_des"
+            android:src="@drawable/ic_arrow_left"/>
 
-            <ImageView
-                android:id="@+id/iv_back_content"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:src="@drawable/ic_arrow_left"
-                android:contentDescription="@string/iv_con_des"/>
+        <com.example.xiaomage.xingvoices.custom.view.CircleImageView
+            android:id="@+id/personal_user_avatar"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_below="@id/iv_back_content"
+            android:layout_centerInParent="true"
+            android:src="@drawable/avatar"/>
 
-            <com.example.xiaomage.xingvoices.custom.view.CircleImageView
-                android:id="@+id/personal_user_avatar"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:layout_below="@id/iv_back_content"
-                android:layout_centerInParent="true"
-                android:src="@drawable/avatar"/>
+        <TextView
+            android:id="@+id/personal_user_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/personal_user_avatar"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="10dp"
+            android:text="@string/app_name"
+            android:textColor="@color/colorTextSelected"
+            android:textSize="14sp"
+            android:textStyle="bold"/>
 
-            <TextView
-                android:id="@+id/personal_user_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/personal_user_avatar"
-                android:layout_centerInParent="true"
-                android:layout_marginTop="10dp"
-                android:text="@string/app_name"
-                android:textSize="14sp"
-                android:textColor="@color/colorTextSelected"
-                android:textStyle="bold"/>
+        <TextView
+            android:id="@+id/tv_follow_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/personal_user_avatar"
+            android:layout_marginStart="56dp"
+            android:text="@string/main_menu_default_follow"
+            android:textColor="@color/colorTextSelected"
+            android:textSize="20sp"
+            android:textStyle="bold"/>
 
-            <TextView
-                android:id="@+id/tv_follow_number"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/personal_user_avatar"
-                android:layout_marginStart="56dp"
-                android:text="@string/main_menu_default_follow"
-                android:textSize="20sp"
-                android:textColor="@color/colorTextSelected"
-                android:textStyle="bold"/>
+        <TextView
+            android:id="@+id/tv_follow_string"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_follow_number"
+            android:layout_marginStart="56dp"
+            android:layout_marginTop="4dp"
+            android:text="@string/personal_follow"
+            android:textColor="@color/colorTextUnselected"
+            android:textSize="12sp"
+            android:textStyle="bold"/>
 
-            <TextView
-                android:id="@+id/tv_follow_string"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/tv_follow_number"
-                android:layout_marginTop="4dp"
-                android:layout_marginStart="56dp"
-                android:text="@string/personal_follow"
-                android:textSize="12sp"
-                android:textColor="@color/colorTextUnselected"
-                android:textStyle="bold"/>
+        <TextView
+            android:id="@+id/tv_fans_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@id/personal_user_avatar"
+            android:layout_marginEnd="56dp"
+            android:text="@string/main_menu_default_fans"
+            android:textColor="@color/colorTextSelected"
+            android:textSize="20sp"
+            android:textStyle="bold"/>
 
-            <TextView
-                android:id="@+id/tv_fans_num"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/personal_user_avatar"
-                android:layout_alignParentEnd="true"
-                android:layout_marginEnd="56dp"
-                android:text="@string/main_menu_default_fans"
-                android:textSize="20sp"
-                android:textColor="@color/colorTextSelected"
-                android:textStyle="bold"/>
+        <TextView
+            android:id="@+id/tv_fans_string"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@id/tv_follow_number"
+            android:layout_marginEnd="56dp"
+            android:layout_marginTop="4dp"
+            android:text="@string/personal_fans"
+            android:textColor="@color/colorTextUnselected"
+            android:textSize="12sp"
+            android:textStyle="bold"/>
 
-            <TextView
-                android:id="@+id/tv_fans_string"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/tv_follow_number"
-                android:layout_marginTop="4dp"
-                android:layout_alignParentEnd="true"
-                android:layout_marginEnd="56dp"
-                android:text="@string/personal_fans"
-                android:textSize="12sp"
-                android:textColor="@color/colorTextUnselected"
-                android:textStyle="bold"/>
+        <ImageView
+            android:id="@+id/iv_to_follow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/personal_user_name"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="24dp"
+            android:contentDescription="@string/iv_con_des"
+            android:src="@drawable/ic_personal_to_follow"
+            android:visibility="gone"/>
 
-            <ImageView
-                android:id="@+id/iv_to_follow"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_centerInParent="true"
-                android:layout_marginBottom="20dp"
-                android:src="@drawable/ic_personal_to_follow"/>
-
-        </RelativeLayout>
-    </com.example.xiaomage.xingvoices.custom.view.RatioLayout>
+    </RelativeLayout>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_personal_voices"

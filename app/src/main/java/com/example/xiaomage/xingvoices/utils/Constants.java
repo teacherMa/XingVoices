@@ -46,4 +46,21 @@ public class Constants {
         int PREPARE_AUDITION = 2;
         int IS_AUDITION = 3;
     }
+
+    public interface BottomMenuItem{
+        int COMMENT = 0;
+        int COLLECTION = 1;
+        int SHARE = 2;
+        int LOOK_UP_PIC = 3;
+        int ADD_TO_BLACK_LIST = 4;
+    }
+
+    /**
+     *BottomMenu的点击事件有可能需要再往外传递给PopularView，RecyclerView的Item点击事件也需要传递
+     * 给PopularView，可能发生冲突，所以这里从10开始赋值
+     *
+     * */
+    public interface MainPopularItem{
+        int FOLLOW = 10;
+    }
 }

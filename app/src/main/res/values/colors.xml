@@ -17,4 +17,9 @@
     <color name="colorRecordLengthHint">#FFFFFF</color>
     <color name="colorRecordTimeColor">#5D5D5D</color>
     <color name="colorAuditionProgressBar">#DD191D</color>
+
+    <color name="colorBgPersonalStart">#FAFAFA</color>
+    <color name="colorBgPersonalEnd">#11FAFAFA</color>
+
+    <color name="colorBottomMenuRedText">#E51C23</color>
 </resources>

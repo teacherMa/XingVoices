@@ -2,7 +2,6 @@ package com.example.xiaomage.xingvoices.feature.record;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.SystemClock;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.NavUtils;
@@ -18,7 +17,6 @@ import com.example.xiaomage.xingvoices.R;
 import com.example.xiaomage.xingvoices.feature.record.publish.PublishActivity;
 import com.example.xiaomage.xingvoices.framework.BaseView;
 import com.example.xiaomage.xingvoices.model.bean.LocalVoice;
-import com.example.xiaomage.xingvoices.utils.Constants;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -110,7 +108,7 @@ public class RecordView extends BaseView<RecordContract.Presenter> implements Re
                 localVoice.setNum(12345);
                 if (mRecordState.getCurrentState() == IS_AUDITION ||
                         mRecordState.getCurrentState() == PREPARE_AUDITION) {
-                    Intent intent = PublishActivity.getNewInstance(getContext(),localVoice);
+                    Intent intent = PublishActivity.getNewIntent(getContext(),localVoice);
                     ((RecordActivity)getContext()).startActivityForResult(intent,REQUEST_UPLOAD);
                 }
                 break;

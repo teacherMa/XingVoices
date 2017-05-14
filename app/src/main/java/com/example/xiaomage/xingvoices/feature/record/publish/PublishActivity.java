@@ -25,7 +25,7 @@ public class PublishActivity extends BaseActivity<PublishPresenter> {
 
     private static final String ARG_VOICE = "local voice bean";
 
-    public static Intent getNewInstance(Context context,LocalVoice localVoice){
+    public static Intent getNewIntent(Context context, LocalVoice localVoice){
 
         Bundle bundle = new Bundle();
         bundle.putSerializable(ARG_VOICE,localVoice);
@@ -43,13 +43,15 @@ public class PublishActivity extends BaseActivity<PublishPresenter> {
 
     @Override
     protected void initView(@Nullable Bundle savedInstanceState) {
-        mLocalVoice=(LocalVoice) getIntent().getSerializableExtra(ARG_VOICE);
-        mRecordPublishView.setLocalVoice(mLocalVoice);
+
     }
 
     @NonNull
     @Override
     protected PublishPresenter createPresenter() {
+
+        mLocalVoice=(LocalVoice) getIntent().getSerializableExtra(ARG_VOICE);
+        mRecordPublishView.setLocalVoice(mLocalVoice);
 
         return new PublishPresenter(
                 Injection.provideRecordRepository(),

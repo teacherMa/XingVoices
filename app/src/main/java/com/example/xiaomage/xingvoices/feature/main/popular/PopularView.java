@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 
 import com.example.xiaomage.xingvoices.R;
+import com.example.xiaomage.xingvoices.api.OnItemClickListener;
 import com.example.xiaomage.xingvoices.framework.BaseView;
 import com.example.xiaomage.xingvoices.model.bean.RemoteVoice;
 
@@ -16,7 +17,7 @@ import java.util.List;
 
 import butterknife.BindView;
 
-public class PopularView extends BaseView<PopularContract.Presenter> implements PopularContract.View {
+public class PopularView extends BaseView<PopularContract.Presenter> implements PopularContract.View,OnItemClickListener<RemoteVoice> {
 
     @BindView(R.id.main_popular_rv)
     RecyclerView mMainPopularRv;
@@ -29,9 +30,13 @@ public class PopularView extends BaseView<PopularContract.Presenter> implements 
 
     @Override
     protected void initView(Context context, AttributeSet attrs, int defStyleAttr) {
-        mAdapter = new PopularAdapter();
+
         mMainPopularRv.setItemAnimator(new DefaultItemAnimator());
         mMainPopularRv.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        mAdapter = new PopularAdapter();
+        mAdapter.setOnClickListener(this);
+
         mMainPopularRv.setAdapter(mAdapter);
     }
 
@@ -43,5 +48,10 @@ public class PopularView extends BaseView<PopularContract.Presenter> implements 
     @Override
     public void loadData(List<RemoteVoice> data) {
         ((PopularAdapter)mMainPopularRv.getAdapter()).refreshData(data);
+    }
+
+    @Override
+    public void onItemClick(RemoteVoice itemValue, int viewID, int position) {
+
     }
 }
