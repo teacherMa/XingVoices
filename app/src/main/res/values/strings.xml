@@ -32,5 +32,12 @@
 
     <string name="personal_follow">关注</string>
     <string name="personal_fans">粉丝</string>
+    
+    <string name="bottom_menu_comment">评论</string>
+    <string name="bottom_menu_collection">收藏</string>
+    <string name="bottom_menu_share">分享</string>
+    <string name="bottom_menu_look_up_pic">查看图片</string>
+    <string name="bottom_menu_add_to_blacklist">拉黑并举报</string>
+    <string name="bottom_menu_cancel">取消</string>
 
 </resources>

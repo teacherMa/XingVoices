@@ -41,6 +41,7 @@
 
         <activity
             android:name=".feature.personal.PersonalActivity"
+            android:parentActivityName=".feature.main.MainActivity"
             android:screenOrientation="portrait">
 
         </activity>

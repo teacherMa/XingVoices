@@ -93,6 +93,8 @@ public class RecordState {
                 mIvSave.setVisibility(GONE);
                 mAudiProBar.setVisibility(GONE);
                 mAudiTime.setVisibility(GONE);
+
+                mVoiceTimer.setBase(SystemClock.elapsedRealtime());
                 mVoiceTimer.start();
                 break;
             case Constants.RecordState.PREPARE_AUDITION:
