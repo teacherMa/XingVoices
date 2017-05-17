@@ -13,10 +13,22 @@ android {
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
+    signingConfigs {
+        release {
+            storeFile file("E:/WorkSpace/Android/XingVoices/xingvoices.keystore")
+            storePassword "android"
+            keyAlias "key0"
+            keyPassword "android"
+        }
+    }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+        }
+        debug{
+            signingConfig signingConfigs.release
         }
     }
 }
@@ -49,5 +61,7 @@ dependencies {
     //glide
     compile 'com.github.bumptech.glide:glide:3.7.0'
 
+    //WeChat
+    compile 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:+'
 
 }
