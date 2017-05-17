@@ -9,6 +9,12 @@ public class Constants {
 
     public static String BASE_URL = "";
 
+    public interface WxLogin{
+        String APP_ID = "wxc988255a4b16c8cf";
+        String APP_SECERT = "";
+        String NULL_RESP = "null resp";
+
+    }
 
     public interface ContentType {
         String
