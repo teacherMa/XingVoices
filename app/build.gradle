@@ -61,6 +61,9 @@ dependencies {
     //glide
     compile 'com.github.bumptech.glide:glide:3.7.0'
 
+    //Gson
+    compile 'com.google.code.gson:gson:2.8.0'
+
     //WeChat
     compile 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:+'
 

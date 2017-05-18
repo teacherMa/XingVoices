@@ -2,7 +2,10 @@ package com.example.xiaomage.xingvoices.model.wxapi;
 
 import android.support.annotation.NonNull;
 
+import com.example.xiaomage.xingvoices.api.OnResultCallback;
 import com.example.xiaomage.xingvoices.framework.BaseRepository;
+import com.example.xiaomage.xingvoices.model.bean.WxBean.AccessToken;
+import com.example.xiaomage.xingvoices.model.bean.WxBean.WxUserInfo;
 
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
@@ -27,5 +30,37 @@ public class WXEntryRepository extends BaseRepository implements WXEntryDataSour
         sLock.unlock();
 
         return INSTANCE;
+    }
+
+    @Override
+    public void getAccessToken(String code, final OnResultCallback<AccessToken> callback) {
+        OnResultCallback<AccessToken> accessTokenOnResultCallback = new OnResultCallback<AccessToken>() {
+            @Override
+            public void onSuccess(AccessToken resultValue, int code) {
+                callback.onSuccess(resultValue,code);
+            }
+
+            @Override
+            public void onFail(String errorMessage) {
+                callback.onFail(errorMessage);
+            }
+        };
+        mRemoteDS.getAccessToken(code,accessTokenOnResultCallback);
+    }
+
+    @Override
+    public void getWxUserInfo(AccessToken accessToken, final OnResultCallback<WxUserInfo> callback) {
+        OnResultCallback<WxUserInfo> wxUserInfoOnResultCallback = new OnResultCallback<WxUserInfo>() {
+            @Override
+            public void onSuccess(WxUserInfo resultValue, int code) {
+                callback.onSuccess(resultValue,code);
+            }
+
+            @Override
+            public void onFail(String errorMessage) {
+                callback.onFail(errorMessage);
+            }
+        };
+        mRemoteDS.getWxUserInfo(accessToken,wxUserInfoOnResultCallback);
     }
 }

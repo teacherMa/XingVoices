@@ -2,9 +2,12 @@ package com.example.xiaomage.xingvoices.wxapi;
 
 import android.support.annotation.NonNull;
 
+import com.example.xiaomage.xingvoices.api.OnResultCallback;
 import com.example.xiaomage.xingvoices.framework.BasePresenter;
-import com.example.xiaomage.xingvoices.framework.BasePresenterApi;
+import com.example.xiaomage.xingvoices.model.bean.WxBean.AccessToken;
+import com.example.xiaomage.xingvoices.model.bean.WxBean.WxUserInfo;
 import com.example.xiaomage.xingvoices.model.wxapi.WXEntryRepository;
+import com.example.xiaomage.xingvoices.utils.BaseUtil;
 
 public class WXEntryPresenter extends BasePresenter<WXEntryContract.View, WXEntryRepository> implements WXEntryContract.Presenter {
 
@@ -15,5 +18,51 @@ public class WXEntryPresenter extends BasePresenter<WXEntryContract.View, WXEntr
     @Override
     public void start() {
 
+    }
+
+    @Override
+    public void getAccessToken(String code) {
+
+        OnResultCallback<AccessToken> mCallback = new OnResultCallback<AccessToken>() {
+            @Override
+            public void onSuccess(AccessToken resultValue, int code) {
+                if(null == getView()){
+                    return;
+                }
+                getView().setAccessToken(resultValue);
+            }
+
+            @Override
+            public void onFail(String errorMessage) {
+                if(null == getView()){
+                    return;
+                }
+                BaseUtil.showToast(errorMessage);
+            }
+        };
+
+        getRepository().getAccessToken(code,mCallback);
+    }
+
+    @Override
+    public void getUserInfo(AccessToken accessToken) {
+        OnResultCallback<WxUserInfo> wxUserInfoOnResultCallback = new OnResultCallback<WxUserInfo>() {
+            @Override
+            public void onSuccess(WxUserInfo resultValue, int code) {
+                if(null == getView()){
+                    return;
+                }
+                getView().setWxUserInfo(resultValue);
+            }
+
+            @Override
+            public void onFail(String errorMessage) {
+                if(null == getView()){
+                    return;
+                }
+                BaseUtil.showToast(errorMessage);
+            }
+        };
+        getRepository().getWxUserInfo(accessToken,wxUserInfoOnResultCallback);
     }
 }

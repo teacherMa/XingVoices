@@ -40,4 +40,8 @@
     <string name="bottom_menu_add_to_blacklist">拉黑并举报</string>
     <string name="bottom_menu_cancel">取消</string>
 
+    <string name="wx_not_installed">未安装微信</string>
+    <string name="wx_not_installed_message">您的手机尚未安装微信，请前往浏览器下载安装</string>
+    <string name="wx_to_installed">好的</string>
+
 </resources>
