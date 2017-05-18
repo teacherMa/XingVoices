@@ -6,7 +6,9 @@ import android.support.annotation.Nullable;
 import android.view.WindowManager;
 
 import com.example.xiaomage.xingvoices.R;
+import com.example.xiaomage.xingvoices.feature.LogInActivity;
 import com.example.xiaomage.xingvoices.framework.BaseActivity;
+import com.example.xiaomage.xingvoices.utils.ActivityController;
 import com.example.xiaomage.xingvoices.utils.BaseUtil;
 import com.example.xiaomage.xingvoices.utils.Constants;
 import com.example.xiaomage.xingvoices.utils.Injection;
@@ -18,7 +20,6 @@ import com.tencent.mm.opensdk.openapi.IWXAPIEventHandler;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 public class WXEntryActivity extends BaseActivity<WXEntryPresenter> implements IWXAPIEventHandler {
     @BindView(R.id.wx_view)
@@ -29,7 +30,6 @@ public class WXEntryActivity extends BaseActivity<WXEntryPresenter> implements I
 
     @Override
     protected void initView(@Nullable Bundle savedInstanceState) {
-
     }
 
     @NonNull
@@ -44,7 +44,9 @@ public class WXEntryActivity extends BaseActivity<WXEntryPresenter> implements I
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+
         mIWxApi = WXAPIFactory.createWXAPI(this, Constants.WxLogin.APP_ID,true);
+
         mIWxApi.registerApp(Constants.WxLogin.APP_ID);
 
         super.onCreate(savedInstanceState);
@@ -79,6 +81,13 @@ public class WXEntryActivity extends BaseActivity<WXEntryPresenter> implements I
             }
 
             mCode = resp.code;
+            mWxView.requestAccessToken(mCode);
         }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        finish();
     }
 }
