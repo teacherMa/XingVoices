@@ -3,9 +3,8 @@ package com.example.xiaomage.xingvoices.feature.personal;
 import android.support.annotation.NonNull;
 
 import com.example.xiaomage.xingvoices.framework.BasePresenter;
-import com.example.xiaomage.xingvoices.framework.BasePresenterApi;
-import com.example.xiaomage.xingvoices.model.bean.RemoteVoice;
-import com.example.xiaomage.xingvoices.model.bean.UserBean;
+import com.example.xiaomage.xingvoices.model.bean.RemoteVoice.RemoteVoice;
+import com.example.xiaomage.xingvoices.model.bean.User.UserBean;
 import com.example.xiaomage.xingvoices.model.personal.PersonalRepository;
 
 import java.util.ArrayList;

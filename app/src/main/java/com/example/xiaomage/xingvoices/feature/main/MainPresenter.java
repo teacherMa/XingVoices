@@ -2,9 +2,12 @@ package com.example.xiaomage.xingvoices.feature.main;
 
 import android.support.annotation.NonNull;
 
+import com.example.xiaomage.xingvoices.api.OnResultCallback;
 import com.example.xiaomage.xingvoices.framework.BasePresenter;
-import com.example.xiaomage.xingvoices.framework.BasePresenterApi;
+import com.example.xiaomage.xingvoices.model.bean.User.UserResp;
+import com.example.xiaomage.xingvoices.model.bean.WxBean.WxUserInfo;
 import com.example.xiaomage.xingvoices.model.main.MainRepository;
+import com.example.xiaomage.xingvoices.utils.BaseUtil;
 
 public class MainPresenter extends BasePresenter<MainContract.View, MainRepository> implements MainContract.Presenter {
 
@@ -14,6 +17,30 @@ public class MainPresenter extends BasePresenter<MainContract.View, MainReposito
 
     @Override
     public void start() {
-
+        WxUserInfo info = getView().getWxUserInfo();
+        login(info);
     }
+
+    @Override
+    public void login(WxUserInfo info) {
+        OnResultCallback<UserResp> callback = new OnResultCallback<UserResp>() {
+            @Override
+            public void onSuccess(UserResp resultValue, int code) {
+                if(null == getView()){
+                    return;
+                }
+                getView().initUserResp(resultValue);
+            }
+
+            @Override
+            public void onFail(String errorMessage) {
+                if(null == getView()){
+                    return;
+                }
+                BaseUtil.showToast(errorMessage);
+            }
+        };
+        getRepository().login(callback,info);
+    }
+
 }

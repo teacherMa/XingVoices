@@ -16,7 +16,7 @@ import android.widget.TextView;
 import com.example.xiaomage.xingvoices.R;
 import com.example.xiaomage.xingvoices.feature.record.publish.PublishActivity;
 import com.example.xiaomage.xingvoices.framework.BaseView;
-import com.example.xiaomage.xingvoices.model.bean.LocalVoice;
+import com.example.xiaomage.xingvoices.model.bean.LocalVoice.LocalVoice;
 
 import butterknife.BindView;
 import butterknife.OnClick;

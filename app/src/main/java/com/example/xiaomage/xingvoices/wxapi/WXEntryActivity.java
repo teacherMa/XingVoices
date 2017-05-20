@@ -6,9 +6,7 @@ import android.support.annotation.Nullable;
 import android.view.WindowManager;
 
 import com.example.xiaomage.xingvoices.R;
-import com.example.xiaomage.xingvoices.feature.LogInActivity;
 import com.example.xiaomage.xingvoices.framework.BaseActivity;
-import com.example.xiaomage.xingvoices.utils.ActivityController;
 import com.example.xiaomage.xingvoices.utils.BaseUtil;
 import com.example.xiaomage.xingvoices.utils.Constants;
 import com.example.xiaomage.xingvoices.utils.Injection;
@@ -45,9 +43,9 @@ public class WXEntryActivity extends BaseActivity<WXEntryPresenter> implements I
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
 
-        mIWxApi = WXAPIFactory.createWXAPI(this, Constants.WxLogin.APP_ID,true);
+        mIWxApi = WXAPIFactory.createWXAPI(this, Constants.WxParamValue.APP_ID,true);
 
-        mIWxApi.registerApp(Constants.WxLogin.APP_ID);
+        mIWxApi.registerApp(Constants.WxParamValue.APP_ID);
 
         super.onCreate(savedInstanceState);
 
@@ -70,7 +68,7 @@ public class WXEntryActivity extends BaseActivity<WXEntryPresenter> implements I
     public void onResp(BaseResp baseResp) {
 
         if(null == baseResp){
-            BaseUtil.showToast(Constants.WxLogin.NULL_RESP);
+            BaseUtil.showToast(Constants.WxParamValue.NULL_RESP);
         }
 
         if(baseResp instanceof SendAuth.Resp){

@@ -10,22 +10,43 @@ import android.util.AttributeSet;
 
 import com.example.xiaomage.xingvoices.R;
 import com.example.xiaomage.xingvoices.api.OnItemClickListener;
-import com.example.xiaomage.xingvoices.framework.BaseView;
-import com.example.xiaomage.xingvoices.model.bean.RemoteVoice;
+import com.example.xiaomage.xingvoices.event.EmptyEvent;
+import com.example.xiaomage.xingvoices.event.MainViewInitEvent;
+import com.example.xiaomage.xingvoices.framework.BaseBusView;
+import com.example.xiaomage.xingvoices.model.bean.RemoteVoice.RemoteVoice;
+import com.example.xiaomage.xingvoices.model.bean.User.UserResp;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.List;
 
 import butterknife.BindView;
 
-public class PopularView extends BaseView<PopularContract.Presenter> implements PopularContract.View,OnItemClickListener<RemoteVoice> {
+public class PopularView extends BaseBusView<PopularContract.Presenter> implements PopularContract.View,OnItemClickListener<RemoteVoice> {
 
     @BindView(R.id.main_popular_rv)
     RecyclerView mMainPopularRv;
 
     private PopularAdapter mAdapter;
+    private UserResp mUserResp;
 
     public PopularView(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
+    }
+
+    @Override
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(EmptyEvent event) {
+        if(null == event){
+            return;
+        }
+        if(event instanceof MainViewInitEvent){
+            MainViewInitEvent initEvent = (MainViewInitEvent) event;
+            mUserResp = initEvent.getResp();
+
+            getPresenter().requestData(mUserResp);
+        }
     }
 
     @Override

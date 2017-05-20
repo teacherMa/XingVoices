@@ -21,15 +21,18 @@ import com.example.xiaomage.xingvoices.R;
 import com.example.xiaomage.xingvoices.custom.view.SlidingMenu;
 import com.example.xiaomage.xingvoices.event.MenuCloseEvent;
 import com.example.xiaomage.xingvoices.event.EmptyEvent;
+import com.example.xiaomage.xingvoices.event.MainViewInitEvent;
 import com.example.xiaomage.xingvoices.feature.main.collection.CollectionFragment;
 import com.example.xiaomage.xingvoices.feature.main.follow.FollowFragment;
 import com.example.xiaomage.xingvoices.feature.main.menu.MenuFragment;
 import com.example.xiaomage.xingvoices.feature.main.popular.PopularFragment;
 import com.example.xiaomage.xingvoices.feature.record.RecordActivity;
 import com.example.xiaomage.xingvoices.framework.BaseBusView;
+import com.example.xiaomage.xingvoices.model.bean.User.UserResp;
 import com.example.xiaomage.xingvoices.model.bean.WxBean.WxUserInfo;
 import com.example.xiaomage.xingvoices.utils.BaseUtil;
 
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
@@ -69,6 +72,7 @@ public class MainView extends BaseBusView<MainContract.Presenter> implements Mai
     private List<Fragment> mVpFragments;
     private TextView mTvLastItem;
     private WxUserInfo mWxUserInfo;
+    private UserResp mResp;
 
     public void setWxUserInfo(WxUserInfo wxUserInfo) {
         mWxUserInfo = wxUserInfo;
@@ -108,7 +112,8 @@ public class MainView extends BaseBusView<MainContract.Presenter> implements Mai
         return R.layout.main_view;
     }
 
-    @OnClick({R.id.iv_main_nav, R.id.tv_main_follow, R.id.tv_main_popular, R.id.tv_main_collection, R.id.iv_main_record})
+    @OnClick({R.id.iv_main_nav, R.id.tv_main_follow, R.id.tv_main_popular, R.id.tv_main_collection,
+            R.id.iv_main_record})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_main_nav:
@@ -220,5 +225,19 @@ public class MainView extends BaseBusView<MainContract.Presenter> implements Mai
         mTvLastItem = mTvMainPopular;
         mTvLastItem.setTextColor(BaseUtil.getColorInt(R.color.colorTextSelected));
 
+    }
+
+    @Override
+    public WxUserInfo getWxUserInfo() {
+        return mWxUserInfo;
+    }
+
+    @Override
+    public void initUserResp(UserResp resp) {
+        mResp = resp;
+        mMainSlidingMenu.openMenu();
+
+        MainViewInitEvent initEvent = new MainViewInitEvent(mResp);
+        EventBus.getDefault().post(initEvent);
     }
 }

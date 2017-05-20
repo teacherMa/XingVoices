@@ -1,6 +1,7 @@
 package com.example.xiaomage.xingvoices.feature.main.menu;
 
 import android.content.Context;
+import android.graphics.drawable.BitmapDrawable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
@@ -12,17 +13,23 @@ import android.widget.TextView;
 import com.example.xiaomage.xingvoices.R;
 import com.example.xiaomage.xingvoices.custom.view.CircleImageView;
 import com.example.xiaomage.xingvoices.custom.view.RatioLayout;
+import com.example.xiaomage.xingvoices.event.EmptyEvent;
 import com.example.xiaomage.xingvoices.event.MenuCloseEvent;
-import com.example.xiaomage.xingvoices.framework.BaseView;
+import com.example.xiaomage.xingvoices.event.MainViewInitEvent;
+import com.example.xiaomage.xingvoices.framework.BaseBusView;
+import com.example.xiaomage.xingvoices.model.bean.User.UserInfo;
+import com.example.xiaomage.xingvoices.model.bean.User.UserResp;
 import com.example.xiaomage.xingvoices.utils.BaseUtil;
+import com.example.xiaomage.xingvoices.utils.FileUtil;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class MenuView extends BaseView<MenuContract.Presenter> implements MenuContract.View {
-
+public class MenuView extends BaseBusView<MenuContract.Presenter> implements MenuContract.View {
 
     @BindView(R.id.iv_back_content)
     ImageView mIvBackContent;
@@ -51,12 +58,28 @@ public class MenuView extends BaseView<MenuContract.Presenter> implements MenuCo
     @BindView(R.id.rl_menu_setting_list)
     RelativeLayout mRlMenuSettingList;
 
+    private UserResp mResp;
+    private UserInfo mUserInfo;
+
     public MenuView(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
     }
 
     @Override
     protected void initView(Context context, AttributeSet attrs, int defStyleAttr) {
+    }
+
+    @Override
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(EmptyEvent event) {
+        if(null == event){
+            return;
+        }
+        if(event instanceof MainViewInitEvent){
+            MainViewInitEvent initEvent = (MainViewInitEvent) event;
+            mResp = initEvent.getResp();
+            getPresenter().getUserInfo(mResp);
+        }
     }
 
     @Override
@@ -91,5 +114,24 @@ public class MenuView extends BaseView<MenuContract.Presenter> implements MenuCo
                 break;
         }
         BaseUtil.showToast(""+view.getId());
+    }
+
+    @Override
+    public void setUserInfo(UserInfo userInfo) {
+
+        if(null == userInfo){
+            return;
+        }
+
+        mUserInfo = userInfo;
+
+        BitmapDrawable bitmapDrawable = new BitmapDrawable(FileUtil.getUserHeadFile());
+        mMenuUserAvatar.setImageDrawable(bitmapDrawable);
+
+        mMenuUserName.setText(userInfo.getNickname());
+
+        mTvFollowNumber.setText(String.valueOf(userInfo.getGuanzhu()));
+
+        mTvFansNum.setText(String.valueOf(userInfo.getFensi()));
     }
 }

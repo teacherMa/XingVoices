@@ -5,7 +5,7 @@ import android.view.ViewGroup;
 
 import com.example.xiaomage.xingvoices.framework.BaseAdapter;
 import com.example.xiaomage.xingvoices.framework.BaseViewHolder;
-import com.example.xiaomage.xingvoices.model.bean.RemoteVoice;
+import com.example.xiaomage.xingvoices.model.bean.RemoteVoice.RemoteVoice;
 
 public class PersonalAdapter extends BaseAdapter<RemoteVoice> {
     @Override

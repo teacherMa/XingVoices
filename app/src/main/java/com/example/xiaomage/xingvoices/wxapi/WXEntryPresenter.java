@@ -9,6 +9,8 @@ import com.example.xiaomage.xingvoices.model.bean.WxBean.WxUserInfo;
 import com.example.xiaomage.xingvoices.model.wxapi.WXEntryRepository;
 import com.example.xiaomage.xingvoices.utils.BaseUtil;
 
+import okhttp3.ResponseBody;
+
 public class WXEntryPresenter extends BasePresenter<WXEntryContract.View, WXEntryRepository> implements WXEntryContract.Presenter {
 
     public WXEntryPresenter(@NonNull WXEntryRepository repository, @NonNull WXEntryContract.View view) {
@@ -64,5 +66,27 @@ public class WXEntryPresenter extends BasePresenter<WXEntryContract.View, WXEntr
             }
         };
         getRepository().getWxUserInfo(accessToken,wxUserInfoOnResultCallback);
+    }
+
+    @Override
+    public void downloadHeadPic(WxUserInfo info) {
+        OnResultCallback<ResponseBody> resultCallback = new OnResultCallback<ResponseBody>() {
+            @Override
+            public void onSuccess(ResponseBody resultValue, int code) {
+                if(null == getView()){
+                    return;
+                }
+                getView().startNewActivity();
+            }
+
+            @Override
+            public void onFail(String errorMessage) {
+                if(null == getView()){
+                    return;
+                }
+                BaseUtil.showToast(errorMessage);
+            }
+        };
+        getRepository().downloadHeadPic(info,resultCallback,null);
     }
 }

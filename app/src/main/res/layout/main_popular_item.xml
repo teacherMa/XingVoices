@@ -17,7 +17,7 @@
         android:layout_height="50dp"
         android:orientation="horizontal">
 
-        <com.example.xiaomage.xingvoices.custom.view.CircleImageView
+        <ImageView
             android:id="@+id/civ_user_avatar"
             android:layout_width="30dp"
             android:layout_height="30dp"
@@ -56,13 +56,36 @@
         android:layout_height="wrap_content"
         app:ratio="0.5625">
 
-        <ImageView
-            android:id="@+id/iv_pic_of_voice"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:src="@drawable/pic"
-            android:scaleType="centerCrop"
-            android:contentDescription="@string/iv_con_des"/>
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/tv_voice_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:textColor="@color/colorPrimary"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/tv_voice_length"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_voice_name"
+                android:textColor="@color/colorPrimary"
+                android:layout_centerHorizontal="true"/>
+
+            <ImageView
+                android:id="@+id/iv_pic_of_voice"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/pic"
+                android:scaleType="centerCrop"
+                android:contentDescription="@string/iv_con_des"/>
+        </RelativeLayout>
+
+
     </com.example.xiaomage.xingvoices.custom.view.RatioLayout>
 
     <RelativeLayout
@@ -159,7 +182,7 @@
                 android:id="@+id/rv_voice_com_list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="gone">
+                android:visibility="invisible">
             </android.support.v7.widget.RecyclerView>
         </FrameLayout>
 

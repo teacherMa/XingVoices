@@ -25,7 +25,11 @@ public class MainActivity extends BaseActivity<MainPresenter> {
 
     public static Intent getNewIntent(Context context,WxUserInfo userInfo){
         Intent intent = new Intent(context,MainActivity.class);
-        intent.putExtra(USER_INFO,userInfo);
+
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(USER_INFO,userInfo);
+        intent.putExtras(bundle);
+
         return intent;
     }
 
@@ -46,8 +50,9 @@ public class MainActivity extends BaseActivity<MainPresenter> {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        Intent intent = getIntent();
+        mWxUserInfo = (WxUserInfo) intent.getSerializableExtra(USER_INFO);
         super.onCreate(savedInstanceState);
-        mWxUserInfo = (WxUserInfo) getIntent().getSerializableExtra(USER_INFO);
     }
 
     @Override
