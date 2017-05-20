@@ -12,8 +12,8 @@ import android.widget.ImageView;
 
 import com.example.xiaomage.xingvoices.R;
 import com.example.xiaomage.xingvoices.framework.BaseView;
-import com.example.xiaomage.xingvoices.model.bean.RemoteVoice;
-import com.example.xiaomage.xingvoices.model.bean.UserBean;
+import com.example.xiaomage.xingvoices.model.bean.RemoteVoice.RemoteVoice;
+import com.example.xiaomage.xingvoices.model.bean.User.UserBean;
 
 import java.util.List;
 
@@ -65,9 +65,6 @@ public class PersonalView extends BaseView<PersonalContract.Presenter> implement
 
     @Override
     public void loadData(List<RemoteVoice> voices) {
-        if(!mUserBean.isUser()){
-            mIvToFollow.setVisibility(VISIBLE);
-        }
         mAdapter.refreshData(voices);
     }
 

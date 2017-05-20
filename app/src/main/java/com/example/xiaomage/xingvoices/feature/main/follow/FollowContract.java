@@ -2,7 +2,7 @@ package com.example.xiaomage.xingvoices.feature.main.follow;
 
 import com.example.xiaomage.xingvoices.framework.BasePresenterApi;
 import com.example.xiaomage.xingvoices.framework.BaseViewApi;
-import com.example.xiaomage.xingvoices.model.bean.RemoteVoice;
+import com.example.xiaomage.xingvoices.model.bean.RemoteVoice.RemoteVoice;
 
 import java.util.List;
 

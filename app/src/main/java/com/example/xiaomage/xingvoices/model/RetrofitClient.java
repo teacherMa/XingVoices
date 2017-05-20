@@ -5,11 +5,16 @@ import android.text.TextUtils;
 import com.example.xiaomage.xingvoices.utils.Constants;
 
 import java.io.IOException;
+import java.security.cert.CertificateException;
+import java.security.cert.X509Certificate;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSession;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
 
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
@@ -33,30 +38,28 @@ public class RetrofitClient {
     private RetrofitClient() {
     }
 
-
     public static <T> T buildService(Class<T> clz) {
         return getBuilder().build().create(clz);
     }
 
-    public static <T> T buildAccessTokenService(Class<T> clz) {
-        return getAccessTokenBuilder().build().create(clz);
+    public static <T> T buildWeiXinService(Class<T> clz) {
+        return getWeiXinBuilder().build().create(clz);
     }
 
-    public static <T> T buildWxUserInfoService(Class<T> clz) {
-        return getWxUserInfoBuilder().build().create(clz);
+    public static <T> T buildDownloadHeadPicService(Class<T> clz){
+        return getDownloadHeadPicBuilder().build().create(clz);
     }
-
 
     public static Retrofit.Builder getBuilder() {
         return getBuilder(Constants.ContentType.JSON);
     }
 
-    public static Retrofit.Builder getAccessTokenBuilder() {
-        return getAccessTokenBuilder(Constants.ContentType.JSON);
+    public static Retrofit.Builder getWeiXinBuilder() {
+        return getWeiXinBuilder(Constants.ContentType.JSON);
     }
 
-    public static Retrofit.Builder getWxUserInfoBuilder() {
-        return getWxUserInfoBuilder(Constants.ContentType.JSON);
+    public static Retrofit.Builder getDownloadHeadPicBuilder(){
+        return getDownloadHeadPicBuilder(Constants.ContentType.JSON);
     }
 
 
@@ -102,6 +105,28 @@ public class RetrofitClient {
                 }
             });
 
+            SSLContext sslContext = SSLContext.getInstance("SSL");
+            sslContext.init(null,new TrustManager[]{
+                    new X509TrustManager() {
+                        @Override
+                        public void checkClientTrusted(X509Certificate[] chain, String authType) throws CertificateException {
+
+                        }
+
+                        @Override
+                        public void checkServerTrusted(X509Certificate[] chain, String authType) throws CertificateException {
+
+                        }
+
+                        @Override
+                        public X509Certificate[] getAcceptedIssuers() {
+                            return new X509Certificate[0];
+                        }
+                    }
+            },null);
+
+            okBuilder.sslSocketFactory(sslContext.getSocketFactory());
+
             sBuilder.client(okBuilder.build());
         } catch (Exception e) {
             e.printStackTrace();
@@ -111,7 +136,7 @@ public class RetrofitClient {
         return sBuilder;
     }
 
-    public static Retrofit.Builder getAccessTokenBuilder(String contentType) {
+    public static Retrofit.Builder getWeiXinBuilder(String contentType) {
 
         sBuilder = null;
 
@@ -123,7 +148,7 @@ public class RetrofitClient {
         try {
             if (null == sBuilder) {
                 sBuilder = new Retrofit.Builder();
-                sBuilder.baseUrl(Constants.WEXIN_ACCESS_TOKEN_URL);
+                sBuilder.baseUrl(Constants.WEXIN_BASE_URL);
                 sBuilder.addConverterFactory(GsonConverterFactory.create());
             }
             OkHttpClient.Builder okBuilder = new OkHttpClient.Builder();
@@ -149,8 +174,7 @@ public class RetrofitClient {
         return sBuilder;
     }
 
-    public static Retrofit.Builder getWxUserInfoBuilder(String contentType) {
-
+    public static Retrofit.Builder getDownloadHeadPicBuilder(String contentType){
         sBuilder = null;
 
         if (TextUtils.isEmpty(contentType)) {
@@ -161,10 +185,16 @@ public class RetrofitClient {
         try {
             if (null == sBuilder) {
                 sBuilder = new Retrofit.Builder();
-                sBuilder.baseUrl(Constants.WEXIN_USER_URL);
+                sBuilder.baseUrl(Constants.WEXIN_HEAD_PIC);
                 sBuilder.addConverterFactory(GsonConverterFactory.create());
             }
             OkHttpClient.Builder okBuilder = new OkHttpClient.Builder();
+            okBuilder.hostnameVerifier(new HostnameVerifier() {
+                @Override
+                public boolean verify(String hostname, SSLSession session) {
+                    return true;
+                }
+            });
             okBuilder.addNetworkInterceptor(new HttpLoggingInterceptor()
                     .setLevel(HttpLoggingInterceptor.Level.BODY));
             okBuilder.addInterceptor(new Interceptor() {
@@ -177,6 +207,28 @@ public class RetrofitClient {
                     return chain.proceed(request);
                 }
             });
+
+            SSLContext sslContext = SSLContext.getInstance("SSL");
+            sslContext.init(null,new TrustManager[]{
+                    new X509TrustManager() {
+                        @Override
+                        public void checkClientTrusted(X509Certificate[] chain, String authType) throws CertificateException {
+
+                        }
+
+                        @Override
+                        public void checkServerTrusted(X509Certificate[] chain, String authType) throws CertificateException {
+
+                        }
+
+                        @Override
+                        public X509Certificate[] getAcceptedIssuers() {
+                            return new X509Certificate[0];
+                        }
+                    }
+            },null);
+
+            okBuilder.sslSocketFactory(sslContext.getSocketFactory());
 
             sBuilder.client(okBuilder.build());
         } catch (Exception e) {

@@ -10,6 +10,8 @@ import com.example.xiaomage.xingvoices.model.bean.WxBean.WxUserInfo;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
+import okhttp3.ResponseBody;
+
 public class WXEntryRepository extends BaseRepository implements WXEntryDataSource {
     private static Lock sLock = new ReentrantLock();
     private static WXEntryRepository INSTANCE = null;
@@ -63,4 +65,23 @@ public class WXEntryRepository extends BaseRepository implements WXEntryDataSour
         };
         mRemoteDS.getWxUserInfo(accessToken,wxUserInfoOnResultCallback);
     }
+
+    @Override
+    public void downloadHeadPic(final WxUserInfo info, final OnResultCallback<ResponseBody> callback, final ResponseBody body) {
+
+        OnResultCallback<ResponseBody> responseBodyOnResultCallback = new OnResultCallback<ResponseBody>() {
+            @Override
+            public void onSuccess(ResponseBody resultValue, int code) {
+                mLocalDS.downloadHeadPic(info,callback,resultValue);
+            }
+
+            @Override
+            public void onFail(String errorMessage) {
+                callback.onFail(errorMessage);
+            }
+        };
+
+        mRemoteDS.downloadHeadPic(info, responseBodyOnResultCallback, null);
+    }
+
 }

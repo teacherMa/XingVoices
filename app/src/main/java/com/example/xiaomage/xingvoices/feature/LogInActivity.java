@@ -37,9 +37,9 @@ public class LogInActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
 
-        mIWxApi = WXAPIFactory.createWXAPI(this, Constants.WxLogin.APP_ID, true);
+        mIWxApi = WXAPIFactory.createWXAPI(this, Constants.WxParamValue.APP_ID, true);
 
-        mIWxApi.registerApp(Constants.WxLogin.APP_ID);
+        mIWxApi.registerApp(Constants.WxParamValue.APP_ID);
 
     }
 

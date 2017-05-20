@@ -2,11 +2,15 @@ package com.example.xiaomage.xingvoices.feature.main.popular;
 
 import android.support.annotation.NonNull;
 
+import com.example.xiaomage.xingvoices.api.OnResultCallback;
 import com.example.xiaomage.xingvoices.framework.BasePresenter;
-import com.example.xiaomage.xingvoices.model.bean.RemoteVoice;
+import com.example.xiaomage.xingvoices.model.bean.RemoteVoice.RemoteVoice;
+import com.example.xiaomage.xingvoices.model.bean.RemoteVoice.VoiceResp;
+import com.example.xiaomage.xingvoices.model.bean.User.UserResp;
 import com.example.xiaomage.xingvoices.model.main.MainRepository;
+import com.example.xiaomage.xingvoices.utils.BaseUtil;
+import com.example.xiaomage.xingvoices.utils.Constants;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class PopularPresenter extends BasePresenter<PopularContract.View, MainRepository> implements PopularContract.Presenter {
@@ -17,16 +21,28 @@ public class PopularPresenter extends BasePresenter<PopularContract.View, MainRe
 
     @Override
     public void start() {
-        requestData();
+
     }
 
     @Override
-    public void requestData() {
-        List<RemoteVoice> voices = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-            voices.add(new RemoteVoice());
-            voices.add(new RemoteVoice());
-        }
-        getView().loadData(voices);
+    public void requestData(UserResp userResp) {
+        OnResultCallback<List<RemoteVoice>> callback = new OnResultCallback<List<RemoteVoice>>() {
+            @Override
+            public void onSuccess(List<RemoteVoice> resultValue, int code) {
+                if(null == getView()){
+                    return;
+                }
+                getView().loadData(resultValue);
+            }
+
+            @Override
+            public void onFail(String errorMessage) {
+                if(null == getView()){
+                    return;
+                }
+                BaseUtil.showToast(errorMessage);
+            }
+        };
+        getRepository().requestData(callback,userResp, Constants.VoiceType.POPULAR);
     }
 }

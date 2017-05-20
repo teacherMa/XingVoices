@@ -8,10 +8,11 @@ package com.example.xiaomage.xingvoices.utils;
 public class Constants {
 
     public static String BASE_URL = "https://www.starsound.xyz/yuliao/index.php/api/";
-    public static String WEXIN_ACCESS_TOKEN_URL = "https://api.weixin.qq.com/sns/oauth2/";
-    public static String WEXIN_USER_URL = "https://api.weixin.qq.com/sns/";
+    public static String WEXIN_BASE_URL = "https://api.weixin.qq.com/sns/";
+    public static String WEXIN_HEAD_PIC = "http://wx.qlogo.cn/mmopen/";
+    public static String PIC_API;
 
-    public interface WxLogin{
+    public interface WxParamValue {
         String APP_ID = "wxc988255a4b16c8cf";
         String APP_SECERT = "16670d3a33f0a7c6b64a8d20a33e2204";
         String NULL_RESP = "null resp";
@@ -19,17 +20,58 @@ public class Constants {
     }
 
     public interface WxApi{
-        String ACCESS_TOKEN = "access_token";
+        String ACCESS_TOKEN = "oauth2/access_token";
         String USER_INFO = "userinfo";
+        String PIC_API = "";
     }
 
-    public interface RequestParam{
+    public interface WxRequestParam {
         String APP_ID = "appid";
         String APP_SECRET = "secret";
         String CODE = "code";
         String GRANT_TYPE = "grant_type";
         String ACCESS_TOKEN = "access_token";
         String OPEN_ID = "openid";
+    }
+
+    public interface XingVoicesApi{
+        String LOGIN = "login";
+        String GET_USER = "getUser";
+        String ALL_VOICE = "allVoice";
+        String MY_FOLLOW = "myFocus";
+        String MY_COLLECTION = "myFavorites";
+    }
+
+    public interface XingVoicesRequestParam{
+        String CHANNEL = "channel";
+        String OPEN_ID = "openid";
+        String NICKNAME = "nickname";
+        String SEX = "sex";
+        String HEAD_PIC = "headpic";
+        String UID = "uid";
+        String CID = "cid";
+    }
+
+    public interface XingVoicesParamValue{
+        String CHANNEL = "APP";
+        int MAN = 1;
+        int WOMEN = 0;
+    }
+
+    public interface VoiceType{
+        String POPULAR = "popular";
+        String FOLLOW = "follow";
+        String COLLECTION = "collection";
+    }
+
+    public interface CommentType{
+        int VOICE = 1;
+        int TEXT = 0;
+    }
+
+    public interface FollowType{
+        int UnFollow = 0;
+        int Followed = 1;
     }
 
     public interface ContentType {
@@ -70,6 +112,10 @@ public class Constants {
         int IS_RECORDING = 1;
         int PREPARE_AUDITION = 2;
         int IS_AUDITION = 3;
+    }
+
+    public interface FileName{
+        String HEAD_PIC = "headpic";
     }
 
     public interface BottomMenuItem{

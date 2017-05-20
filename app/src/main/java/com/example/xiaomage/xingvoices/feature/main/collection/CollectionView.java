@@ -10,7 +10,7 @@ import android.util.AttributeSet;
 
 import com.example.xiaomage.xingvoices.R;
 import com.example.xiaomage.xingvoices.framework.BaseView;
-import com.example.xiaomage.xingvoices.model.bean.RemoteVoice;
+import com.example.xiaomage.xingvoices.model.bean.RemoteVoice.RemoteVoice;
 
 import java.util.List;
 

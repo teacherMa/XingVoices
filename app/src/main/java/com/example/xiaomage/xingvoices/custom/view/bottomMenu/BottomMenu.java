@@ -96,7 +96,7 @@ public class BottomMenu extends PopupWindow {
                 if(null == mOnBottomMenuItemClickListener){
                     return;
                 }
-                mOnBottomMenuItemClickListener.onItemClick(COMMENT);
+                mOnBottomMenuItemClickListener.onBottomItemClick(COMMENT);
                 BottomMenu.this.dismiss();
             }
         });
@@ -108,7 +108,7 @@ public class BottomMenu extends PopupWindow {
                 if(null == mOnBottomMenuItemClickListener){
                     return;
                 }
-                mOnBottomMenuItemClickListener.onItemClick(COLLECTION);
+                mOnBottomMenuItemClickListener.onBottomItemClick(COLLECTION);
                 BottomMenu.this.dismiss();
             }
         });
@@ -120,7 +120,7 @@ public class BottomMenu extends PopupWindow {
                 if(null == mOnBottomMenuItemClickListener){
                     return;
                 }
-                mOnBottomMenuItemClickListener.onItemClick(SHARE);
+                mOnBottomMenuItemClickListener.onBottomItemClick(SHARE);
                 BottomMenu.this.dismiss();
             }
         });
@@ -132,7 +132,7 @@ public class BottomMenu extends PopupWindow {
                 if(null == mOnBottomMenuItemClickListener){
                     return;
                 }
-                mOnBottomMenuItemClickListener.onItemClick(LOOK_UP_PIC);
+                mOnBottomMenuItemClickListener.onBottomItemClick(LOOK_UP_PIC);
                 BottomMenu.this.dismiss();
             }
         });
@@ -144,7 +144,7 @@ public class BottomMenu extends PopupWindow {
                 if(null == mOnBottomMenuItemClickListener){
                     return;
                 }
-                mOnBottomMenuItemClickListener.onItemClick(ADD_TO_BLACK_LIST);
+                mOnBottomMenuItemClickListener.onBottomItemClick(ADD_TO_BLACK_LIST);
                 BottomMenu.this.dismiss();
             }
         });

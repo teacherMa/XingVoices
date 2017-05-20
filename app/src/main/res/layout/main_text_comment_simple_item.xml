@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <com.example.xiaomage.xingvoices.custom.view.CircleImageView
+        <ImageView
             android:id="@+id/civ_com_user_avatar"
             android:layout_width="30dp"
             android:layout_height="30dp"

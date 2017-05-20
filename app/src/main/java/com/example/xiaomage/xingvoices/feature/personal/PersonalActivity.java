@@ -8,11 +8,10 @@ import android.support.annotation.Nullable;
 
 import com.example.xiaomage.xingvoices.R;
 import com.example.xiaomage.xingvoices.framework.BaseActivity;
-import com.example.xiaomage.xingvoices.model.bean.UserBean;
+import com.example.xiaomage.xingvoices.model.bean.User.UserBean;
 import com.example.xiaomage.xingvoices.utils.Injection;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 public class PersonalActivity extends BaseActivity<PersonalPresenter> {
 

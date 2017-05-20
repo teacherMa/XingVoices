@@ -11,10 +11,12 @@ public class WXEntryContract {
     interface View extends BaseViewApi<Presenter> {
         void setAccessToken(AccessToken accessToken);
         void setWxUserInfo(WxUserInfo userInfo);
+        void startNewActivity();
     }
 
     interface Presenter extends BasePresenterApi {
         void getAccessToken(String code);
         void getUserInfo(AccessToken accessToken);
+        void downloadHeadPic(WxUserInfo info);
     }
 }

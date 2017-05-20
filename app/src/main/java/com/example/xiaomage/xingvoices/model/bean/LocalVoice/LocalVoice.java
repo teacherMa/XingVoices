@@ -1,4 +1,4 @@
-package com.example.xiaomage.xingvoices.model.bean;
+package com.example.xiaomage.xingvoices.model.bean.LocalVoice;
 
 import java.io.Serializable;
 

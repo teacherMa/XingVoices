@@ -3,7 +3,7 @@ package com.example.xiaomage.xingvoices.feature.main.follow;
 import android.support.annotation.NonNull;
 
 import com.example.xiaomage.xingvoices.framework.BasePresenter;
-import com.example.xiaomage.xingvoices.model.bean.RemoteVoice;
+import com.example.xiaomage.xingvoices.model.bean.RemoteVoice.RemoteVoice;
 import com.example.xiaomage.xingvoices.model.main.MainRepository;
 
 import java.util.ArrayList;

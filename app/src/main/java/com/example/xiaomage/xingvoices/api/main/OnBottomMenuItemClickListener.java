@@ -5,5 +5,5 @@ package com.example.xiaomage.xingvoices.api.main;
  */
 
 public interface OnBottomMenuItemClickListener {
-    void onItemClick(int position);
+    void onBottomItemClick(int position);
 }
