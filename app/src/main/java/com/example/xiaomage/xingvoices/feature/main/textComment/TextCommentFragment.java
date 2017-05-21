@@ -18,7 +18,6 @@ public class TextCommentFragment extends BaseFragment<TextCommentPresenter> {
     @BindView(R.id.text_com_view)
     TextCommentView mTextComView;
 
-    private int mModel;
     private RemoteVoice mRemoteVoice;
 
     @Override
@@ -31,7 +30,6 @@ public class TextCommentFragment extends BaseFragment<TextCommentPresenter> {
     protected TextCommentPresenter createPresenter() {
 
         mTextComView.setRemoteVoice(mRemoteVoice);
-        mTextComView.setModel(mModel);
 
         return new TextCommentPresenter(
                 Injection.provideMainRepository(),
@@ -44,13 +42,6 @@ public class TextCommentFragment extends BaseFragment<TextCommentPresenter> {
         return R.layout.main_text_com_frag;
     }
 
-    public int getModel() {
-        return mModel;
-    }
-
-    public void setModel(int model) {
-        mModel = model;
-    }
 
     public void setRemoteVoice(RemoteVoice remoteVoice) {
         mRemoteVoice = remoteVoice;

@@ -175,12 +175,10 @@ public class PopularVH extends BaseViewHolder<RemoteVoice> implements OnBottomMe
         mFragments = new ArrayList<>();
 
         TextCommentFragment textCommentFragment = new TextCommentFragment();
-        textCommentFragment.setModel(Constants.CommentItemType.SIMPLE);
         textCommentFragment.setRemoteVoice(mRemoteVoice);
         mFragments.add(textCommentFragment);
 
         VoiceCommentFragment voiceCommentFragment = new VoiceCommentFragment();
-        voiceCommentFragment.setModel(Constants.CommentItemType.SIMPLE);
         voiceCommentFragment.setRemoteVoice(mRemoteVoice);
         mFragments.add(voiceCommentFragment);
 

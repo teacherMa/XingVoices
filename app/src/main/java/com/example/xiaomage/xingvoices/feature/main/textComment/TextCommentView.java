@@ -3,24 +3,16 @@ package com.example.xiaomage.xingvoices.feature.main.textComment;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.xiaomage.xingvoices.R;
-import com.example.xiaomage.xingvoices.feature.main.popular.PopularAdapter;
 import com.example.xiaomage.xingvoices.framework.BaseView;
 import com.example.xiaomage.xingvoices.model.bean.CommentBean.CommentBean;
 import com.example.xiaomage.xingvoices.model.bean.RemoteVoice.RemoteVoice;
 import com.example.xiaomage.xingvoices.utils.BaseUtil;
-import com.example.xiaomage.xingvoices.utils.Constants;
 
 import java.util.List;
 
@@ -28,112 +20,50 @@ import butterknife.BindView;
 
 public class TextCommentView extends BaseView<TextCommentContract.Presenter> implements TextCommentContract.View {
 
-    public static final String TAG = "TextCommentView";
+    @BindView(R.id.iv_com_user_avatar_first)
+    ImageView mIvComUserAvatarFirst;
+    @BindView(R.id.tv_com_user_name_first)
+    TextView mTvComUserNameFirst;
+    @BindView(R.id.rl_com_basic_info_first)
+    RelativeLayout mRlComBasicInfoFirst;
+    @BindView(R.id.tv_com_content_first)
+    TextView mTvComContentFirst;
+    @BindView(R.id.tv_com_like_num_first)
+    TextView mTvComLikeNumFirst;
+    @BindView(R.id.iv_com_like_it_first)
+    ImageView mIvComLikeItFirst;
+    @BindView(R.id.iv_com_user_avatar_second)
+    ImageView mIvComUserAvatarSecond;
+    @BindView(R.id.tv_com_user_name_second)
+    TextView mTvComUserNameSecond;
+    @BindView(R.id.rl_com_basic_info_second)
+    RelativeLayout mRlComBasicInfoSecond;
+    @BindView(R.id.tv_com_content_second)
+    TextView mTvComContentSecond;
+    @BindView(R.id.tv_com_like_num_second)
+    TextView mTvComLikeNumSecond;
+    @BindView(R.id.iv_com_like_it_second)
+    ImageView mIvComLikeItSecond;
+    @BindView(R.id.first)
+    RelativeLayout mFirst;
+    @BindView(R.id.second)
+    RelativeLayout mSecond;
 
-    @BindView(R.id.rv_text_com)
-    RecyclerView mRvTextCom;
-
-    private int mModel;
     private RemoteVoice mRemoteVoice;
-
-    private class TextCommentHolder extends RecyclerView.ViewHolder {
-
-        private CommentBean mCommentBean;
-
-        private TextView mTvName;
-        private TextView mTvComContent;
-        private TextView mTvLikeNum;
-        private ImageView mIvLikeIt;
-        private ImageView mIvAvatar;
-
-        public TextCommentHolder(View itemView) {
-            super(itemView);
-            mTvName = (TextView) itemView.findViewById(R.id.tv_com_user_name);
-            mTvComContent = (TextView) itemView.findViewById(R.id.tv_com_content);
-            mTvLikeNum = (TextView) itemView.findViewById(R.id.tv_com_like_num);
-            mIvAvatar = (ImageView) itemView.findViewById(R.id.iv_com_user_avatar);
-            mIvLikeIt = (ImageView) itemView.findViewById(R.id.iv_com_like_it);
-        }
-
-        public void bindVoice(CommentBean textCommentBean) {
-            Log.e(TAG, this.toString() + " bind data" );
-
-            mCommentBean = textCommentBean;
-
-            mTvName.setText(mCommentBean.getUser());
-            mTvComContent.setText(mCommentBean.getContent());
-            mTvLikeNum.setText(String.valueOf(mCommentBean.getZan()));
-            BaseUtil.loadCirclePic(mCommentBean.getHeadpic()).into(mIvAvatar);
-            if (mCommentBean.getIs_zan() == 1) {
-                mIvLikeIt.setImageDrawable(BaseUtil.getDrawable(R.drawable.ic_main_voice_down_like));
-            }
-        }
-
-    }
-
-    private class TextCommentAdapter extends RecyclerView.Adapter<TextCommentHolder> {
-
-        private List<CommentBean> mBeen;
-
-        public TextCommentAdapter(List<CommentBean> been) {
-            mBeen = been;
-        }
-
-        @Override
-        public TextCommentHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View view;
-            if (Constants.CommentItemType.SIMPLE == mModel) {
-                view = LayoutInflater.from(getContext()).inflate(R.layout.
-                        main_text_comment_simple_item, parent,false);
-                return new TextCommentHolder(view);
-            }
-            view = LayoutInflater.from(getContext()).inflate(R.layout.
-                    text_comment_item, parent, false);
-            return new TextCommentHolder(view);
-        }
-
-        @Override
-        public void onBindViewHolder(TextCommentHolder holder, int position) {
-            holder.bindVoice(mBeen.get(position));
-        }
-
-        @Override
-        public int getItemCount() {
-            if (mModel == Constants.CommentItemType.SIMPLE) {
-                return 2;
-            }
-            return mBeen.size();
-        }
-
-        public void refreshData(List<CommentBean>been){
-            mBeen = been;
-            notifyDataSetChanged();
-        }
-    }
 
     public TextCommentView(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
+
     }
 
     @Override
     protected void initView(Context context, AttributeSet attrs, int defStyleAttr) {
-
-        mRvTextCom.setItemAnimator(new DefaultItemAnimator());
-        mRvTextCom.setLayoutManager(new LinearLayoutManager(getContext()));
 
     }
 
     @Override
     protected int getLayoutResId() {
         return R.layout.main_text_com_view;
-    }
-
-    public int getModel() {
-        return mModel;
-    }
-
-    public void setModel(int model) {
-        mModel = model;
     }
 
     @Override
@@ -143,13 +73,42 @@ public class TextCommentView extends BaseView<TextCommentContract.Presenter> imp
 
     @Override
     public void updateData(List<CommentBean> been) {
-        Log.e(TAG, this.toString() + " bind data, data size = "+been.size() +"recyclerView :"+mRvTextCom.getWidth() +" "+mRvTextCom.getHeight());
-        if(null == mRvTextCom.getAdapter()){
-            TextCommentAdapter adapter = new TextCommentAdapter(been);
-            mRvTextCom.setAdapter(adapter);
-            return;
+        CommentBean bean;
+        switch (been.size()){
+            case 0:
+                mFirst.setVisibility(INVISIBLE);
+                mSecond.setVisibility(INVISIBLE);
+                break;
+            case 1:
+                bean = been.get(0);
+                mTvComContentFirst.setText(bean.getContent());
+                mTvComLikeNumFirst.setText(String.valueOf(bean.getZan()));
+                mTvComUserNameFirst.setText(bean.getUser());
+                BaseUtil.loadCirclePic(bean.getHeadpic()).into(mIvComUserAvatarFirst);
+                if(bean.getIs_zan()==1){
+                    mIvComLikeItFirst.setImageDrawable(BaseUtil.getDrawable(R.drawable.ic_main_voice_down_like));
+                }
+                mSecond.setVisibility(INVISIBLE);
+                break;
+            default:
+                bean = been.get(0);
+                mTvComContentFirst.setText(bean.getContent());
+                mTvComLikeNumFirst.setText(String.valueOf(bean.getZan()));
+                mTvComUserNameFirst.setText(bean.getUser());
+                BaseUtil.loadCirclePic(bean.getHeadpic()).into(mIvComUserAvatarFirst);
+                if(bean.getIs_zan()==1){
+                    mIvComLikeItFirst.setImageDrawable(BaseUtil.getDrawable(R.drawable.ic_main_voice_down_like));
+                }
+
+                bean = been.get(1);
+                mTvComContentSecond.setText(bean.getContent());
+                mTvComLikeNumSecond.setText(String.valueOf(bean.getZan()));
+                mTvComUserNameSecond.setText(bean.getUser());
+                BaseUtil.loadCirclePic(bean.getHeadpic()).into(mIvComUserAvatarSecond);
+                if(bean.getIs_zan()==1){
+                    mIvComLikeItSecond.setImageDrawable(BaseUtil.getDrawable(R.drawable.ic_main_voice_down_like));
+                }
         }
-        ((TextCommentAdapter)mRvTextCom.getAdapter()).refreshData(been);
     }
 
     public void setRemoteVoice(RemoteVoice remoteVoice) {
