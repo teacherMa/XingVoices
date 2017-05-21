@@ -2,11 +2,13 @@ package com.example.xiaomage.xingvoices.model.bean.User;
 
 import java.io.Serializable;
 
+import io.realm.RealmObject;
+
 /**
  * Created by xiaomage on 2017/5/8.
  */
 
-public class UserBean implements Serializable {
+public class UserBean extends RealmObject implements Serializable {
 
     /**
      * uid : TzFiVA7MIl906N
