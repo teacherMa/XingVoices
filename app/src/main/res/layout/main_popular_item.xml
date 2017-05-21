@@ -145,46 +145,31 @@
                 android:id="@+id/tv_text_com"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="4dp"
                 android:layout_centerVertical="true"
                 android:layout_marginStart="8dp"
                 android:text="@string/main_text_comments"
                 android:textColor="@color/colorTextUnselected"
-                android:textSize="12sp"
-                android:textStyle="bold"/>
+                android:textSize="12sp"/>
 
             <TextView
                 android:id="@+id/tv_voice_com"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="4dp"
                 android:layout_centerVertical="true"
                 android:layout_marginStart="12dp"
                 android:layout_toEndOf="@id/tv_text_com"
                 android:text="@string/main_voice_comments"
                 android:textColor="@color/colorTextUnselected"
-                android:textSize="12sp"
-                android:textStyle="bold"/>
+                android:textSize="12sp"/>
 
         </RelativeLayout>
 
-        <FrameLayout
+        <com.example.xiaomage.xingvoices.custom.view.WrapContentViewPager
+            android:id="@+id/vp_comments"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/rv_text_com_list"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-            </android.support.v7.widget.RecyclerView>
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/rv_voice_com_list"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="invisible">
-            </android.support.v7.widget.RecyclerView>
-        </FrameLayout>
+        </com.example.xiaomage.xingvoices.custom.view.WrapContentViewPager>
 
         <TextView
             android:id="@+id/tv_more_com"

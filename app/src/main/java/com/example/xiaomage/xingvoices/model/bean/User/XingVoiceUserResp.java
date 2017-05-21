@@ -4,7 +4,7 @@ package com.example.xiaomage.xingvoices.model.bean.User;
  * Created by xiaomage on 2017/5/19.
  */
 
-public class UserResp {
+public class XingVoiceUserResp {
 
     /**
      * status : 1
@@ -14,7 +14,7 @@ public class UserResp {
 
     private int status;
     private String info;
-    private UserBean user;
+    private XingVoiceUser user;
 
     public int getStatus() {
         return status;
@@ -32,11 +32,11 @@ public class UserResp {
         this.info = info;
     }
 
-    public UserBean getUser() {
+    public XingVoiceUser getUser() {
         return user;
     }
 
-    public void setUser(UserBean user) {
+    public void setUser(XingVoiceUser user) {
         this.user = user;
     }
 }

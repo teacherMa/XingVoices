@@ -4,10 +4,11 @@ import android.support.annotation.NonNull;
 
 import com.example.xiaomage.xingvoices.api.OnResultCallback;
 import com.example.xiaomage.xingvoices.framework.BaseRepository;
+import com.example.xiaomage.xingvoices.model.bean.CommentBean.CommentBean;
 import com.example.xiaomage.xingvoices.model.bean.RemoteVoice.RemoteVoice;
-import com.example.xiaomage.xingvoices.model.bean.RemoteVoice.VoiceResp;
-import com.example.xiaomage.xingvoices.model.bean.User.UserInfo;
-import com.example.xiaomage.xingvoices.model.bean.User.UserResp;
+import com.example.xiaomage.xingvoices.model.bean.User.XingVoiceUser;
+import com.example.xiaomage.xingvoices.model.bean.User.BasicUserInfo;
+import com.example.xiaomage.xingvoices.model.bean.User.XingVoiceUserResp;
 import com.example.xiaomage.xingvoices.model.bean.WxBean.WxUserInfo;
 
 import java.util.List;
@@ -37,10 +38,26 @@ public class MainRepository extends BaseRepository implements MainDataSource {
     }
 
     @Override
-    public void login(final OnResultCallback<UserResp> resultCallback, WxUserInfo info) {
-        OnResultCallback<UserResp> callback = new OnResultCallback<UserResp>() {
+    public void login(final OnResultCallback<XingVoiceUserResp> resultCallback, final WxUserInfo info, XingVoiceUserResp xingVoiceUserResp) {
+        OnResultCallback<XingVoiceUserResp> callback = new OnResultCallback<XingVoiceUserResp>() {
             @Override
-            public void onSuccess(UserResp resultValue, int code) {
+            public void onSuccess(XingVoiceUserResp resultValue, int code) {
+                mLocalDS.login(resultCallback,info,resultValue);
+            }
+
+            @Override
+            public void onFail(String errorMessage) {
+                resultCallback.onFail(errorMessage);
+            }
+        };
+        mRemoteDS.login(callback,info,null);
+    }
+
+    @Override
+    public void getUserInfo(final OnResultCallback<BasicUserInfo> resultCallback, XingVoiceUserResp resp) {
+        OnResultCallback<BasicUserInfo> callback = new OnResultCallback<BasicUserInfo>() {
+            @Override
+            public void onSuccess(BasicUserInfo resultValue, int code) {
                 resultCallback.onSuccess(resultValue,code);
             }
 
@@ -49,27 +66,16 @@ public class MainRepository extends BaseRepository implements MainDataSource {
                 resultCallback.onFail(errorMessage);
             }
         };
-        mRemoteDS.login(callback,info);
+        mRemoteDS.getUserInfo(callback,resp);
     }
 
     @Override
-    public void getUser(final OnResultCallback<UserInfo> resultCallback, UserResp resp) {
-        OnResultCallback<UserInfo> callback = new OnResultCallback<UserInfo>() {
-            @Override
-            public void onSuccess(UserInfo resultValue, int code) {
-                resultCallback.onSuccess(resultValue,code);
-            }
+    public void getLocalUser(OnResultCallback<XingVoiceUser> callback) {
 
-            @Override
-            public void onFail(String errorMessage) {
-                resultCallback.onFail(errorMessage);
-            }
-        };
-        mRemoteDS.getUser(callback,resp);
     }
 
     @Override
-    public void requestData(final OnResultCallback<List<RemoteVoice>> resultCallback, final UserResp resp, String dataType) {
+    public void requestVoicesList(final OnResultCallback<List<RemoteVoice>> resultCallback, final XingVoiceUserResp resp, String dataType) {
         OnResultCallback<List<RemoteVoice>> callback = new OnResultCallback<List<RemoteVoice>>() {
             @Override
             public void onSuccess(List<RemoteVoice> resultValue, int code) {
@@ -81,6 +87,22 @@ public class MainRepository extends BaseRepository implements MainDataSource {
                 resultCallback.onFail(errorMessage);
             }
         };
-        mRemoteDS.requestData(callback,resp, dataType);
+        mRemoteDS.requestVoicesList(callback,resp, dataType);
+    }
+
+    @Override
+    public void requestComment(final OnResultCallback<List<CommentBean>> resultCallback, final RemoteVoice voice, XingVoiceUser bean, final int commentType) {
+        OnResultCallback<XingVoiceUser> loackCallback = new OnResultCallback<XingVoiceUser>() {
+            @Override
+            public void onSuccess(XingVoiceUser resultValue, int code) {
+                mRemoteDS.requestComment(resultCallback,voice,resultValue,commentType);
+            }
+
+            @Override
+            public void onFail(String errorMessage) {
+                resultCallback.onFail(errorMessage);
+            }
+        };
+        mLocalDS.getLocalUser(loackCallback);
     }
 }

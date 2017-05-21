@@ -4,7 +4,7 @@ import android.support.annotation.NonNull;
 
 import com.example.xiaomage.xingvoices.framework.BasePresenter;
 import com.example.xiaomage.xingvoices.model.bean.RemoteVoice.RemoteVoice;
-import com.example.xiaomage.xingvoices.model.bean.User.UserBean;
+import com.example.xiaomage.xingvoices.model.bean.User.XingVoiceUser;
 import com.example.xiaomage.xingvoices.model.personal.PersonalRepository;
 
 import java.util.ArrayList;
@@ -18,15 +18,15 @@ public class PersonalPresenter extends BasePresenter<PersonalContract.View, Pers
 
     @Override
     public void start() {
-        UserBean userBean = getView().getUserBean();
-        if(null == userBean){
+        XingVoiceUser xingVoiceUser = getView().getXingVoiceUser();
+        if(null == xingVoiceUser){
             return;
         }
-        requestUserVoices(userBean);
+        requestUserVoices(xingVoiceUser);
     }
 
     @Override
-    public void requestUserVoices(UserBean userBean) {
+    public void requestUserVoices(XingVoiceUser xingVoiceUser) {
         List<RemoteVoice> voices = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
             voices.add(new RemoteVoice());

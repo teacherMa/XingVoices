@@ -1,23 +1,23 @@
 package com.example.xiaomage.xingvoices.event;
 
-import com.example.xiaomage.xingvoices.model.bean.User.UserResp;
+import com.example.xiaomage.xingvoices.model.bean.User.XingVoiceUserResp;
 
 /**
  * Created by xiaomage on 2017/5/19.
  */
 
 public class MainViewInitEvent extends EmptyEvent{
-    private UserResp mResp;
+    private XingVoiceUserResp mResp;
 
-    public MainViewInitEvent(UserResp resp) {
+    public MainViewInitEvent(XingVoiceUserResp resp) {
         mResp = resp;
     }
 
-    public UserResp getResp() {
+    public XingVoiceUserResp getResp() {
         return mResp;
     }
 
-    public void setResp(UserResp resp) {
+    public void setResp(XingVoiceUserResp resp) {
         mResp = resp;
     }
 

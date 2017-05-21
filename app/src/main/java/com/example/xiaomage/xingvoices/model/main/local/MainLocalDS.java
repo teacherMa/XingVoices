@@ -1,14 +1,20 @@
 package com.example.xiaomage.xingvoices.model.main.local;
 
 import com.example.xiaomage.xingvoices.api.OnResultCallback;
+import com.example.xiaomage.xingvoices.model.bean.CommentBean.CommentBean;
 import com.example.xiaomage.xingvoices.model.bean.RemoteVoice.RemoteVoice;
-import com.example.xiaomage.xingvoices.model.bean.RemoteVoice.VoiceResp;
-import com.example.xiaomage.xingvoices.model.bean.User.UserInfo;
-import com.example.xiaomage.xingvoices.model.bean.User.UserResp;
+import com.example.xiaomage.xingvoices.model.bean.User.XingVoiceUser;
+import com.example.xiaomage.xingvoices.model.bean.User.BasicUserInfo;
+import com.example.xiaomage.xingvoices.model.bean.User.XingVoiceUserResp;
 import com.example.xiaomage.xingvoices.model.bean.WxBean.WxUserInfo;
 import com.example.xiaomage.xingvoices.model.main.MainDataSource;
+import com.example.xiaomage.xingvoices.utils.Constants;
 
 import java.util.List;
+
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
+
 
 public class MainLocalDS implements MainDataSource {
     private MainLocalDS() {
@@ -19,17 +25,52 @@ public class MainLocalDS implements MainDataSource {
     }
 
     @Override
-    public void login(OnResultCallback<UserResp> resultCallback, WxUserInfo info) {
+    public void login(OnResultCallback<XingVoiceUserResp> resultCallback, WxUserInfo info, XingVoiceUserResp xingVoiceUserResp) {
+
+        Realm realm = Realm.getDefaultInstance();
+
+        if(realm.where(XingVoiceUser.class).findAll().size()!=0){
+            resultCallback.onSuccess(xingVoiceUserResp, Constants.ResultCode.LOCAL);
+            return;
+        }
+
+        realm.beginTransaction();
+
+        final XingVoiceUser resp = realm.copyToRealm(xingVoiceUserResp.getUser());
+
+        realm.commitTransaction();
+
+        resultCallback.onSuccess(xingVoiceUserResp,Constants.ResultCode.LOCAL);
 
     }
 
     @Override
-    public void getUser(OnResultCallback<UserInfo> resultCallback, UserResp resp) {
+    public void getUserInfo(OnResultCallback<BasicUserInfo> resultCallback, XingVoiceUserResp resp) {
 
     }
 
     @Override
-    public void requestData(OnResultCallback<List<RemoteVoice>> resultCallback, UserResp resp, String dataType) {
+    public void getLocalUser(OnResultCallback<XingVoiceUser> callback) {
+
+        Realm realm = Realm.getDefaultInstance();
+
+        List<XingVoiceUser> users = realm.where(XingVoiceUser.class).findAll();
+
+        if(0 == users.size()){
+            callback.onFail(Constants.ResponseError.DATA_EMPTY);
+            return;
+        }
+
+        callback.onSuccess(users.get(0),Constants.ResultCode.LOCAL);
+    }
+
+    @Override
+    public void requestVoicesList(OnResultCallback<List<RemoteVoice>> resultCallback, XingVoiceUserResp resp, String dataType) {
+
+    }
+
+    @Override
+    public void requestComment(OnResultCallback<List<CommentBean>> resultCallback, RemoteVoice voice, XingVoiceUser bean,int commentType) {
 
     }
 

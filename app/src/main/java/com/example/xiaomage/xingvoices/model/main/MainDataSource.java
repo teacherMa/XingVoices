@@ -1,10 +1,11 @@
 package com.example.xiaomage.xingvoices.model.main;
 
 import com.example.xiaomage.xingvoices.api.OnResultCallback;
+import com.example.xiaomage.xingvoices.model.bean.CommentBean.CommentBean;
 import com.example.xiaomage.xingvoices.model.bean.RemoteVoice.RemoteVoice;
-import com.example.xiaomage.xingvoices.model.bean.RemoteVoice.VoiceResp;
-import com.example.xiaomage.xingvoices.model.bean.User.UserInfo;
-import com.example.xiaomage.xingvoices.model.bean.User.UserResp;
+import com.example.xiaomage.xingvoices.model.bean.User.XingVoiceUser;
+import com.example.xiaomage.xingvoices.model.bean.User.BasicUserInfo;
+import com.example.xiaomage.xingvoices.model.bean.User.XingVoiceUserResp;
 import com.example.xiaomage.xingvoices.model.bean.WxBean.WxUserInfo;
 
 import java.util.List;
@@ -12,11 +13,17 @@ import java.util.List;
 public interface MainDataSource {
 
     /**
-    *这里的login是使用微信的信息去登录星声服务器*/
-    void login(OnResultCallback<UserResp> resultCallback, WxUserInfo info);
+    *这里的login是使用微信的信息去登录星声服务器,获取星声账号*/
+    void login(OnResultCallback<XingVoiceUserResp> resultCallback, WxUserInfo info, XingVoiceUserResp xingVoiceUserResp);
 
-    void getUser(OnResultCallback<UserInfo> resultCallback, UserResp resp);
+    /**
+     * 这里是通过星声账号，获取星声用户的基本信息，包括粉丝，关注数*/
+    void getUserInfo(OnResultCallback<BasicUserInfo> resultCallback, XingVoiceUserResp resp);
 
-    void requestData(OnResultCallback<List<RemoteVoice>> resultCallback, UserResp resp, String dataType);
+    void getLocalUser(OnResultCallback<XingVoiceUser> callback);
+
+    void requestVoicesList(OnResultCallback<List<RemoteVoice>> resultCallback, XingVoiceUserResp resp, String dataType);
+
+    void requestComment(OnResultCallback<List<CommentBean>> resultCallback, RemoteVoice voice, XingVoiceUser bean,int commentType);
 
 }

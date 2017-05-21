@@ -28,7 +28,7 @@ import com.example.xiaomage.xingvoices.feature.main.menu.MenuFragment;
 import com.example.xiaomage.xingvoices.feature.main.popular.PopularFragment;
 import com.example.xiaomage.xingvoices.feature.record.RecordActivity;
 import com.example.xiaomage.xingvoices.framework.BaseBusView;
-import com.example.xiaomage.xingvoices.model.bean.User.UserResp;
+import com.example.xiaomage.xingvoices.model.bean.User.XingVoiceUserResp;
 import com.example.xiaomage.xingvoices.model.bean.WxBean.WxUserInfo;
 import com.example.xiaomage.xingvoices.utils.BaseUtil;
 
@@ -72,7 +72,7 @@ public class MainView extends BaseBusView<MainContract.Presenter> implements Mai
     private List<Fragment> mVpFragments;
     private TextView mTvLastItem;
     private WxUserInfo mWxUserInfo;
-    private UserResp mResp;
+    private XingVoiceUserResp mResp;
 
     public void setWxUserInfo(WxUserInfo wxUserInfo) {
         mWxUserInfo = wxUserInfo;
@@ -233,7 +233,7 @@ public class MainView extends BaseBusView<MainContract.Presenter> implements Mai
     }
 
     @Override
-    public void initUserResp(UserResp resp) {
+    public void initUserResp(XingVoiceUserResp resp) {
         mResp = resp;
         mMainSlidingMenu.openMenu();
 

@@ -7,6 +7,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageView;
 
+import com.example.xiaomage.xingvoices.App;
 import com.example.xiaomage.xingvoices.R;
 import com.example.xiaomage.xingvoices.utils.Constants;
 import com.tencent.mm.opensdk.modelmsg.SendAuth;
@@ -16,6 +17,8 @@ import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
 
 /**
  * Created by xiaomage on 2017/5/18.
@@ -40,6 +43,13 @@ public class LogInActivity extends AppCompatActivity {
         mIWxApi = WXAPIFactory.createWXAPI(this, Constants.WxParamValue.APP_ID, true);
 
         mIWxApi.registerApp(Constants.WxParamValue.APP_ID);
+
+        Realm.init(this);
+        RealmConfiguration config = new RealmConfiguration.Builder()
+                .deleteRealmIfMigrationNeeded()
+                .build();
+
+        Realm.setDefaultConfiguration(config);
 
     }
 

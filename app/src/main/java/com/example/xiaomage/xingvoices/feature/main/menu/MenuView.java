@@ -17,8 +17,8 @@ import com.example.xiaomage.xingvoices.event.EmptyEvent;
 import com.example.xiaomage.xingvoices.event.MenuCloseEvent;
 import com.example.xiaomage.xingvoices.event.MainViewInitEvent;
 import com.example.xiaomage.xingvoices.framework.BaseBusView;
-import com.example.xiaomage.xingvoices.model.bean.User.UserInfo;
-import com.example.xiaomage.xingvoices.model.bean.User.UserResp;
+import com.example.xiaomage.xingvoices.model.bean.User.BasicUserInfo;
+import com.example.xiaomage.xingvoices.model.bean.User.XingVoiceUserResp;
 import com.example.xiaomage.xingvoices.utils.BaseUtil;
 import com.example.xiaomage.xingvoices.utils.FileUtil;
 
@@ -58,8 +58,8 @@ public class MenuView extends BaseBusView<MenuContract.Presenter> implements Men
     @BindView(R.id.rl_menu_setting_list)
     RelativeLayout mRlMenuSettingList;
 
-    private UserResp mResp;
-    private UserInfo mUserInfo;
+    private XingVoiceUserResp mResp;
+    private BasicUserInfo mBasicUserInfo;
 
     public MenuView(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
@@ -116,22 +116,21 @@ public class MenuView extends BaseBusView<MenuContract.Presenter> implements Men
         BaseUtil.showToast(""+view.getId());
     }
 
-    @Override
-    public void setUserInfo(UserInfo userInfo) {
+    public void setBasicUserInfo(BasicUserInfo basicUserInfo) {
 
-        if(null == userInfo){
+        if(null == basicUserInfo){
             return;
         }
 
-        mUserInfo = userInfo;
+        mBasicUserInfo = basicUserInfo;
 
         BitmapDrawable bitmapDrawable = new BitmapDrawable(FileUtil.getUserHeadFile());
         mMenuUserAvatar.setImageDrawable(bitmapDrawable);
 
-        mMenuUserName.setText(userInfo.getNickname());
+        mMenuUserName.setText(basicUserInfo.getNickname());
 
-        mTvFollowNumber.setText(String.valueOf(userInfo.getGuanzhu()));
+        mTvFollowNumber.setText(String.valueOf(basicUserInfo.getGuanzhu()));
 
-        mTvFansNum.setText(String.valueOf(userInfo.getFensi()));
+        mTvFansNum.setText(String.valueOf(basicUserInfo.getFensi()));
     }
 }

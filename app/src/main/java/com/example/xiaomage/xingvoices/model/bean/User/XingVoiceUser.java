@@ -6,9 +6,10 @@ import io.realm.RealmObject;
 
 /**
  * Created by xiaomage on 2017/5/8.
+ *
  */
 
-public class UserBean extends RealmObject implements Serializable {
+public class XingVoiceUser extends RealmObject implements Serializable {
 
     /**
      * uid : TzFiVA7MIl906N

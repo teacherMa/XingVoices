@@ -13,7 +13,7 @@ import android.widget.ImageView;
 import com.example.xiaomage.xingvoices.R;
 import com.example.xiaomage.xingvoices.framework.BaseView;
 import com.example.xiaomage.xingvoices.model.bean.RemoteVoice.RemoteVoice;
-import com.example.xiaomage.xingvoices.model.bean.User.UserBean;
+import com.example.xiaomage.xingvoices.model.bean.User.XingVoiceUser;
 
 import java.util.List;
 
@@ -29,10 +29,10 @@ public class PersonalView extends BaseView<PersonalContract.Presenter> implement
     @BindView(R.id.rv_personal_voices)
     RecyclerView mRvPersonalVoices;
 
-    private UserBean mUserBean;
+    private XingVoiceUser mXingVoiceUser;
 
-    public void setUserBean(UserBean userBean) {
-        mUserBean = userBean;
+    public void setXingVoiceUser(XingVoiceUser xingVoiceUser) {
+        mXingVoiceUser = xingVoiceUser;
     }
 
     private PersonalAdapter mAdapter;
@@ -68,8 +68,7 @@ public class PersonalView extends BaseView<PersonalContract.Presenter> implement
         mAdapter.refreshData(voices);
     }
 
-    @Override
-    public UserBean getUserBean() {
-        return mUserBean;
+    public XingVoiceUser getXingVoiceUser() {
+        return mXingVoiceUser;
     }
 }

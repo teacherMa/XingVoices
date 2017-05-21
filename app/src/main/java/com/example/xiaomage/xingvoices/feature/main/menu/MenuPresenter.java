@@ -4,8 +4,8 @@ import android.support.annotation.NonNull;
 
 import com.example.xiaomage.xingvoices.api.OnResultCallback;
 import com.example.xiaomage.xingvoices.framework.BasePresenter;
-import com.example.xiaomage.xingvoices.model.bean.User.UserInfo;
-import com.example.xiaomage.xingvoices.model.bean.User.UserResp;
+import com.example.xiaomage.xingvoices.model.bean.User.BasicUserInfo;
+import com.example.xiaomage.xingvoices.model.bean.User.XingVoiceUserResp;
 import com.example.xiaomage.xingvoices.model.main.MainRepository;
 import com.example.xiaomage.xingvoices.utils.BaseUtil;
 
@@ -21,14 +21,14 @@ public class MenuPresenter extends BasePresenter<MenuContract.View, MainReposito
     }
 
     @Override
-    public void getUserInfo(UserResp resp) {
-        OnResultCallback<UserInfo> callback = new OnResultCallback<UserInfo>() {
+    public void getUserInfo(XingVoiceUserResp resp) {
+        OnResultCallback<BasicUserInfo> callback = new OnResultCallback<BasicUserInfo>() {
             @Override
-            public void onSuccess(UserInfo resultValue, int code) {
+            public void onSuccess(BasicUserInfo resultValue, int code) {
                 if(null == getView()){
                     return;
                 }
-                getView().setUserInfo(resultValue);
+                getView().setBasicUserInfo(resultValue);
             }
 
             @Override
@@ -39,6 +39,6 @@ public class MenuPresenter extends BasePresenter<MenuContract.View, MainReposito
                 BaseUtil.showToast(errorMessage);
             }
         };
-        getRepository().getUser(callback,resp);
+        getRepository().getUserInfo(callback,resp);
     }
 }

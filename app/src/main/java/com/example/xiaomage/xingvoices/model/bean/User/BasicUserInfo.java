@@ -4,7 +4,7 @@ package com.example.xiaomage.xingvoices.model.bean.User;
  * Created by xiaomage on 2017/5/20.
  */
 
-public class UserInfo {
+public class BasicUserInfo {
     /**
      * nickname : 萌萌哒的probe
      * headpic : http://www.starsound.xyz/yuliao/public/uploads/
