@@ -19,6 +19,7 @@ public class MainPresenter extends BasePresenter<MainContract.View, MainReposito
     public void start() {
         WxUserInfo info = getView().getWxUserInfo();
         if(null == info){
+            getView().initMainUi();
             return;
         }
         login(info);
@@ -32,7 +33,7 @@ public class MainPresenter extends BasePresenter<MainContract.View, MainReposito
                 if(null == getView()){
                     return;
                 }
-                getView().initUserResp(resultValue);
+                getView().initMainUi();
             }
 
             @Override

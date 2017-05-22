@@ -27,7 +27,7 @@
                 android:src="@drawable/ic_arrow_right"
                 android:contentDescription="@string/iv_con_des"/>
 
-            <com.example.xiaomage.xingvoices.custom.view.CircleImageView
+            <ImageView
                 android:id="@+id/menu_user_avatar"
                 android:layout_width="80dp"
                 android:layout_height="80dp"

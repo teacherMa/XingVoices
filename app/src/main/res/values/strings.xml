@@ -39,6 +39,8 @@
     <string name="bottom_menu_look_up_pic">查看图片</string>
     <string name="bottom_menu_add_to_blacklist">拉黑并举报</string>
     <string name="bottom_menu_cancel">取消</string>
+    <string name="bottom_text_com_hint">评论字数在20字以内最佳</string>
+    <string name="bottom_text_com_send">发送</string>
 
     <string name="wx_not_installed">未安装微信</string>
     <string name="wx_not_installed_message">您的手机尚未安装微信，请前往浏览器下载安装</string>

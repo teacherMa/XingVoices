@@ -9,7 +9,7 @@ public class MainContract {
 
     interface View extends BaseViewApi<Presenter> {
         WxUserInfo getWxUserInfo();
-        void initUserResp(XingVoiceUserResp resp);
+        void initMainUi();
     }
 
     interface Presenter extends BasePresenterApi {

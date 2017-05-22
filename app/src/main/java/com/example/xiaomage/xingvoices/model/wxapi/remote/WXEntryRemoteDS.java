@@ -76,35 +76,6 @@ public class WXEntryRemoteDS implements WXEntryDataSource {
                 });
     }
 
-    @Override
-    public void downloadHeadPic(WxUserInfo info, final OnResultCallback<ResponseBody> callback, final ResponseBody body) {
-
-        String[] apis = info.getHeadimgurl().split("/");
-        String api = apis[apis.length-2];
-
-        RetrofitClient.buildDownloadHeadPicService(ApiService.class)
-                .downloadHeadPic(api)
-                .enqueue(new Callback<ResponseBody>() {
-                    @Override
-                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                        if(null == response || !response.isSuccessful() || null == response.body()){
-                            callback.onFail(Constants.ResponseError.SERVER_ERROR);
-                            return;
-                        }
-                        callback.onSuccess(response.body(),Constants.ResultCode.REMOTE);
-                    }
-
-                    @Override
-                    public void onFailure(Call<ResponseBody> call, Throwable t) {
-                        if(null == t || null == t.getMessage()){
-                            callback.onFail(Constants.ResponseError.SERVER_ERROR);
-                            return;
-                        }
-                        callback.onFail(t.getMessage());
-                    }
-                });
-    }
-
     private static class SingletonHolder {
         private static final WXEntryRemoteDS INSTANCE = new WXEntryRemoteDS();
     }

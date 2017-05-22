@@ -34,7 +34,7 @@ public class MenuView extends BaseBusView<MenuContract.Presenter> implements Men
     @BindView(R.id.iv_back_content)
     ImageView mIvBackContent;
     @BindView(R.id.menu_user_avatar)
-    CircleImageView mMenuUserAvatar;
+    ImageView mMenuUserAvatar;
     @BindView(R.id.menu_user_name)
     TextView mMenuUserName;
     @BindView(R.id.tv_follow_number)
@@ -58,7 +58,6 @@ public class MenuView extends BaseBusView<MenuContract.Presenter> implements Men
     @BindView(R.id.rl_menu_setting_list)
     RelativeLayout mRlMenuSettingList;
 
-    private XingVoiceUserResp mResp;
     private BasicUserInfo mBasicUserInfo;
 
     public MenuView(@NonNull Context context, @Nullable AttributeSet attrs) {
@@ -77,8 +76,10 @@ public class MenuView extends BaseBusView<MenuContract.Presenter> implements Men
         }
         if(event instanceof MainViewInitEvent){
             MainViewInitEvent initEvent = (MainViewInitEvent) event;
-            mResp = initEvent.getResp();
-            getPresenter().getUserInfo(mResp);
+            if(!initEvent.isNeedInit()){
+                return;
+            }
+            getPresenter().getUserInfo();
         }
     }
 
@@ -113,7 +114,6 @@ public class MenuView extends BaseBusView<MenuContract.Presenter> implements Men
             case R.id.menu_my_setting:
                 break;
         }
-        BaseUtil.showToast(""+view.getId());
     }
 
     public void setBasicUserInfo(BasicUserInfo basicUserInfo) {
@@ -124,8 +124,7 @@ public class MenuView extends BaseBusView<MenuContract.Presenter> implements Men
 
         mBasicUserInfo = basicUserInfo;
 
-        BitmapDrawable bitmapDrawable = new BitmapDrawable(FileUtil.getUserHeadFile());
-        mMenuUserAvatar.setImageDrawable(bitmapDrawable);
+        BaseUtil.loadCirclePic(basicUserInfo.getHeadpic()).into(mMenuUserAvatar);
 
         mMenuUserName.setText(basicUserInfo.getNickname());
 

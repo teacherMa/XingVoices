@@ -46,13 +46,16 @@ public class Constants {
     public interface XingVoicesRequestParam {
         String CHANNEL = "channel";
         String OPEN_ID = "openid";
+        String HEADPIC = "headpic";
         String NICKNAME = "nickname";
         String SEX = "sex";
-        String HEAD_PIC = "headpic";
         String UID = "uid";
         String CID = "cid";
         String VID = "vid";
         String TYPE = "type";
+        String PAGE = "page";
+        String NUM = "num";
+        String IS_U = "is_u";
     }
 
     public interface XingVoicesParamValue {

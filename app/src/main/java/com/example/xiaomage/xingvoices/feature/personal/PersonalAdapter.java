@@ -10,6 +10,6 @@ import com.example.xiaomage.xingvoices.model.bean.RemoteVoice.RemoteVoice;
 public class PersonalAdapter extends BaseAdapter<RemoteVoice> {
     @Override
     protected BaseViewHolder createViewHolder(Context context, ViewGroup parent) {
-        return new PersonalVH(context, parent);
+        return new PersonalVH(context, parent).setId();
     }
 }

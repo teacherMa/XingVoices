@@ -2,17 +2,19 @@ package com.example.xiaomage.xingvoices.feature.personal;
 
 import android.support.annotation.NonNull;
 
+import com.example.xiaomage.xingvoices.api.OnResultCallback;
 import com.example.xiaomage.xingvoices.framework.BasePresenter;
 import com.example.xiaomage.xingvoices.model.bean.RemoteVoice.RemoteVoice;
+import com.example.xiaomage.xingvoices.model.bean.User.BasicUserInfo;
 import com.example.xiaomage.xingvoices.model.bean.User.XingVoiceUser;
-import com.example.xiaomage.xingvoices.model.personal.PersonalRepository;
+import com.example.xiaomage.xingvoices.model.main.MainRepository;
+import com.example.xiaomage.xingvoices.utils.BaseUtil;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class PersonalPresenter extends BasePresenter<PersonalContract.View, PersonalRepository> implements PersonalContract.Presenter {
+public class PersonalPresenter extends BasePresenter<PersonalContract.View, MainRepository> implements PersonalContract.Presenter {
 
-    public PersonalPresenter(@NonNull PersonalRepository repository, @NonNull PersonalContract.View view) {
+    public PersonalPresenter(@NonNull MainRepository repository, @NonNull PersonalContract.View view) {
         super(repository, view);
     }
 
@@ -22,15 +24,52 @@ public class PersonalPresenter extends BasePresenter<PersonalContract.View, Pers
         if(null == xingVoiceUser){
             return;
         }
-        requestUserVoices(xingVoiceUser);
+        requestUserInfo(xingVoiceUser);
     }
 
     @Override
     public void requestUserVoices(XingVoiceUser xingVoiceUser) {
-        List<RemoteVoice> voices = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-            voices.add(new RemoteVoice());
-        }
-        getView().loadData(voices);
+        OnResultCallback<List<RemoteVoice>> onResultCallback = new OnResultCallback<List<RemoteVoice>>() {
+            @Override
+            public void onSuccess(List<RemoteVoice> resultValue, int code) {
+                if(null == getView()){
+                    return;
+                }
+                getView().loadData(resultValue);
+            }
+
+            @Override
+            public void onFail(String errorMessage) {
+                if(null == getView()){
+                    return;
+                }
+                BaseUtil.showToast(errorMessage);
+            }
+        };
+        getRepository().requestPopularVoicesList(onResultCallback,xingVoiceUser.getUid(),1,null,1,10);
+    }
+
+    @Override
+    public void requestUserInfo(final XingVoiceUser xingVoiceUser) {
+        OnResultCallback<BasicUserInfo> onResultCallback = new OnResultCallback<BasicUserInfo>() {
+            @Override
+            public void onSuccess(BasicUserInfo resultValue, int code) {
+                if(null == getView()){
+                    return;
+                }
+                getView().loadData(resultValue);
+
+            }
+
+            @Override
+            public void onFail(String errorMessage) {
+                if(null == getView()){
+                    return;
+                }
+                BaseUtil.showToast(errorMessage);
+                requestUserVoices(xingVoiceUser);
+            }
+        };
+        getRepository().getUserInfo(onResultCallback,null,xingVoiceUser.getUid());
     }
 }

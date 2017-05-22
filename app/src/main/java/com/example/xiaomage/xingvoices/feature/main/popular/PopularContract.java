@@ -14,6 +14,6 @@ public class PopularContract {
     }
 
     interface Presenter extends BasePresenterApi {
-        void requestVoiceData(XingVoiceUserResp xingVoiceUserResp);
+        void requestAllPopularVoice();
     }
 }

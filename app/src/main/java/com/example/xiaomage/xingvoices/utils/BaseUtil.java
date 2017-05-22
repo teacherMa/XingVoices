@@ -21,6 +21,7 @@ import com.example.xiaomage.xingvoices.R;
 import com.example.xiaomage.xingvoices.utils.GlideCircleTransform.GlideCircleTransform;
 
 import java.io.File;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Put some static functions that can be use everywhere

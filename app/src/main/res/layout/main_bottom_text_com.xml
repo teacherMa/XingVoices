@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="horizontal"
+              android:layout_width="match_parent"
+              android:layout_height="40dp"
+    android:background="@color/colorPrimaryDark">
+
+    <ImageView
+        android:id="@+id/iv_to_voice_com"
+        android:layout_width="40dp"
+        android:layout_height="match_parent"
+        android:padding="8dp"
+        android:src="@drawable/ic_mic_blue"
+        android:contentDescription="@string/iv_con_des"/>
+
+    <Button
+        android:id="@+id/iv_send_com"
+        android:layout_width="80dp"
+        android:layout_height="40dp"
+        android:layout_margin="4dp"
+        android:layout_alignParentEnd="true"
+        android:text="@string/bottom_text_com_send"
+        android:textColor="@color/colorSendButtonText"
+        android:background="@drawable/bg_cir_rect"/>
+
+    <EditText
+        android:id="@+id/et_voice_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="8dp"
+        android:layout_toEndOf="@id/iv_to_voice_com"
+        android:layout_toStartOf="@id/iv_send_com"
+        android:hint="@string/bottom_text_com_hint"
+        android:maxLength="30"
+        android:background="@color/colorPrimary"
+        android:textCursorDrawable="@color/colorMenuOpenContentBackground"/>
+
+
+
+</RelativeLayout>

@@ -12,6 +12,6 @@ public class MenuContract {
     }
 
     interface Presenter extends BasePresenterApi {
-        void getUserInfo(XingVoiceUserResp resp);
+        void getUserInfo();
     }
 }

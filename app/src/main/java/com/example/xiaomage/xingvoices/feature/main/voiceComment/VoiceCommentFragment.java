@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 
 import com.example.xiaomage.xingvoices.R;
 import com.example.xiaomage.xingvoices.framework.BaseFragment;
+import com.example.xiaomage.xingvoices.model.bean.CommentBean.CommentBean;
 import com.example.xiaomage.xingvoices.model.bean.RemoteVoice.RemoteVoice;
 import com.example.xiaomage.xingvoices.utils.Injection;
 
@@ -17,7 +18,6 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 public class VoiceCommentFragment extends BaseFragment<VoiceCommentPresenter> {
-
     @BindView(R.id.voice_com_view)
     VoiceCommentView mVoiceComView;
 
@@ -31,9 +31,7 @@ public class VoiceCommentFragment extends BaseFragment<VoiceCommentPresenter> {
     @NonNull
     @Override
     protected VoiceCommentPresenter createPresenter() {
-
         mVoiceComView.setRemoteVoice(mRemoteVoice);
-
         return new VoiceCommentPresenter(
                 Injection.provideMainRepository(),
                 mVoiceComView
@@ -48,9 +46,4 @@ public class VoiceCommentFragment extends BaseFragment<VoiceCommentPresenter> {
     public void setRemoteVoice(RemoteVoice remoteVoice) {
         mRemoteVoice = remoteVoice;
     }
-
-    public RemoteVoice getRemoteVoice() {
-        return mRemoteVoice;
-    }
-
 }

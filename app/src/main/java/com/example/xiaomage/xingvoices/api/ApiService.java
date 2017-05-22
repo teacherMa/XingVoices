@@ -36,7 +36,8 @@ public interface ApiService {
     Call<XingVoiceUserResp> login(@Query(Constants.XingVoicesRequestParam.CHANNEL) String channel,
                                   @Query(Constants.XingVoicesRequestParam.OPEN_ID) String openid,
                                   @Query(Constants.XingVoicesRequestParam.NICKNAME) String nickname,
-                                  @Query(Constants.XingVoicesRequestParam.SEX) int sex);
+                                  @Query(Constants.XingVoicesRequestParam.SEX) int sex,
+                                  @Query(Constants.XingVoicesRequestParam.HEADPIC) String hedapic);
 
 
     @GET(Constants.XingVoicesApi.GET_USER)
@@ -46,7 +47,11 @@ public interface ApiService {
 
     @GET(Constants.XingVoicesApi.ALL_VOICE)
     Call<List<RemoteVoice>> getAllVoice(@Query(Constants.XingVoicesRequestParam.CHANNEL) String channel,
-                                        @Query(Constants.XingVoicesRequestParam.UID) String uid);
+                                        @Query(Constants.XingVoicesRequestParam.UID) String uid,
+                                        @Query(Constants.XingVoicesRequestParam.IS_U) int is_u,
+                                        @Query(Constants.XingVoicesRequestParam.CID) String cid,
+                                        @Query(Constants.XingVoicesRequestParam.PAGE) int page,
+                                        @Query(Constants.XingVoicesRequestParam.NUM) int num);
 
     @GET(Constants.XingVoicesApi.MY_COLLECTION)
     Call<List<RemoteVoice>> getMyCollection(@Query(Constants.XingVoicesRequestParam.CHANNEL) String channel,

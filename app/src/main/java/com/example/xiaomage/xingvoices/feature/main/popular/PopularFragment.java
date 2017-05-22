@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 
 import com.example.xiaomage.xingvoices.R;
 import com.example.xiaomage.xingvoices.framework.BaseFragment;
+import com.example.xiaomage.xingvoices.model.bean.RemoteVoice.RemoteVoice;
 import com.example.xiaomage.xingvoices.utils.Injection;
 
 import butterknife.BindView;
@@ -22,7 +23,6 @@ public class PopularFragment extends BaseFragment<PopularPresenter> {
 
     @Override
     protected void initView(@Nullable Bundle savedInstanceState) {
-
     }
 
     @NonNull

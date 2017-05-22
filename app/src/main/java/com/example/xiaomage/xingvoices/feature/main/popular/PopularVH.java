@@ -115,7 +115,13 @@ public class PopularVH extends BaseViewHolder<RemoteVoice> implements OnBottomMe
 
     @OnClick(R.id.civ_user_avatar)
     public void onMCivUserAvatarClicked() {
+
         XingVoiceUser xingVoiceUser = new XingVoiceUser();
+
+        xingVoiceUser.setHeadpic(mRemoteVoice.getUser().getHeadpic());
+        xingVoiceUser.setNickname(mRemoteVoice.getUser().getNickname());
+        xingVoiceUser.setUid(mRemoteVoice.getUser().getUid());
+
         Intent intent = PersonalActivity.getNewIntent(xingVoiceUser, getContext());
         getContext().startActivity(intent);
     }
@@ -185,7 +191,8 @@ public class PopularVH extends BaseViewHolder<RemoteVoice> implements OnBottomMe
     }
 
     private void initViewPager() {
-        FragmentManager fragmentManager = ((MainActivity) getContext()).getSupportFragmentManager();
+
+        FragmentManager fragmentManager = ((MainActivity)getContext()).getSupportFragmentManager();
 
         mVpComments.setAdapter(new FragmentStatePagerAdapter(fragmentManager) {
             @Override
@@ -231,4 +238,8 @@ public class PopularVH extends BaseViewHolder<RemoteVoice> implements OnBottomMe
         mTvTextCom.setTextColor(BaseUtil.getColorInt(R.color.colorTextSelected));
     }
 
+    public PopularVH setId(){
+        mVpComments.setId(View.generateViewId());
+        return this;
+    }
 }

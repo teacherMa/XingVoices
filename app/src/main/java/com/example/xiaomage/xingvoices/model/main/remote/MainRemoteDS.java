@@ -31,7 +31,7 @@ public class MainRemoteDS implements MainDataSource {
                       WxUserInfo info, XingVoiceUserResp xingVoiceUserResp) {
         RetrofitClient.buildService(ApiService.class)
                 .login(Constants.XingVoicesParamValue.CHANNEL,
-                        info.getOpenid(), info.getNickname(), info.getSex())
+                        info.getOpenid(), info.getNickname(), info.getSex(),info.getHeadimgurl())
                 .enqueue(new Callback<XingVoiceUserResp>() {
                     @Override
                     public void onResponse(Call<XingVoiceUserResp> call,
@@ -56,10 +56,10 @@ public class MainRemoteDS implements MainDataSource {
 
     @Override
     public void getUserInfo(final OnResultCallback<BasicUserInfo> resultCallback,
-                            final XingVoiceUserResp resp) {
+                            String uid,String cid) {
         RetrofitClient.buildService(ApiService.class)
-                .getUser(Constants.XingVoicesParamValue.CHANNEL, resp.getUser().getUid(),
-                        resp.getUser().getUid())
+                .getUser(Constants.XingVoicesParamValue.CHANNEL,uid,
+                        cid)
                 .enqueue(new Callback<BasicUserInfo>() {
                     @Override
                     public void onResponse(Call<BasicUserInfo> call, Response<BasicUserInfo> response) {
@@ -87,29 +87,10 @@ public class MainRemoteDS implements MainDataSource {
     }
 
     @Override
-    public void requestVoicesList(final OnResultCallback<List<RemoteVoice>> resultCallback,
-                                  final XingVoiceUserResp resp, String dataType) {
-        Call<List<RemoteVoice>> respCall = null;
-
-        switch (dataType) {
-            case Constants.VoiceType.POPULAR:
-                respCall = RetrofitClient.buildService(ApiService.class)
-                        .getAllVoice(Constants.XingVoicesParamValue.CHANNEL, resp.getUser().getUid());
-                break;
-            case Constants.VoiceType.FOLLOW:
-                respCall = RetrofitClient.buildService(ApiService.class)
-                        .getMyFollow(Constants.XingVoicesParamValue.CHANNEL, resp.getUser().getUid());
-                break;
-            case Constants.VoiceType.COLLECTION:
-                RetrofitClient.buildService(ApiService.class)
-                        .getMyCollection(Constants.XingVoicesParamValue.CHANNEL, resp.getUser().getUid());
-                break;
-            default:
-                respCall = RetrofitClient.buildService(ApiService.class)
-                        .getAllVoice(Constants.XingVoicesParamValue.CHANNEL, resp.getUser().getUid());
-                break;
-        }
-
+    public void requestPopularVoicesList(final OnResultCallback<List<RemoteVoice>> resultCallback, String uid,
+                                         int is_u, String cid, int page, int num) {
+        Call<List<RemoteVoice>> respCall = RetrofitClient.buildService(ApiService.class)
+                .getAllVoice(Constants.XingVoicesParamValue.CHANNEL, uid,is_u,cid,page,num);
         if (null == respCall) {
             return;
         }

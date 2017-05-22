@@ -68,25 +68,4 @@ public class WXEntryPresenter extends BasePresenter<WXEntryContract.View, WXEntr
         getRepository().getWxUserInfo(accessToken,wxUserInfoOnResultCallback);
     }
 
-    @Override
-    public void downloadHeadPic(WxUserInfo info) {
-        OnResultCallback<ResponseBody> resultCallback = new OnResultCallback<ResponseBody>() {
-            @Override
-            public void onSuccess(ResponseBody resultValue, int code) {
-                if(null == getView()){
-                    return;
-                }
-                getView().startNewActivity();
-            }
-
-            @Override
-            public void onFail(String errorMessage) {
-                if(null == getView()){
-                    return;
-                }
-                BaseUtil.showToast(errorMessage);
-            }
-        };
-        getRepository().downloadHeadPic(info,resultCallback,null);
-    }
 }

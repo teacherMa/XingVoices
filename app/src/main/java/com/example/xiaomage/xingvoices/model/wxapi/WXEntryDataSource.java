@@ -10,6 +10,4 @@ public interface WXEntryDataSource {
 
     void getAccessToken(String code, OnResultCallback<AccessToken> callback);
     void getWxUserInfo(AccessToken accessToken, OnResultCallback<WxUserInfo>callback);
-    void downloadHeadPic(WxUserInfo info, OnResultCallback<ResponseBody> callback, ResponseBody body);
-
 }

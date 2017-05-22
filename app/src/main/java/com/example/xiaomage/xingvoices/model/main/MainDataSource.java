@@ -14,16 +14,21 @@ public interface MainDataSource {
 
     /**
     *这里的login是使用微信的信息去登录星声服务器,获取星声账号*/
-    void login(OnResultCallback<XingVoiceUserResp> resultCallback, WxUserInfo info, XingVoiceUserResp xingVoiceUserResp);
+    void login(OnResultCallback<XingVoiceUserResp> resultCallback, WxUserInfo info,
+               XingVoiceUserResp xingVoiceUserResp);
 
     /**
-     * 这里是通过星声账号，获取星声用户的基本信息，包括粉丝，关注数*/
-    void getUserInfo(OnResultCallback<BasicUserInfo> resultCallback, XingVoiceUserResp resp);
+     * 获取星声用户的基本信息，包括粉丝，关注数
+     * @param uid 当前浏览用户的id
+     * @param cid 被获取的用户id*/
+    void getUserInfo(OnResultCallback<BasicUserInfo> resultCallback, String uid,String cid);
 
     void getLocalUser(OnResultCallback<XingVoiceUser> callback);
 
-    void requestVoicesList(OnResultCallback<List<RemoteVoice>> resultCallback, XingVoiceUserResp resp, String dataType);
+    void requestPopularVoicesList(OnResultCallback<List<RemoteVoice>> resultCallback, String uid , int is_u,
+                                  String cid, int page, int num);
 
-    void requestComment(OnResultCallback<List<CommentBean>> resultCallback, RemoteVoice voice, XingVoiceUser bean,int commentType);
+    void requestComment(OnResultCallback<List<CommentBean>> resultCallback, RemoteVoice voice,
+                        XingVoiceUser bean,int commentType);
 
 }

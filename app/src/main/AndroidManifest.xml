@@ -18,12 +18,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity
-            android:name=".feature.LogInActivity"
-            android:screenOrientation="portrait">
+        <activity android:name=".feature.login.LogInActivity">
             <intent-filter>
-
                 <action android:name="android.intent.action.MAIN"/>
+
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
@@ -44,7 +42,6 @@
 
         <activity
             android:name=".feature.record.RecordActivity"
-            android:parentActivityName=".feature.main.MainActivity"
             android:screenOrientation="portrait">
 
         </activity>
@@ -58,7 +55,6 @@
 
         <activity
             android:name=".feature.personal.PersonalActivity"
-            android:parentActivityName=".feature.main.MainActivity"
             android:screenOrientation="portrait">
 
         </activity>

@@ -46,7 +46,7 @@ public class PersonalActivity extends BaseActivity<PersonalPresenter> {
         mPersonalView.setXingVoiceUser(mXingVoiceUser);
 
         return new PersonalPresenter(
-                Injection.providePersonalRepository(),
+                Injection.provideMainRepository(),
                 mPersonalView
         );
     }

@@ -101,10 +101,8 @@ public class MainView extends BaseBusView<MainContract.Presenter> implements Mai
 
     @Override
     protected void initView(Context context, AttributeSet attrs, int defStyleAttr) {
-
         prepareFragments();
         initViewPager();
-
     }
 
     @Override
@@ -233,11 +231,20 @@ public class MainView extends BaseBusView<MainContract.Presenter> implements Mai
     }
 
     @Override
-    public void initUserResp(XingVoiceUserResp resp) {
-        mResp = resp;
+    public void initMainUi() {
         mMainSlidingMenu.openMenu();
 
-        MainViewInitEvent initEvent = new MainViewInitEvent(mResp);
-        EventBus.getDefault().post(initEvent);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                MainViewInitEvent initEvent = new MainViewInitEvent(true);
+                EventBus.getDefault().post(initEvent);
+            }
+        }).start();
     }
 }

@@ -36,7 +36,9 @@ public class MainLocalDS implements MainDataSource {
 
         realm.beginTransaction();
 
-        final XingVoiceUser resp = realm.copyToRealm(xingVoiceUserResp.getUser());
+        final XingVoiceUser xingVoiceUser = xingVoiceUserResp.getUser();
+        xingVoiceUser.setHeadpic(info.getHeadimgurl());
+        realm.copyToRealm(xingVoiceUser);
 
         realm.commitTransaction();
 
@@ -45,9 +47,10 @@ public class MainLocalDS implements MainDataSource {
     }
 
     @Override
-    public void getUserInfo(OnResultCallback<BasicUserInfo> resultCallback, XingVoiceUserResp resp) {
+    public void getUserInfo(OnResultCallback<BasicUserInfo> resultCallback, String uid, String cid) {
 
     }
+
 
     @Override
     public void getLocalUser(OnResultCallback<XingVoiceUser> callback) {
@@ -65,12 +68,15 @@ public class MainLocalDS implements MainDataSource {
     }
 
     @Override
-    public void requestVoicesList(OnResultCallback<List<RemoteVoice>> resultCallback, XingVoiceUserResp resp, String dataType) {
+    public void requestPopularVoicesList(OnResultCallback<List<RemoteVoice>> resultCallback, String uid,
+                                         int is_u, String cid, int page, int num) {
 
     }
 
+
     @Override
-    public void requestComment(OnResultCallback<List<CommentBean>> resultCallback, RemoteVoice voice, XingVoiceUser bean,int commentType) {
+    public void requestComment(OnResultCallback<List<CommentBean>> resultCallback, RemoteVoice voice,
+                               XingVoiceUser bean,int commentType) {
 
     }
 

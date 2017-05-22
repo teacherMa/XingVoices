@@ -66,22 +66,4 @@ public class WXEntryRepository extends BaseRepository implements WXEntryDataSour
         mRemoteDS.getWxUserInfo(accessToken,wxUserInfoOnResultCallback);
     }
 
-    @Override
-    public void downloadHeadPic(final WxUserInfo info, final OnResultCallback<ResponseBody> callback, final ResponseBody body) {
-
-        OnResultCallback<ResponseBody> responseBodyOnResultCallback = new OnResultCallback<ResponseBody>() {
-            @Override
-            public void onSuccess(ResponseBody resultValue, int code) {
-                mLocalDS.downloadHeadPic(info,callback,resultValue);
-            }
-
-            @Override
-            public void onFail(String errorMessage) {
-                callback.onFail(errorMessage);
-            }
-        };
-
-        mRemoteDS.downloadHeadPic(info, responseBodyOnResultCallback, null);
-    }
-
 }

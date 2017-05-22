@@ -57,13 +57,12 @@
 
             <ImageView
                 android:id="@+id/iv_com_content"
-                android:layout_width="match_parent"
+                android:layout_width="50dp"
                 android:layout_height="12dp"
                 android:layout_centerVertical="true"
-                android:layout_toStartOf="@id/tv_voice_com_length"
+                android:layout_alignParentStart="true"
                 android:background="@drawable/bg_voice_bar"
                 android:contentDescription="@string/iv_con_des"/>
-
 
         </RelativeLayout>
 
