@@ -5,11 +5,9 @@ import android.support.annotation.NonNull;
 import com.example.xiaomage.xingvoices.api.OnResultCallback;
 import com.example.xiaomage.xingvoices.framework.BasePresenter;
 import com.example.xiaomage.xingvoices.model.bean.RemoteVoice.RemoteVoice;
-import com.example.xiaomage.xingvoices.model.bean.RemoteVoice.VoiceResp;
-import com.example.xiaomage.xingvoices.model.bean.User.UserResp;
+import com.example.xiaomage.xingvoices.model.bean.User.XingVoiceUser;
 import com.example.xiaomage.xingvoices.model.main.MainRepository;
 import com.example.xiaomage.xingvoices.utils.BaseUtil;
-import com.example.xiaomage.xingvoices.utils.Constants;
 
 import java.util.List;
 
@@ -25,8 +23,8 @@ public class PopularPresenter extends BasePresenter<PopularContract.View, MainRe
     }
 
     @Override
-    public void requestData(UserResp userResp) {
-        OnResultCallback<List<RemoteVoice>> callback = new OnResultCallback<List<RemoteVoice>>() {
+    public void requestAllPopularVoice() {
+        final OnResultCallback<List<RemoteVoice>> callback = new OnResultCallback<List<RemoteVoice>>() {
             @Override
             public void onSuccess(List<RemoteVoice> resultValue, int code) {
                 if(null == getView()){
@@ -43,6 +41,18 @@ public class PopularPresenter extends BasePresenter<PopularContract.View, MainRe
                 BaseUtil.showToast(errorMessage);
             }
         };
-        getRepository().requestData(callback,userResp, Constants.VoiceType.POPULAR);
+        OnResultCallback<XingVoiceUser> userOnResultCallback = new OnResultCallback<XingVoiceUser>() {
+            @Override
+            public void onSuccess(XingVoiceUser resultValue, int code) {
+                getRepository().requestPopularVoicesList(callback, resultValue.getUid(),
+                        0,null,1,10);
+            }
+
+            @Override
+            public void onFail(String errorMessage) {
+                callback.onFail(errorMessage);
+            }
+        };
+        getRepository().getLocalUser(userOnResultCallback);
     }
 }

@@ -19,7 +19,7 @@ public class Constants {
         String GRANT_TYPE = "authorization_code";
     }
 
-    public interface WxApi{
+    public interface WxApi {
         String ACCESS_TOKEN = "oauth2/access_token";
         String USER_INFO = "userinfo";
         String PIC_API = "";
@@ -34,42 +34,53 @@ public class Constants {
         String OPEN_ID = "openid";
     }
 
-    public interface XingVoicesApi{
+    public interface XingVoicesApi {
         String LOGIN = "login";
-        String GET_USER = "getUser";
+        String GET_USER = "getUserInfo";
         String ALL_VOICE = "allVoice";
         String MY_FOLLOW = "myFocus";
         String MY_COLLECTION = "myFavorites";
+        String VOICE_TO_COMMENTS = "voiceToComments";
     }
 
-    public interface XingVoicesRequestParam{
+    public interface XingVoicesRequestParam {
         String CHANNEL = "channel";
         String OPEN_ID = "openid";
+        String HEADPIC = "headpic";
         String NICKNAME = "nickname";
         String SEX = "sex";
-        String HEAD_PIC = "headpic";
         String UID = "uid";
         String CID = "cid";
+        String VID = "vid";
+        String TYPE = "type";
+        String PAGE = "page";
+        String NUM = "num";
+        String IS_U = "is_u";
     }
 
-    public interface XingVoicesParamValue{
+    public interface XingVoicesParamValue {
         String CHANNEL = "APP";
         int MAN = 1;
         int WOMEN = 0;
     }
 
-    public interface VoiceType{
+    public interface VoiceType {
         String POPULAR = "popular";
         String FOLLOW = "follow";
         String COLLECTION = "collection";
     }
 
-    public interface CommentType{
+    public interface CommentType {
         int VOICE = 1;
         int TEXT = 0;
     }
 
-    public interface FollowType{
+    public interface CommentItemType {
+        int SIMPLE = 0;
+        int TOTAL = 1;
+    }
+
+    public interface FollowType {
         int UnFollow = 0;
         int Followed = 1;
     }
@@ -107,18 +118,18 @@ public class Constants {
                 REMOTE = 1025;
     }
 
-    public interface RecordState{
+    public interface RecordState {
         int PREPARE_RECORD = 0;
         int IS_RECORDING = 1;
         int PREPARE_AUDITION = 2;
         int IS_AUDITION = 3;
     }
 
-    public interface FileName{
+    public interface FileName {
         String HEAD_PIC = "headpic";
     }
 
-    public interface BottomMenuItem{
+    public interface BottomMenuItem {
         int COMMENT = 0;
         int COLLECTION = 1;
         int SHARE = 2;
@@ -127,11 +138,10 @@ public class Constants {
     }
 
     /**
-     *BottomMenu的点击事件有可能需要再往外传递给PopularView，RecyclerView的Item点击事件也需要传递
+     * BottomMenu的点击事件有可能需要再往外传递给PopularView，RecyclerView的Item点击事件也需要传递
      * 给PopularView，可能发生冲突，所以这里从10开始赋值
-     *
-     * */
-    public interface MainPopularItem{
+     */
+    public interface MainPopularItem {
         int FOLLOW = 10;
     }
 }

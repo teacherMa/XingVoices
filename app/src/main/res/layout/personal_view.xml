@@ -19,13 +19,14 @@
             android:contentDescription="@string/iv_con_des"
             android:src="@drawable/ic_arrow_left"/>
 
-        <com.example.xiaomage.xingvoices.custom.view.CircleImageView
+        <ImageView
             android:id="@+id/personal_user_avatar"
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:layout_below="@id/iv_back_content"
             android:layout_centerInParent="true"
-            android:src="@drawable/avatar"/>
+            android:src="@drawable/avatar"
+            android:contentDescription="@string/iv_con_des"/>
 
         <TextView
             android:id="@+id/personal_user_name"

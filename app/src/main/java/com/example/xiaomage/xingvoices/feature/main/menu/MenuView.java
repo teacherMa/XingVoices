@@ -17,8 +17,8 @@ import com.example.xiaomage.xingvoices.event.EmptyEvent;
 import com.example.xiaomage.xingvoices.event.MenuCloseEvent;
 import com.example.xiaomage.xingvoices.event.MainViewInitEvent;
 import com.example.xiaomage.xingvoices.framework.BaseBusView;
-import com.example.xiaomage.xingvoices.model.bean.User.UserInfo;
-import com.example.xiaomage.xingvoices.model.bean.User.UserResp;
+import com.example.xiaomage.xingvoices.model.bean.User.BasicUserInfo;
+import com.example.xiaomage.xingvoices.model.bean.User.XingVoiceUserResp;
 import com.example.xiaomage.xingvoices.utils.BaseUtil;
 import com.example.xiaomage.xingvoices.utils.FileUtil;
 
@@ -34,7 +34,7 @@ public class MenuView extends BaseBusView<MenuContract.Presenter> implements Men
     @BindView(R.id.iv_back_content)
     ImageView mIvBackContent;
     @BindView(R.id.menu_user_avatar)
-    CircleImageView mMenuUserAvatar;
+    ImageView mMenuUserAvatar;
     @BindView(R.id.menu_user_name)
     TextView mMenuUserName;
     @BindView(R.id.tv_follow_number)
@@ -58,8 +58,7 @@ public class MenuView extends BaseBusView<MenuContract.Presenter> implements Men
     @BindView(R.id.rl_menu_setting_list)
     RelativeLayout mRlMenuSettingList;
 
-    private UserResp mResp;
-    private UserInfo mUserInfo;
+    private BasicUserInfo mBasicUserInfo;
 
     public MenuView(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
@@ -77,8 +76,10 @@ public class MenuView extends BaseBusView<MenuContract.Presenter> implements Men
         }
         if(event instanceof MainViewInitEvent){
             MainViewInitEvent initEvent = (MainViewInitEvent) event;
-            mResp = initEvent.getResp();
-            getPresenter().getUserInfo(mResp);
+            if(!initEvent.isNeedInit()){
+                return;
+            }
+            getPresenter().getUserInfo();
         }
     }
 
@@ -113,25 +114,22 @@ public class MenuView extends BaseBusView<MenuContract.Presenter> implements Men
             case R.id.menu_my_setting:
                 break;
         }
-        BaseUtil.showToast(""+view.getId());
     }
 
-    @Override
-    public void setUserInfo(UserInfo userInfo) {
+    public void setBasicUserInfo(BasicUserInfo basicUserInfo) {
 
-        if(null == userInfo){
+        if(null == basicUserInfo){
             return;
         }
 
-        mUserInfo = userInfo;
+        mBasicUserInfo = basicUserInfo;
 
-        BitmapDrawable bitmapDrawable = new BitmapDrawable(FileUtil.getUserHeadFile());
-        mMenuUserAvatar.setImageDrawable(bitmapDrawable);
+        BaseUtil.loadCirclePic(basicUserInfo.getHeadpic()).into(mMenuUserAvatar);
 
-        mMenuUserName.setText(userInfo.getNickname());
+        mMenuUserName.setText(basicUserInfo.getNickname());
 
-        mTvFollowNumber.setText(String.valueOf(userInfo.getGuanzhu()));
+        mTvFollowNumber.setText(String.valueOf(basicUserInfo.getGuanzhu()));
 
-        mTvFansNum.setText(String.valueOf(userInfo.getFensi()));
+        mTvFansNum.setText(String.valueOf(basicUserInfo.getFensi()));
     }
 }

@@ -2,9 +2,10 @@ package com.example.xiaomage.xingvoices.feature.main.popular;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,16 +17,20 @@ import android.widget.TextView;
 import com.example.xiaomage.xingvoices.R;
 import com.example.xiaomage.xingvoices.api.OnItemClickListener;
 import com.example.xiaomage.xingvoices.api.main.OnBottomMenuItemClickListener;
+import com.example.xiaomage.xingvoices.custom.view.WrapContentViewPager;
 import com.example.xiaomage.xingvoices.custom.view.bottomMenu.BottomMenu;
+import com.example.xiaomage.xingvoices.feature.main.MainActivity;
+import com.example.xiaomage.xingvoices.feature.main.textComment.TextCommentFragment;
+import com.example.xiaomage.xingvoices.feature.main.voiceComment.VoiceCommentFragment;
 import com.example.xiaomage.xingvoices.feature.personal.PersonalActivity;
-import com.example.xiaomage.xingvoices.framework.BaseAdapter;
 import com.example.xiaomage.xingvoices.framework.BaseViewHolder;
-import com.example.xiaomage.xingvoices.model.bean.CommentBean.TextCommentBean;
-import com.example.xiaomage.xingvoices.model.bean.CommentBean.VoiceCommentBean;
 import com.example.xiaomage.xingvoices.model.bean.RemoteVoice.RemoteVoice;
-import com.example.xiaomage.xingvoices.model.bean.User.UserBean;
+import com.example.xiaomage.xingvoices.model.bean.User.XingVoiceUser;
 import com.example.xiaomage.xingvoices.utils.BaseUtil;
 import com.example.xiaomage.xingvoices.utils.Constants;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -61,20 +66,18 @@ public class PopularVH extends BaseViewHolder<RemoteVoice> implements OnBottomMe
     TextView mTvTextCom;
     @BindView(R.id.tv_voice_com)
     TextView mTvVoiceCom;
-    @BindView(R.id.rv_text_com_list)
-    RecyclerView mRvTextComList;
-    @BindView(R.id.rv_voice_com_list)
-    RecyclerView mRvVoiceComList;
     @BindView(R.id.tv_more_com)
     TextView mTvMoreCom;
     @BindView(R.id.tv_voice_name)
     TextView mTvVoiceName;
     @BindView(R.id.tv_voice_length)
     TextView mTvVoiceLength;
+    @BindView(R.id.vp_comments)
+    WrapContentViewPager mVpComments;
 
-    private boolean mIsUser;
     private OnItemClickListener<RemoteVoice> mOnItemClickListener;
     private RemoteVoice mRemoteVoice;
+    private List<Fragment> mFragments;
 
     public PopularVH(Context context, ViewGroup root) {
         super(context, root, R.layout.main_popular_item);
@@ -82,6 +85,7 @@ public class PopularVH extends BaseViewHolder<RemoteVoice> implements OnBottomMe
 
     @Override
     protected void bindData(RemoteVoice itemValue, int position, OnItemClickListener listener) {
+
         mOnItemClickListener = listener;
         mRemoteVoice = itemValue;
 
@@ -105,14 +109,20 @@ public class PopularVH extends BaseViewHolder<RemoteVoice> implements OnBottomMe
 
         mTvBrowsedTimes.setText(String.valueOf(itemValue.getPlay_num()));
 
-        initRv();
-
+        prepareFragment();
+        initViewPager();
     }
 
     @OnClick(R.id.civ_user_avatar)
     public void onMCivUserAvatarClicked() {
-        UserBean userBean = new UserBean();
-        Intent intent = PersonalActivity.getNewIntent(userBean, getContext());
+
+        XingVoiceUser xingVoiceUser = new XingVoiceUser();
+
+        xingVoiceUser.setHeadpic(mRemoteVoice.getUser().getHeadpic());
+        xingVoiceUser.setNickname(mRemoteVoice.getUser().getNickname());
+        xingVoiceUser.setUid(mRemoteVoice.getUser().getUid());
+
+        Intent intent = PersonalActivity.getNewIntent(xingVoiceUser, getContext());
         getContext().startActivity(intent);
     }
 
@@ -131,11 +141,16 @@ public class PopularVH extends BaseViewHolder<RemoteVoice> implements OnBottomMe
 
     @OnClick(R.id.tv_text_com)
     public void onMTvTextComClicked() {
-
+        mTvTextCom.setTextColor(BaseUtil.getColorInt(R.color.colorTextSelected));
+        mTvVoiceCom.setTextColor(BaseUtil.getColorInt(R.color.colorTextUnselected));
+        mVpComments.setCurrentItem(0);
     }
 
     @OnClick(R.id.tv_voice_com)
     public void onMTvVoiceComClicked() {
+        mTvVoiceCom.setTextColor(BaseUtil.getColorInt(R.color.colorTextSelected));
+        mTvTextCom.setTextColor(BaseUtil.getColorInt(R.color.colorTextUnselected));
+        mVpComments.setCurrentItem(1);
     }
 
     @OnClick(R.id.tv_more_com)
@@ -162,92 +177,69 @@ public class PopularVH extends BaseViewHolder<RemoteVoice> implements OnBottomMe
         }
     }
 
-    private void initRv() {
+    private void prepareFragment() {
+        mFragments = new ArrayList<>();
 
-        mRvTextComList.setItemAnimator(new DefaultItemAnimator());
-        mRvTextComList.setLayoutManager(new LinearLayoutManager(getContext()));
+        TextCommentFragment textCommentFragment = new TextCommentFragment();
+        textCommentFragment.setRemoteVoice(mRemoteVoice);
+        mFragments.add(textCommentFragment);
 
-        TextListAdapter textListAdapter = new TextListAdapter();
+        VoiceCommentFragment voiceCommentFragment = new VoiceCommentFragment();
+        voiceCommentFragment.setRemoteVoice(mRemoteVoice);
+        mFragments.add(voiceCommentFragment);
 
-        mRvTextComList.setAdapter(textListAdapter);
-
-        mRvVoiceComList.setItemAnimator(new DefaultItemAnimator());
-        mRvVoiceComList.setLayoutManager(new LinearLayoutManager(getContext()));
-
-        VoiceListAdapter voiceListAdapter = new VoiceListAdapter();
-
-        mRvVoiceComList.setAdapter(voiceListAdapter);
     }
 
-    private class TextListHolder extends BaseViewHolder<TextCommentBean> {
+    private void initViewPager() {
 
-        @BindView(R.id.civ_com_user_avatar)
-        ImageView mCivComUserAvatar;
-        @BindView(R.id.tv_com_user_name)
-        TextView mTvComUserName;
-        @BindView(R.id.tv_com_content)
-        TextView mTvComContent;
-        @BindView(R.id.tv_com_like_num)
-        TextView mTvComLikeNum;
-        @BindView(R.id.iv_com_like_it)
-        ImageView mIvComLikeIt;
+        FragmentManager fragmentManager = ((MainActivity)getContext()).getSupportFragmentManager();
 
-        public TextListHolder(Context context, ViewGroup root) {
-            super(context, root, R.layout.main_text_comment_simple_item);
-        }
+        mVpComments.setAdapter(new FragmentStatePagerAdapter(fragmentManager) {
+            @Override
+            public Fragment getItem(int position) {
+                return mFragments.get(position);
+            }
 
-        @Override
-        protected void bindData(TextCommentBean itemValue, int position, OnItemClickListener listener) {
+            @Override
+            public int getCount() {
+                return 2;
+            }
+        });
 
-        }
+        mVpComments.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
-        @OnClick(R.id.iv_com_like_it)
-        public void onViewClicked() {
-        }
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                switch (position) {
+                    case 0:
+                        mTvTextCom.setTextColor(BaseUtil.getColorInt(R.color.colorTextSelected));
+                        mTvVoiceCom.setTextColor(BaseUtil.getColorInt(R.color.colorTextUnselected));
+                        break;
+                    case 1:
+                        mTvVoiceCom.setTextColor(BaseUtil.getColorInt(R.color.colorTextSelected));
+                        mTvTextCom.setTextColor(BaseUtil.getColorInt(R.color.colorTextUnselected));
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+
+        mVpComments.setCurrentItem(0);
+        mTvTextCom.setTextColor(BaseUtil.getColorInt(R.color.colorTextSelected));
     }
 
-    private class TextListAdapter extends BaseAdapter<TextCommentBean> {
-
-        @Override
-        protected BaseViewHolder createViewHolder(Context context, ViewGroup parent) {
-            return new TextListHolder(context, parent);
-        }
-    }
-
-    private class VoiceListHolder extends BaseViewHolder<VoiceCommentBean> {
-
-        @BindView(R.id.civ_com_user_avatar)
-        ImageView mCivComUserAvatar;
-        @BindView(R.id.tv_com_user_name)
-        TextView mTvComUserName;
-        @BindView(R.id.tv_voice_com_length)
-        TextView mTvVoiceComLength;
-        @BindView(R.id.tv_com_content)
-        ImageView mTvComContent;
-        @BindView(R.id.tv_com_like_num)
-        TextView mTvComLikeNum;
-        @BindView(R.id.iv_com_like_it)
-        ImageView mIvComLikeIt;
-
-        public VoiceListHolder(Context context, ViewGroup root) {
-            super(context, root, R.layout.main_voice_comment_simple_item);
-        }
-
-        @Override
-        protected void bindData(VoiceCommentBean itemValue, int position, OnItemClickListener listener) {
-
-        }
-
-        @OnClick(R.id.iv_com_like_it)
-        public void onViewClicked() {
-        }
-    }
-
-    private class VoiceListAdapter extends BaseAdapter<VoiceCommentBean> {
-
-        @Override
-        protected BaseViewHolder createViewHolder(Context context, ViewGroup parent) {
-            return new VoiceListHolder(context, parent);
-        }
+    public PopularVH setId(){
+        mVpComments.setId(View.generateViewId());
+        return this;
     }
 }

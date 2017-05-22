@@ -61,14 +61,12 @@ public class WXEntryView extends BaseView<WXEntryContract.Presenter> implements 
     @Override
     public void setWxUserInfo(WxUserInfo userInfo) {
         mWxUserInfo = userInfo;
-        getPresenter().downloadHeadPic(userInfo);
+        startNewActivity();
     }
 
-    @Override
     public void startNewActivity() {
         Intent intent = MainActivity.getNewIntent(getContext(),mWxUserInfo);
         getContext().startActivity(intent);
     }
-
 
 }

@@ -8,7 +8,7 @@ import android.support.annotation.Nullable;
 
 import com.example.xiaomage.xingvoices.R;
 import com.example.xiaomage.xingvoices.framework.BaseActivity;
-import com.example.xiaomage.xingvoices.model.bean.User.UserBean;
+import com.example.xiaomage.xingvoices.model.bean.User.XingVoiceUser;
 import com.example.xiaomage.xingvoices.utils.Injection;
 
 import butterknife.BindView;
@@ -20,13 +20,13 @@ public class PersonalActivity extends BaseActivity<PersonalPresenter> {
     @BindView(R.id.personal_view)
     PersonalView mPersonalView;
 
-    private UserBean mUserBean;
+    private XingVoiceUser mXingVoiceUser;
 
-    public static Intent getNewIntent(UserBean userBean, Context context){
+    public static Intent getNewIntent(XingVoiceUser xingVoiceUser, Context context){
         Intent intent = new Intent(context,PersonalActivity.class);
 
         Bundle bundle = new Bundle();
-        bundle.putSerializable(ARG_USER_BEAN,userBean);
+        bundle.putSerializable(ARG_USER_BEAN, xingVoiceUser);
 
         intent.putExtras(bundle);
 
@@ -42,11 +42,11 @@ public class PersonalActivity extends BaseActivity<PersonalPresenter> {
     @Override
     protected PersonalPresenter createPresenter() {
 
-        mUserBean = (UserBean)getIntent().getSerializableExtra(ARG_USER_BEAN);
-        mPersonalView.setUserBean(mUserBean);
+        mXingVoiceUser = (XingVoiceUser)getIntent().getSerializableExtra(ARG_USER_BEAN);
+        mPersonalView.setXingVoiceUser(mXingVoiceUser);
 
         return new PersonalPresenter(
-                Injection.providePersonalRepository(),
+                Injection.provideMainRepository(),
                 mPersonalView
         );
     }

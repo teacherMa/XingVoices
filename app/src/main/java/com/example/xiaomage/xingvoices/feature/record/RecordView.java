@@ -14,6 +14,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.xiaomage.xingvoices.R;
+import com.example.xiaomage.xingvoices.feature.main.MainActivity;
 import com.example.xiaomage.xingvoices.feature.record.publish.PublishActivity;
 import com.example.xiaomage.xingvoices.framework.BaseView;
 import com.example.xiaomage.xingvoices.model.bean.LocalVoice.LocalVoice;
@@ -114,7 +115,7 @@ public class RecordView extends BaseView<RecordContract.Presenter> implements Re
                 break;
             case R.id.iv_cancel_record:
                 releaseAll();
-                NavUtils.navigateUpFromSameTask((RecordActivity) getContext());
+                ((RecordActivity)getContext()).onBackPressed();
                 break;
             case R.id.iv_audition:
                 if (mRecordState.getCurrentState() == PREPARE_AUDITION) {

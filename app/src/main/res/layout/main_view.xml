@@ -6,6 +6,7 @@ android:id="@+id/main_sliding_menu"
 android:layout_width="match_parent"
 android:layout_height="match_parent"
 android:scrollbars="none"
+android:fillViewport="true"
 app:drawerType="true"
 app:rightPadding="100dp">
 
@@ -58,7 +59,9 @@ app:rightPadding="100dp">
                         android:id="@+id/iv_main_nav"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:padding="1dp"
+                        android:padding="4dp"
+                        android:background="?attr/selectableItemBackground"
+                        android:clickable="true"
                         android:src="@drawable/ic_main_nav_sidebar"
                         android:contentDescription="@string/app_name"/>
 

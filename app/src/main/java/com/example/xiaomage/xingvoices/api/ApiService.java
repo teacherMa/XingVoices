@@ -1,9 +1,10 @@
 package com.example.xiaomage.xingvoices.api;
 
+import com.example.xiaomage.xingvoices.model.bean.CommentBean.CommentBean;
 import com.example.xiaomage.xingvoices.model.bean.RemoteVoice.RemoteVoice;
 import com.example.xiaomage.xingvoices.model.bean.RemoteVoice.VoiceResp;
-import com.example.xiaomage.xingvoices.model.bean.User.UserInfo;
-import com.example.xiaomage.xingvoices.model.bean.User.UserResp;
+import com.example.xiaomage.xingvoices.model.bean.User.BasicUserInfo;
+import com.example.xiaomage.xingvoices.model.bean.User.XingVoiceUserResp;
 import com.example.xiaomage.xingvoices.model.bean.WxBean.AccessToken;
 import com.example.xiaomage.xingvoices.model.bean.WxBean.WxUserInfo;
 import com.example.xiaomage.xingvoices.utils.Constants;
@@ -32,27 +33,38 @@ public interface ApiService {
     Call<ResponseBody> downloadHeadPic(@Path("className") String className);
 
     @GET(Constants.XingVoicesApi.LOGIN)
-    Call<UserResp> login(@Query(Constants.XingVoicesRequestParam.CHANNEL) String channel,
-                         @Query(Constants.XingVoicesRequestParam.OPEN_ID) String openid,
-                         @Query(Constants.XingVoicesRequestParam.NICKNAME) String nickname,
-                         @Query(Constants.XingVoicesRequestParam.SEX) int sex);
+    Call<XingVoiceUserResp> login(@Query(Constants.XingVoicesRequestParam.CHANNEL) String channel,
+                                  @Query(Constants.XingVoicesRequestParam.OPEN_ID) String openid,
+                                  @Query(Constants.XingVoicesRequestParam.NICKNAME) String nickname,
+                                  @Query(Constants.XingVoicesRequestParam.SEX) int sex,
+                                  @Query(Constants.XingVoicesRequestParam.HEADPIC) String hedapic);
 
 
     @GET(Constants.XingVoicesApi.GET_USER)
-    Call<UserInfo> getUser(@Query(Constants.XingVoicesRequestParam.CHANNEL) String channel,
-                           @Query(Constants.XingVoicesRequestParam.UID) String uid,
-                           @Query(Constants.XingVoicesRequestParam.CID) String cid);
+    Call<BasicUserInfo> getUser(@Query(Constants.XingVoicesRequestParam.CHANNEL) String channel,
+                                @Query(Constants.XingVoicesRequestParam.UID) String uid,
+                                @Query(Constants.XingVoicesRequestParam.CID) String cid);
 
     @GET(Constants.XingVoicesApi.ALL_VOICE)
     Call<List<RemoteVoice>> getAllVoice(@Query(Constants.XingVoicesRequestParam.CHANNEL) String channel,
-                                        @Query(Constants.XingVoicesRequestParam.UID) String uid);
+                                        @Query(Constants.XingVoicesRequestParam.UID) String uid,
+                                        @Query(Constants.XingVoicesRequestParam.IS_U) int is_u,
+                                        @Query(Constants.XingVoicesRequestParam.CID) String cid,
+                                        @Query(Constants.XingVoicesRequestParam.PAGE) int page,
+                                        @Query(Constants.XingVoicesRequestParam.NUM) int num);
 
     @GET(Constants.XingVoicesApi.MY_COLLECTION)
-    Call<VoiceResp> getMyCollection(@Query(Constants.XingVoicesRequestParam.CHANNEL) String channel,
+    Call<List<RemoteVoice>> getMyCollection(@Query(Constants.XingVoicesRequestParam.CHANNEL) String channel,
                                 @Query(Constants.XingVoicesRequestParam.UID) String uid);
 
     @GET(Constants.XingVoicesApi.MY_FOLLOW)
-    Call<VoiceResp> getMyFollow(@Query(Constants.XingVoicesRequestParam.CHANNEL) String channel,
+    Call<List<RemoteVoice>> getMyFollow(@Query(Constants.XingVoicesRequestParam.CHANNEL) String channel,
                                   @Query(Constants.XingVoicesRequestParam.UID) String uid);
+
+    @GET(Constants.XingVoicesApi.VOICE_TO_COMMENTS)
+    Call<List<CommentBean>> getVoiceComment(@Query(Constants.XingVoicesRequestParam.CHANNEL) String channel,
+                                      @Query(Constants.XingVoicesRequestParam.UID) String uid,
+                                      @Query(Constants.XingVoicesRequestParam.VID) String vid,
+                                      @Query(Constants.XingVoicesRequestParam.TYPE) int type);
 
 }

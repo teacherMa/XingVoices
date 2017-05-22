@@ -4,7 +4,7 @@ import android.support.annotation.NonNull;
 
 import com.example.xiaomage.xingvoices.api.OnResultCallback;
 import com.example.xiaomage.xingvoices.framework.BasePresenter;
-import com.example.xiaomage.xingvoices.model.bean.User.UserResp;
+import com.example.xiaomage.xingvoices.model.bean.User.XingVoiceUserResp;
 import com.example.xiaomage.xingvoices.model.bean.WxBean.WxUserInfo;
 import com.example.xiaomage.xingvoices.model.main.MainRepository;
 import com.example.xiaomage.xingvoices.utils.BaseUtil;
@@ -18,18 +18,22 @@ public class MainPresenter extends BasePresenter<MainContract.View, MainReposito
     @Override
     public void start() {
         WxUserInfo info = getView().getWxUserInfo();
+        if(null == info){
+            getView().initMainUi();
+            return;
+        }
         login(info);
     }
 
     @Override
     public void login(WxUserInfo info) {
-        OnResultCallback<UserResp> callback = new OnResultCallback<UserResp>() {
+        OnResultCallback<XingVoiceUserResp> callback = new OnResultCallback<XingVoiceUserResp>() {
             @Override
-            public void onSuccess(UserResp resultValue, int code) {
+            public void onSuccess(XingVoiceUserResp resultValue, int code) {
                 if(null == getView()){
                     return;
                 }
-                getView().initUserResp(resultValue);
+                getView().initMainUi();
             }
 
             @Override
@@ -40,7 +44,7 @@ public class MainPresenter extends BasePresenter<MainContract.View, MainReposito
                 BaseUtil.showToast(errorMessage);
             }
         };
-        getRepository().login(callback,info);
+        getRepository().login(callback,info,null);
     }
 
 }
