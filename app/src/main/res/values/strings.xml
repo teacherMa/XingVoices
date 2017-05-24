@@ -2,6 +2,7 @@
     <string name="app_name">XingVoices</string>
 
     <string name="iv_con_des">fuck google</string>
+    <string name="alert_ok">好的</string>
 
     <string name="main_popular">热门</string>
     <string name="main_follow">关注</string>
@@ -15,12 +16,14 @@
     <string name="main_voice_comments">语音评论</string>
     <string name="main_more_comments">更多评论</string>
 
-    <string name="main_menu_default_follow">66</string>
-    <string name="main_menu_default_fans">88</string>
+    <string name="main_menu_default_follow">0</string>
+    <string name="main_menu_default_fans">0</string>
     <string name="main_menu_follow">关注</string>
     <string name="main_menu_fans">粉丝</string>
 
     <string name="record_time_hint">录制时间最短10s</string>
+    <string name="record_time_too_short">时间太短</string>
+    <string name="record_too_short_to_abandon">不够10s，无法保存</string>
     <string name="record_init_time">0</string>
     <string name="record_split_time">:</string>
     <string name="record_again">重录</string>
@@ -29,6 +32,13 @@
     <string name="record_stop">停止</string>
     <string name="record_continue">继续录制</string>
     <string name="record_publish_name_hint">在此为音频输入一个名称吧！</string>
+    <string name="record_no_title">没有标题</string>
+    <string name="record_need_title">录音需要标题</string>
+    <string name="record_no_pic">没有图片</string>
+    <string name="record_need_pic">录音需要图片</string>
+    <string name="record_publish">上传</string>
+    <string name="record_publish_success">上传成功</string>
+    <string name="record_is_upload">正在上传</string>
 
     <string name="personal_follow">关注</string>
     <string name="personal_fans">粉丝</string>

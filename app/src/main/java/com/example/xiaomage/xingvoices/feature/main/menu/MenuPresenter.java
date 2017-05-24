@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 
 import com.example.xiaomage.xingvoices.api.OnResultCallback;
 import com.example.xiaomage.xingvoices.framework.BasePresenter;
+import com.example.xiaomage.xingvoices.model.UserManager;
 import com.example.xiaomage.xingvoices.model.bean.User.BasicUserInfo;
 import com.example.xiaomage.xingvoices.model.bean.User.XingVoiceUser;
 import com.example.xiaomage.xingvoices.model.bean.User.XingVoiceUserResp;
@@ -29,6 +30,9 @@ public class MenuPresenter extends BasePresenter<MenuContract.View, MainReposito
             public void onSuccess(BasicUserInfo resultValue, int code) {
                 if(null == getView()){
                     return;
+                }
+                if (null != UserManager.getInstance().getCurrentUser()){
+                    resultValue.setHeadpic(UserManager.getInstance().getCurrentUser().getAvatar());
                 }
                 getView().setBasicUserInfo(resultValue);
             }

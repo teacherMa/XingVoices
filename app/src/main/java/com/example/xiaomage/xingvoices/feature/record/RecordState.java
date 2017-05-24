@@ -54,6 +54,7 @@ public class RecordState {
 
     public void setCurrentState(int currentState) {
         mCurrentState = currentState;
+        updateState();
     }
 
     public int getCurrentState() {
@@ -61,7 +62,11 @@ public class RecordState {
         return mCurrentState;
     }
 
-    public void updateState(){
+    public void init(){
+        updateState();
+    }
+
+    private void updateState(){
 
         switch (mCurrentState){
             case Constants.RecordState.PREPARE_RECORD:
@@ -77,6 +82,8 @@ public class RecordState {
                 mIvSave.setVisibility(GONE);
                 mAudiProBar.setVisibility(GONE);
                 mAudiTime.setVisibility(GONE);
+
+                mVoiceTimer.stop();
                 mVoiceTimer.setBase(SystemClock.elapsedRealtime());
                 break;
             case Constants.RecordState.IS_RECORDING:

@@ -10,6 +10,8 @@ import com.example.xiaomage.xingvoices.model.bean.WxBean.WxUserInfo;
 
 import java.util.List;
 
+import okhttp3.ResponseBody;
+
 public interface MainDataSource {
 
     /**
@@ -25,10 +27,15 @@ public interface MainDataSource {
 
     void getLocalUser(OnResultCallback<XingVoiceUser> callback);
 
-    void requestPopularVoicesList(OnResultCallback<List<RemoteVoice>> resultCallback, String uid , int is_u,
-                                  String cid, int page, int num);
+    void requestPopularVoicesList(OnResultCallback<List<RemoteVoice>> resultCallback, String uid ,
+                                  int is_u, String cid, int page, int num);
 
     void requestComment(OnResultCallback<List<CommentBean>> resultCallback, RemoteVoice voice,
                         XingVoiceUser bean,int commentType);
+
+    void downloadVoice(OnResultCallback<ResponseBody> resultCallback, ResponseBody responseBody,
+                       String vUrl,String vId);
+
+    void playVoice(OnResultCallback<Boolean> resultCallback,String vId);
 
 }

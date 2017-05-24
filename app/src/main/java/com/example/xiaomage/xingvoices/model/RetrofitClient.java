@@ -46,8 +46,8 @@ public class RetrofitClient {
         return getWeiXinBuilder().build().create(clz);
     }
 
-    public static <T> T buildDownloadHeadPicService(Class<T> clz){
-        return getDownloadHeadPicBuilder().build().create(clz);
+    public static <T> T buildDownloadVoiceService(Class<T> clz){
+        return getDownloadVoiceBuilder().build().create(clz);
     }
 
     public static Retrofit.Builder getBuilder() {
@@ -58,8 +58,8 @@ public class RetrofitClient {
         return getWeiXinBuilder(Constants.ContentType.JSON);
     }
 
-    public static Retrofit.Builder getDownloadHeadPicBuilder(){
-        return getDownloadHeadPicBuilder(Constants.ContentType.JSON);
+    public static Retrofit.Builder getDownloadVoiceBuilder(){
+        return getDownloadVoiceBuilder(Constants.ContentType.JSON);
     }
 
 
@@ -174,7 +174,7 @@ public class RetrofitClient {
         return sBuilder;
     }
 
-    public static Retrofit.Builder getDownloadHeadPicBuilder(String contentType){
+    public static Retrofit.Builder getDownloadVoiceBuilder(String contentType){
         sBuilder = null;
 
         if (TextUtils.isEmpty(contentType)) {
@@ -185,7 +185,7 @@ public class RetrofitClient {
         try {
             if (null == sBuilder) {
                 sBuilder = new Retrofit.Builder();
-                sBuilder.baseUrl(Constants.WEXIN_HEAD_PIC);
+                sBuilder.baseUrl(Constants.VOICE_URL);
                 sBuilder.addConverterFactory(GsonConverterFactory.create());
             }
             OkHttpClient.Builder okBuilder = new OkHttpClient.Builder();

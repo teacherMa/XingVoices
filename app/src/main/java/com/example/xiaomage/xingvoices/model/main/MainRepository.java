@@ -11,10 +11,13 @@ import com.example.xiaomage.xingvoices.model.bean.User.BasicUserInfo;
 import com.example.xiaomage.xingvoices.model.bean.User.XingVoiceUserResp;
 import com.example.xiaomage.xingvoices.model.bean.WxBean.WxUserInfo;
 import com.example.xiaomage.xingvoices.utils.Constants;
+import com.example.xiaomage.xingvoices.utils.FileUtil;
 
 import java.util.List;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
+
+import okhttp3.ResponseBody;
 
 public class MainRepository extends BaseRepository implements MainDataSource {
     private static Lock sLock = new ReentrantLock();
@@ -154,5 +157,44 @@ public class MainRepository extends BaseRepository implements MainDataSource {
             }
         };
         mLocalDS.getLocalUser(loackCallback);
+    }
+
+    @Override
+    public void downloadVoice(final OnResultCallback<ResponseBody> resultCallback,
+                              ResponseBody responseBody, final String vUrl, final String cId) {
+
+        if(null != FileUtil.getVoicePath(cId)){
+            resultCallback.onSuccess(null,Constants.ResultCode.LOCAL);
+            return;
+        }
+
+        OnResultCallback<ResponseBody> onResultCallback = new OnResultCallback<ResponseBody>() {
+            @Override
+            public void onSuccess(ResponseBody resultValue, int code) {
+                mLocalDS.downloadVoice(resultCallback,resultValue,vUrl,cId);
+            }
+
+            @Override
+            public void onFail(String errorMessage) {
+                resultCallback.onFail(errorMessage);
+            }
+        };
+        mRemoteDS.downloadVoice(onResultCallback,responseBody,vUrl,cId);
+    }
+
+    @Override
+    public void playVoice(final OnResultCallback<Boolean> resultCallback, String vId) {
+        OnResultCallback<Boolean> onResultCallback = new OnResultCallback<Boolean>() {
+            @Override
+            public void onSuccess(Boolean resultValue, int code) {
+                resultCallback.onSuccess(resultValue,code);
+            }
+
+            @Override
+            public void onFail(String errorMessage) {
+                resultCallback.onFail(errorMessage);
+            }
+        };
+        mLocalDS.playVoice(onResultCallback,vId);
     }
 }

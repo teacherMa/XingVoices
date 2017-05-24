@@ -17,6 +17,7 @@ import com.example.xiaomage.xingvoices.event.EmptyEvent;
 import com.example.xiaomage.xingvoices.event.MenuCloseEvent;
 import com.example.xiaomage.xingvoices.event.MainViewInitEvent;
 import com.example.xiaomage.xingvoices.framework.BaseBusView;
+import com.example.xiaomage.xingvoices.model.UserManager;
 import com.example.xiaomage.xingvoices.model.bean.User.BasicUserInfo;
 import com.example.xiaomage.xingvoices.model.bean.User.XingVoiceUserResp;
 import com.example.xiaomage.xingvoices.utils.BaseUtil;
@@ -124,7 +125,7 @@ public class MenuView extends BaseBusView<MenuContract.Presenter> implements Men
 
         mBasicUserInfo = basicUserInfo;
 
-        BaseUtil.loadCirclePic(basicUserInfo.getHeadpic()).into(mMenuUserAvatar);
+        BaseUtil.loadCirclePic(mBasicUserInfo.getHeadpic()).into(mMenuUserAvatar);
 
         mMenuUserName.setText(basicUserInfo.getNickname());
 
