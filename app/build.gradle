@@ -67,4 +67,6 @@ dependencies {
     //WeChat
     compile 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:+'
 
+    compile 'com.czt.mp3recorder:library:1.0.4'
+
 }

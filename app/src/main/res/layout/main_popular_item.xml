@@ -73,14 +73,25 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/tv_voice_name"
+                android:layout_marginTop="8dp"
                 android:textColor="@color/colorPrimary"
                 android:layout_centerHorizontal="true"/>
+
+            <ImageView
+                android:id="@+id/iv_play_anim"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toStartOf="@id/tv_voice_length"
+                android:layout_below="@id/tv_voice_name"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="24dp"
+                android:visibility="invisible"
+                android:contentDescription="@string/iv_con_des"/>
 
             <ImageView
                 android:id="@+id/iv_pic_of_voice"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:src="@drawable/pic"
                 android:scaleType="centerCrop"
                 android:contentDescription="@string/iv_con_des"/>
         </RelativeLayout>

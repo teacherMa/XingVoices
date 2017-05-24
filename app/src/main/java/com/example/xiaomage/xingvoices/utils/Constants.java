@@ -10,6 +10,7 @@ public class Constants {
     public static String BASE_URL = "https://www.starsound.xyz/yuliao/index.php/api/";
     public static String WEXIN_BASE_URL = "https://api.weixin.qq.com/sns/";
     public static String WEXIN_HEAD_PIC = "http://wx.qlogo.cn/mmopen/";
+    public static String VOICE_URL = "http://app.starsound.xyz/user/";
     public static String PIC_API;
 
     public interface WxParamValue {
@@ -36,11 +37,13 @@ public class Constants {
 
     public interface XingVoicesApi {
         String LOGIN = "login";
-        String GET_USER = "getUserInfo";
+        String GET_USER = "getUser";
         String ALL_VOICE = "allVoice";
         String MY_FOLLOW = "myFocus";
         String MY_COLLECTION = "myFavorites";
+        String ADD_VOICE = "addVoice";
         String VOICE_TO_COMMENTS = "voiceToComments";
+        String UPLOAD_OSS = "uploadOSS";
     }
 
     public interface XingVoicesRequestParam {
@@ -56,6 +59,11 @@ public class Constants {
         String PAGE = "page";
         String NUM = "num";
         String IS_U = "is_u";
+        String TITLE = "title";
+        String RE_URL = "reurl";
+        String LENGTH = "length";
+        String BACKGROUND = "backgrund";
+        String ALL_BACKGROUND= "allbackgrund";
     }
 
     public interface XingVoicesParamValue {
@@ -68,6 +76,14 @@ public class Constants {
         String POPULAR = "popular";
         String FOLLOW = "follow";
         String COLLECTION = "collection";
+    }
+
+    public interface PicCode {
+        int
+                GALLERY = 0,
+                CAMERA = 1,
+                CROP_PIC = 2,
+                CHANGE_STAGE = 3;
     }
 
     public interface CommentType {

@@ -2,18 +2,24 @@ package com.example.xiaomage.xingvoices.api;
 
 import com.example.xiaomage.xingvoices.model.bean.CommentBean.CommentBean;
 import com.example.xiaomage.xingvoices.model.bean.RemoteVoice.RemoteVoice;
-import com.example.xiaomage.xingvoices.model.bean.RemoteVoice.VoiceResp;
 import com.example.xiaomage.xingvoices.model.bean.User.BasicUserInfo;
 import com.example.xiaomage.xingvoices.model.bean.User.XingVoiceUserResp;
 import com.example.xiaomage.xingvoices.model.bean.WxBean.AccessToken;
 import com.example.xiaomage.xingvoices.model.bean.WxBean.WxUserInfo;
+import com.example.xiaomage.xingvoices.model.bean.publish.PublishResp;
+import com.example.xiaomage.xingvoices.model.bean.upload.UploadResp;
 import com.example.xiaomage.xingvoices.utils.Constants;
 
 import java.util.List;
 
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.Multipart;
+import retrofit2.http.POST;
+import retrofit2.http.Part;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
@@ -53,6 +59,21 @@ public interface ApiService {
                                         @Query(Constants.XingVoicesRequestParam.PAGE) int page,
                                         @Query(Constants.XingVoicesRequestParam.NUM) int num);
 
+    @GET("{id}/file/{date}/{voiceName}")
+    Call<ResponseBody> downloadVoice(@Path("id") String id,
+                                     @Path("date") String date,
+                                     @Path("voiceName") String voiceName);
+
+    @GET(Constants.XingVoicesApi.ADD_VOICE)
+    Call<PublishResp> addVoice(@Query(Constants.XingVoicesRequestParam.CHANNEL) String channel,
+                               @Query(Constants.XingVoicesRequestParam.UID) String uid,
+                               @Query(Constants.XingVoicesRequestParam.TITLE) String title,
+                               @Query(Constants.XingVoicesRequestParam.RE_URL) String reurl,
+                               @Query(Constants.XingVoicesRequestParam.LENGTH) int length,
+                               @Query(Constants.XingVoicesRequestParam.BACKGROUND) String bg,
+                               @Query(Constants.XingVoicesRequestParam.ALL_BACKGROUND) String allBg);
+
+
     @GET(Constants.XingVoicesApi.MY_COLLECTION)
     Call<List<RemoteVoice>> getMyCollection(@Query(Constants.XingVoicesRequestParam.CHANNEL) String channel,
                                 @Query(Constants.XingVoicesRequestParam.UID) String uid);
@@ -66,5 +87,14 @@ public interface ApiService {
                                       @Query(Constants.XingVoicesRequestParam.UID) String uid,
                                       @Query(Constants.XingVoicesRequestParam.VID) String vid,
                                       @Query(Constants.XingVoicesRequestParam.TYPE) int type);
+
+    @Multipart
+    @POST(Constants.XingVoicesApi.UPLOAD_OSS)
+    Call<UploadResp> upload(@Query(Constants.XingVoicesRequestParam.CHANNEL) String channel,
+                            @Query(Constants.XingVoicesRequestParam.UID) String uid,
+                            @Part("description")RequestBody requestBody,
+                            @Part MultipartBody.Part fileFirst,
+                            @Part MultipartBody.Part fileSecond,
+                            @Part MultipartBody.Part fileThird);
 
 }

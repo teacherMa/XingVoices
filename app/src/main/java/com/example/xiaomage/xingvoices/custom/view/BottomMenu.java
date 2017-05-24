@@ -1,4 +1,4 @@
-package com.example.xiaomage.xingvoices.custom.view.bottomMenu;
+package com.example.xiaomage.xingvoices.custom.view;
 
 import android.content.Context;
 import android.graphics.drawable.BitmapDrawable;

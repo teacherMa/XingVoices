@@ -11,9 +11,12 @@ import com.example.xiaomage.xingvoices.model.bean.User.XingVoiceUserResp;
 import com.example.xiaomage.xingvoices.model.bean.WxBean.WxUserInfo;
 import com.example.xiaomage.xingvoices.model.main.MainDataSource;
 import com.example.xiaomage.xingvoices.utils.Constants;
+import com.example.xiaomage.xingvoices.utils.FileUtil;
 
+import java.io.File;
 import java.util.List;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -141,6 +144,44 @@ public class MainRemoteDS implements MainDataSource {
                         resultCallback.onFail(t.getMessage());
                     }
                 });
+    }
+
+    @Override
+    public void downloadVoice(final OnResultCallback<ResponseBody> resultCallback,
+                              ResponseBody responseBody, String vUrl,String vId) {
+
+        String[] strings = vUrl.split("/");
+
+        String id = strings[strings.length-4];
+        String date = strings[strings.length-2];
+        String voiceName = strings[strings.length-1];
+
+        RetrofitClient.buildDownloadVoiceService(ApiService.class)
+                .downloadVoice(id,date,voiceName)
+                .enqueue(new Callback<ResponseBody>() {
+                    @Override
+                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                        if(null == response || !response.isSuccessful() || null == response.body()){
+                            resultCallback.onFail(Constants.ResponseError.SERVER_ERROR);
+                            return;
+                        }
+                        resultCallback.onSuccess(response.body(),Constants.ResultCode.REMOTE);
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResponseBody> call, Throwable t) {
+                        if(t == null || null == t.getMessage()){
+                            resultCallback.onFail(Constants.ResponseError.SERVER_ERROR);
+                            return;
+                        }
+                        resultCallback.onFail(t.getMessage());
+                    }
+                });
+    }
+
+    @Override
+    public void playVoice(OnResultCallback<Boolean> resultCallback, String vId) {
+
     }
 
     private static class SingletonHolder {

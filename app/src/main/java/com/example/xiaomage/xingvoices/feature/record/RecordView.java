@@ -4,9 +4,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.NavUtils;
 import android.util.AttributeSet;
+import android.util.DisplayMetrics;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Chronometer;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -14,10 +16,16 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.xiaomage.xingvoices.R;
-import com.example.xiaomage.xingvoices.feature.main.MainActivity;
+import com.example.xiaomage.xingvoices.event.EmptyEvent;
+import com.example.xiaomage.xingvoices.event.UpdateAuditionProgressEvent;
 import com.example.xiaomage.xingvoices.feature.record.publish.PublishActivity;
-import com.example.xiaomage.xingvoices.framework.BaseView;
+import com.example.xiaomage.xingvoices.framework.BaseBusView;
 import com.example.xiaomage.xingvoices.model.bean.LocalVoice.LocalVoice;
+import com.example.xiaomage.xingvoices.utils.AlertUtil;
+import com.example.xiaomage.xingvoices.utils.BaseUtil;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -27,7 +35,7 @@ import static com.example.xiaomage.xingvoices.utils.Constants.RecordState.IS_REC
 import static com.example.xiaomage.xingvoices.utils.Constants.RecordState.PREPARE_AUDITION;
 import static com.example.xiaomage.xingvoices.utils.Constants.RecordState.PREPARE_RECORD;
 
-public class RecordView extends BaseView<RecordContract.Presenter> implements RecordContract.View {
+public class RecordView extends BaseBusView<RecordContract.Presenter> implements RecordContract.View {
 
     private static final int REQUEST_UPLOAD = 0;
 
@@ -57,11 +65,29 @@ public class RecordView extends BaseView<RecordContract.Presenter> implements Re
     View mAuditionProgressBar;
     @BindView(R.id.ll_audition_time)
     LinearLayout mLlAuditionTime;
+    @BindView(R.id.tv_audition_length_min)
+    TextView mTvAuditionLengthMin;
+    @BindView(R.id.tv_audition_length_sec)
+    TextView mTvAuditionLengthSec;
 
     private RecordState mRecordState;
+    private String mCurRecordPath;
+    private int mCurRecordLength;
 
     public RecordView(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
+    }
+
+    @Override
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(EmptyEvent event) {
+        if (event == null) {
+            return;
+        }
+        if (event instanceof UpdateAuditionProgressEvent) {
+            UpdateAuditionProgressEvent auditionProgressEvent = (UpdateAuditionProgressEvent) event;
+            updateProgress(auditionProgressEvent.getCurPosition());
+        }
     }
 
     @Override
@@ -70,7 +96,7 @@ public class RecordView extends BaseView<RecordContract.Presenter> implements Re
         mRecordState = new RecordState(mTvRecordAgain, mTvRecordSave, mTvRecordTimeHint,
                 mIvRecordAgain, mIvRecordSave, mIvStartRecord, mIvAudition, mAuditionProgressBar,
                 mLlAuditionTime, mVoiceTimer);
-        mRecordState.updateState();
+        mRecordState.init();
     }
 
     @Override
@@ -86,46 +112,57 @@ public class RecordView extends BaseView<RecordContract.Presenter> implements Re
             case R.id.iv_start_record:
                 if (mRecordState.getCurrentState() == PREPARE_RECORD) {
                     mRecordState.setCurrentState(IS_RECORDING);
-                    mRecordState.updateState();
+                    getPresenter().recordAudio(true);
                     return;
                 }
                 if (mRecordState.getCurrentState() == IS_RECORDING) {
                     mRecordState.setCurrentState(PREPARE_AUDITION);
-                    mRecordState.updateState();
+                    getPresenter().recordAudio(false);
+
+                    int temp0 = Integer.parseInt(mVoiceTimer.getText().toString().split(":")[0]);
+                    int temp1 = Integer.parseInt(mVoiceTimer.getText().toString().split(":")[1]);
+                    mCurRecordLength = temp0 * 60 + temp1;
+                    if (mCurRecordLength < 10) {
+                        mRecordState.setCurrentState(PREPARE_RECORD);
+                        getPresenter().deleteAudio(mCurRecordPath);
+                        AlertUtil.showAlert(getContext(),
+                                BaseUtil.getString(R.string.record_time_too_short),
+                                BaseUtil.getString(R.string.record_too_short_to_abandon));
+                    }
                     return;
                 }
                 if (mRecordState.getCurrentState() == IS_AUDITION) {
                     mRecordState.setCurrentState(IS_RECORDING);
-                    mRecordState.updateState();
                     return;
                 }
                 break;
             case R.id.iv_record_again:
                 mRecordState.setCurrentState(PREPARE_RECORD);
-                mRecordState.updateState();
+                getPresenter().deleteAudio(mCurRecordPath);
                 break;
             case R.id.iv_record_save:
                 LocalVoice localVoice = new LocalVoice();
-                localVoice.setNum(12345);
+                localVoice.setPath(mCurRecordPath);
+                localVoice.setLength(mCurRecordLength);
                 if (mRecordState.getCurrentState() == IS_AUDITION ||
                         mRecordState.getCurrentState() == PREPARE_AUDITION) {
-                    Intent intent = PublishActivity.getNewIntent(getContext(),localVoice);
-                    ((RecordActivity)getContext()).startActivityForResult(intent,REQUEST_UPLOAD);
+                    Intent intent = PublishActivity.getNewIntent(getContext(), localVoice);
+                    ((RecordActivity) getContext()).startActivityForResult(intent, REQUEST_UPLOAD);
                 }
                 break;
             case R.id.iv_cancel_record:
                 releaseAll();
-                ((RecordActivity)getContext()).onBackPressed();
+                ((RecordActivity) getContext()).onBackPressed();
                 break;
             case R.id.iv_audition:
                 if (mRecordState.getCurrentState() == PREPARE_AUDITION) {
                     mRecordState.setCurrentState(IS_AUDITION);
-                    mRecordState.updateState();
+                    getPresenter().audition(mCurRecordPath);
                     return;
                 }
                 if (mRecordState.getCurrentState() == IS_AUDITION) {
                     mRecordState.setCurrentState(PREPARE_AUDITION);
-                    mRecordState.updateState();
+                    getPresenter().audition(mCurRecordPath);
                     return;
                 }
                 break;
@@ -138,4 +175,35 @@ public class RecordView extends BaseView<RecordContract.Presenter> implements Re
 
     }
 
+    @Override
+    public void recordSuccess(String path) {
+        mCurRecordPath = path;
+    }
+
+    @Override
+    public void deleteSuccess() {
+
+    }
+
+    @Override
+    public void isAudition(Integer length) {
+        if (mCurRecordLength * 1000 > length - 1000 || mCurRecordLength * 1000 < length + 1000) {
+            mRecordState.setCurrentState(PREPARE_AUDITION);
+        }
+    }
+
+    private void updateProgress(int curPosition) {
+        WindowManager manager = (WindowManager) getContext().getSystemService(Context.WINDOW_SERVICE);
+        DisplayMetrics metrics = new DisplayMetrics();
+        manager.getDefaultDisplay().getMetrics(metrics);
+
+        ViewGroup.LayoutParams layoutParams = mAuditionProgressBar.getLayoutParams();
+        layoutParams.width = metrics.widthPixels * curPosition / (mCurRecordLength * 1000);
+
+        int curSec = curPosition/1000 +1;
+        mTvAuditionLengthSec.setText(String.valueOf(curSec%60));
+        mTvAuditionLengthMin.setText(String.valueOf(curSec/60));
+
+        mAuditionProgressBar.setLayoutParams(layoutParams);
+    }
 }

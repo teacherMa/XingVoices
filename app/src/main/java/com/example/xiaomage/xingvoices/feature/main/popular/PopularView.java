@@ -12,9 +12,11 @@ import com.example.xiaomage.xingvoices.R;
 import com.example.xiaomage.xingvoices.api.OnItemClickListener;
 import com.example.xiaomage.xingvoices.event.EmptyEvent;
 import com.example.xiaomage.xingvoices.event.MainViewInitEvent;
+import com.example.xiaomage.xingvoices.event.ChangeAnimEvent;
 import com.example.xiaomage.xingvoices.framework.BaseBusView;
 import com.example.xiaomage.xingvoices.model.bean.RemoteVoice.RemoteVoice;
 
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
@@ -28,6 +30,7 @@ public class PopularView extends BaseBusView<PopularContract.Presenter> implemen
     RecyclerView mMainPopularRv;
 
     private PopularAdapter mAdapter;
+    private int mCurPosition;
 
     public PopularView(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
@@ -71,8 +74,25 @@ public class PopularView extends BaseBusView<PopularContract.Presenter> implemen
     }
 
     @Override
-    public void onItemClick(RemoteVoice itemValue, int viewID, int position) {
+    public void downloadSuccess(String vId) {
+        getPresenter().playVoice(vId);
+        ChangeAnimEvent animEvent = new ChangeAnimEvent(mCurPosition,true);
+        EventBus.getDefault().post(animEvent);
+    }
 
+    @Override
+    public void playFinished() {
+        ChangeAnimEvent event = new ChangeAnimEvent(mCurPosition,false);
+        EventBus.getDefault().post(event);
+    }
+
+    @Override
+    public void onItemClick(RemoteVoice itemValue, int viewID, int position) {
+        switch (viewID){
+            case R.id.iv_pic_of_voice:
+                getPresenter().downloadVoice(itemValue.getReurl(),itemValue.getVid());
+                break;
+        }
     }
 
 }
