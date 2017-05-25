@@ -1,5 +1,6 @@
 package com.example.xiaomage.xingvoices.model.bean.RemoteVoice;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -7,7 +8,7 @@ import java.util.List;
  * 这里remoteVoice没有包含评论，是因为评论可能获取不到，改为在每一个item里获取
  */
 
-public class RemoteVoice {
+public class RemoteVoice implements Serializable{
     /**
      * vid : I2QNJbVE98NawKq
      * is_hot : 1
@@ -144,7 +145,7 @@ public class RemoteVoice {
         this.user = user;
     }
 
-    public static class TypeBean {
+    public static class TypeBean implements Serializable{
         /**
          * tid : 7182896105
          * title : 个人
@@ -170,7 +171,7 @@ public class RemoteVoice {
         }
     }
 
-    public static class UserBean {
+    public static class UserBean implements Serializable{
         /**
          * uid : qnskIbhlcB38
          * nickname : Elsa

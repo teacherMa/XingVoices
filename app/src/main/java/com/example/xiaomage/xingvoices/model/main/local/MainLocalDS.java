@@ -3,6 +3,7 @@ package com.example.xiaomage.xingvoices.model.main.local;
 import android.media.MediaPlayer;
 import android.os.AsyncTask;
 
+import com.czt.mp3recorder.MP3Recorder;
 import com.example.xiaomage.xingvoices.api.OnResultCallback;
 import com.example.xiaomage.xingvoices.model.UserManager;
 import com.example.xiaomage.xingvoices.model.bean.CommentBean.CommentBean;
@@ -13,20 +14,20 @@ import com.example.xiaomage.xingvoices.model.bean.User.XingVoiceUser;
 import com.example.xiaomage.xingvoices.model.bean.User.BasicUserInfo;
 import com.example.xiaomage.xingvoices.model.bean.User.XingVoiceUserResp;
 import com.example.xiaomage.xingvoices.model.bean.WxBean.WxUserInfo;
+import com.example.xiaomage.xingvoices.model.bean.comment.CommentResp;
 import com.example.xiaomage.xingvoices.model.main.MainDataSource;
 import com.example.xiaomage.xingvoices.utils.Constants;
 import com.example.xiaomage.xingvoices.utils.FileUtil;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.Date;
 import java.util.List;
 
 import io.realm.Realm;
-import io.realm.RealmConfiguration;
 import okhttp3.ResponseBody;
 
 
@@ -34,6 +35,9 @@ public class MainLocalDS implements MainDataSource {
     private String mCurPlayVoiceId;
     private MediaPlayer mMediaPlayer;
     private OnResultCallback<Boolean> mCurCallback;
+    private MP3Recorder mMP3Recorder;
+    private String mRecordPath;
+    private String mRecordId;
 
     private MainLocalDS() {
     }
@@ -229,6 +233,78 @@ public class MainLocalDS implements MainDataSource {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void likeIt(OnResultCallback<String> resultCallback, String cId) {
+
+    }
+
+    @Override
+    public void playVoiceCom(OnResultCallback<Boolean> resultCallback, CommentBean commentBean) {
+
+    }
+
+    @Override
+    public void recordAudio(OnResultCallback<String> resultCallback, boolean toStart) {
+        if(toStart) {
+            String id = String.valueOf(new Date().getTime());
+            mRecordId = id;
+            Object o = new Object() ;
+            String path = FileUtil.RECORD_FILE.concat("/").concat(id).concat(".mp3");
+            mRecordPath = path;
+            File file = new File(path);
+            if(!file.exists()){
+                file.getParentFile().mkdir();
+                try {
+                    file.createNewFile();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    resultCallback.onFail(Constants.ResponseError.DATA_EMPTY);
+                }
+            }
+            mMP3Recorder = new MP3Recorder(file);
+            try {
+                mMP3Recorder.start();
+            } catch (IOException e) {
+                e.printStackTrace();
+                resultCallback.onFail(Constants.ResponseError.UNKNOWN);
+                return;
+            }
+            resultCallback.onSuccess(mRecordPath,Constants.ResultCode.LOCAL);
+            return;
+        }
+        if(null == mMP3Recorder){
+            return;
+        }
+        if(mMP3Recorder.isRecording()){
+            mMP3Recorder.stop();
+
+            LocalVoice localVoice = new LocalVoice();
+            localVoice.setId(mRecordId);
+            localVoice.setPath(mRecordPath);
+
+            Realm realm = Realm.getDefaultInstance();
+            realm.beginTransaction();
+            realm.copyToRealm(localVoice);
+            realm.commitTransaction();
+
+            resultCallback.onSuccess(mRecordId,Constants.ResultCode.LOCAL);
+
+            mMP3Recorder = null;
+            mRecordPath = null;
+            mRecordId = null;
+        }
+    }
+
+    @Override
+    public void publishTextCom(OnResultCallback<CommentResp> resultCallback, String vId, String content) {
+
+    }
+
+    @Override
+    public void publishVoiceCom(OnResultCallback<CommentResp> resultCallback, String vId, String cId, int cLength) {
+
     }
 
 

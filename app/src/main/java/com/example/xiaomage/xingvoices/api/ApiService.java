@@ -6,6 +6,8 @@ import com.example.xiaomage.xingvoices.model.bean.User.BasicUserInfo;
 import com.example.xiaomage.xingvoices.model.bean.User.XingVoiceUserResp;
 import com.example.xiaomage.xingvoices.model.bean.WxBean.AccessToken;
 import com.example.xiaomage.xingvoices.model.bean.WxBean.WxUserInfo;
+import com.example.xiaomage.xingvoices.model.bean.comment.CommentResp;
+import com.example.xiaomage.xingvoices.model.bean.likeIt.LikeItResp;
 import com.example.xiaomage.xingvoices.model.bean.publish.PublishResp;
 import com.example.xiaomage.xingvoices.model.bean.upload.UploadResp;
 import com.example.xiaomage.xingvoices.utils.Constants;
@@ -82,11 +84,27 @@ public interface ApiService {
     Call<List<RemoteVoice>> getMyFollow(@Query(Constants.XingVoicesRequestParam.CHANNEL) String channel,
                                   @Query(Constants.XingVoicesRequestParam.UID) String uid);
 
+    @GET(Constants.XingVoicesApi.ADD_COMMENTS)
+    Call<CommentResp> addComment(@Query(Constants.XingVoicesRequestParam.CHANNEL) String channel,
+                                 @Query(Constants.XingVoicesRequestParam.UID) String uid,
+                                 @Query(Constants.XingVoicesRequestParam.VID) String vid,
+                                 @Query(Constants.XingVoicesRequestParam.TYPE) int type,
+                                 @Query(Constants.XingVoicesRequestParam.CONTENT) String content,
+                                 @Query(Constants.XingVoicesRequestParam.CLENGTH) int cLength);
+
+
     @GET(Constants.XingVoicesApi.VOICE_TO_COMMENTS)
     Call<List<CommentBean>> getVoiceComment(@Query(Constants.XingVoicesRequestParam.CHANNEL) String channel,
                                       @Query(Constants.XingVoicesRequestParam.UID) String uid,
                                       @Query(Constants.XingVoicesRequestParam.VID) String vid,
                                       @Query(Constants.XingVoicesRequestParam.TYPE) int type);
+
+
+
+    @GET(Constants.XingVoicesApi.LIKE_IT)
+    Call<LikeItResp> likeIt(@Query(Constants.XingVoicesRequestParam.CHANNEL) String channel,
+                            @Query(Constants.XingVoicesRequestParam.UID) String uid,
+                            @Query(Constants.XingVoicesRequestParam.CID) String cid);
 
     @Multipart
     @POST(Constants.XingVoicesApi.UPLOAD_OSS)
@@ -96,5 +114,6 @@ public interface ApiService {
                             @Part MultipartBody.Part fileFirst,
                             @Part MultipartBody.Part fileSecond,
                             @Part MultipartBody.Part fileThird);
+
 
 }

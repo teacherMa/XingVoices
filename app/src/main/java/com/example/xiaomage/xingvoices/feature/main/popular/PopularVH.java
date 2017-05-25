@@ -18,15 +18,21 @@ import android.widget.TextView;
 
 import com.example.xiaomage.xingvoices.R;
 import com.example.xiaomage.xingvoices.api.OnItemClickListener;
+import com.example.xiaomage.xingvoices.api.main.OnBottomCommentItemClickListener;
 import com.example.xiaomage.xingvoices.api.main.OnBottomMenuItemClickListener;
 import com.example.xiaomage.xingvoices.custom.view.BottomCommentView;
 import com.example.xiaomage.xingvoices.custom.view.WrapContentViewPager;
 import com.example.xiaomage.xingvoices.custom.view.BottomMenu;
 import com.example.xiaomage.xingvoices.event.EmptyEvent;
 import com.example.xiaomage.xingvoices.event.ChangeAnimEvent;
+import com.example.xiaomage.xingvoices.event.VH.VHAuditionEvent;
+import com.example.xiaomage.xingvoices.event.VH.VHPublishTextComEvent;
+import com.example.xiaomage.xingvoices.event.VH.VHPublishVoiceComEvent;
+import com.example.xiaomage.xingvoices.event.VH.VHRecordEvent;
 import com.example.xiaomage.xingvoices.feature.main.MainActivity;
-import com.example.xiaomage.xingvoices.feature.main.textComment.TextCommentFragment;
-import com.example.xiaomage.xingvoices.feature.main.voiceComment.VoiceCommentFragment;
+import com.example.xiaomage.xingvoices.feature.main.comment.CommentActivity;
+import com.example.xiaomage.xingvoices.feature.main.textSimpleComment.TextCommentFragment;
+import com.example.xiaomage.xingvoices.feature.main.voiceSimpleComment.VoiceCommentFragment;
 import com.example.xiaomage.xingvoices.feature.personal.PersonalActivity;
 import com.example.xiaomage.xingvoices.framework.BaseViewHolder;
 import com.example.xiaomage.xingvoices.model.bean.RemoteVoice.RemoteVoice;
@@ -53,7 +59,8 @@ import static com.example.xiaomage.xingvoices.utils.Constants.BottomMenuItem.LOO
 import static com.example.xiaomage.xingvoices.utils.Constants.BottomMenuItem.SHARE;
 import static com.example.xiaomage.xingvoices.utils.Constants.MainPopularItem.FOLLOW;
 
-public class PopularVH extends BaseViewHolder<RemoteVoice> implements OnBottomMenuItemClickListener {
+public class PopularVH extends BaseViewHolder<RemoteVoice> implements OnBottomMenuItemClickListener,
+        OnBottomCommentItemClickListener {
 
     private static final int DURATION = 500;
 
@@ -200,6 +207,8 @@ public class PopularVH extends BaseViewHolder<RemoteVoice> implements OnBottomMe
 
     @OnClick(R.id.tv_more_com)
     public void onMTvMoreComClicked() {
+        Intent intent = CommentActivity.getNewIntent(mRemoteVoice,getContext());
+        getContext().startActivity(intent);
     }
 
     @OnClick(R.id.iv_pic_of_voice)
@@ -212,6 +221,7 @@ public class PopularVH extends BaseViewHolder<RemoteVoice> implements OnBottomMe
         switch (position) {
             case COMMENT:
                 BottomCommentView bottomCommentView = new BottomCommentView(getContext());
+                bottomCommentView.setItemClickListener(this);
                 View root = LayoutInflater.from(getContext()).inflate(R.layout.main_view, null);
                 bottomCommentView.showAtLocation(root,Gravity.BOTTOM,0,0);
                 break;
@@ -329,5 +339,32 @@ public class PopularVH extends BaseViewHolder<RemoteVoice> implements OnBottomMe
         }
         mAnimationDrawable.setOneShot(false);
         mIvPlayAnim.setBackgroundDrawable(mAnimationDrawable);
+    }
+
+    @Override
+    public void onBottomCommentItemClick(int position, String content) {
+        switch (position){
+            case Constants.BottomComItem.START_RECORD:
+                EventBus.getDefault().post(new VHRecordEvent(Constants.ViewHolderTag.PopularVH,true));
+                break;
+            case Constants.BottomComItem.STOP_RECORD:
+                EventBus.getDefault().post(new VHRecordEvent(Constants.ViewHolderTag.PopularVH,false));
+                break;
+            case Constants.BottomComItem.TO_AUDITION:
+                EventBus.getDefault().post(new VHAuditionEvent(Constants.ViewHolderTag.PopularVH));
+                break;
+            case Constants.BottomComItem.STOP_AUDITION:
+                EventBus.getDefault().post(new VHAuditionEvent(Constants.ViewHolderTag.PopularVH));
+                break;
+            case Constants.BottomComItem.SEND_TEXT_COM:
+                EventBus.getDefault().post(new VHPublishTextComEvent(Constants.ViewHolderTag.PopularVH,
+                        content,mRemoteVoice));
+                break;
+            case Constants.BottomComItem.SEND_VOICE_COM:
+                EventBus.getDefault().post(new VHPublishVoiceComEvent(Constants.ViewHolderTag.PopularVH,mRemoteVoice,content));
+                break;
+            default:
+                break;
+        }
     }
 }

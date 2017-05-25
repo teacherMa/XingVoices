@@ -113,6 +113,7 @@ public class MenuView extends BaseBusView<MenuContract.Presenter> implements Men
             case R.id.menu_sys_message:
                 break;
             case R.id.menu_my_setting:
+                getContext().startActivity(SettingActivity.getIntent(getContext()));
                 break;
         }
     }

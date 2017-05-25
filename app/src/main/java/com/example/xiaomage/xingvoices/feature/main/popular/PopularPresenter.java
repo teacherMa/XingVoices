@@ -5,8 +5,8 @@ import android.support.annotation.NonNull;
 import com.example.xiaomage.xingvoices.api.OnResultCallback;
 import com.example.xiaomage.xingvoices.framework.BasePresenter;
 import com.example.xiaomage.xingvoices.model.bean.RemoteVoice.RemoteVoice;
-import com.example.xiaomage.xingvoices.model.bean.User.BasicUserInfo;
 import com.example.xiaomage.xingvoices.model.bean.User.XingVoiceUser;
+import com.example.xiaomage.xingvoices.model.bean.comment.CommentResp;
 import com.example.xiaomage.xingvoices.model.main.MainRepository;
 import com.example.xiaomage.xingvoices.utils.BaseUtil;
 
@@ -23,6 +23,28 @@ public class PopularPresenter extends BasePresenter<PopularContract.View, MainRe
     @Override
     public void start() {
 
+    }
+
+    @Override
+    public void recordAudio(boolean toStart) {
+        OnResultCallback<String> onResultCallback = new OnResultCallback<String>() {
+            @Override
+            public void onSuccess(String resultValue, int code) {
+                if(null == getView()){
+                    return;
+                }
+                getView().recordSuccess(resultValue);
+            }
+
+            @Override
+            public void onFail(String errorMessage) {
+                if(null == getView()){
+                    return;
+                }
+                BaseUtil.showToast(errorMessage);
+            }
+        };
+        getRepository().recordAudio(onResultCallback,toStart);
     }
 
     @Override
@@ -98,5 +120,49 @@ public class PopularPresenter extends BasePresenter<PopularContract.View, MainRe
             }
         };
         getRepository().playVoice(resultCallback,vId);
+    }
+
+    @Override
+    public void publishTextCom(String vId, String content) {
+        OnResultCallback<CommentResp> resultCallback = new OnResultCallback<CommentResp>() {
+            @Override
+            public void onSuccess(CommentResp resultValue, int code) {
+                if(null == getView()){
+                    return;
+                }
+                getView().commentSuccess(resultValue.getInfo());
+            }
+
+            @Override
+            public void onFail(String errorMessage) {
+                if(null == getView()){
+                    return;
+                }
+                BaseUtil.showToast(errorMessage);
+            }
+        };
+        getRepository().publishTextCom(resultCallback,vId,content);
+    }
+
+    @Override
+    public void publishVoiceCom(String vId, String cId, int cLength) {
+        OnResultCallback<CommentResp> resultCallback = new OnResultCallback<CommentResp>() {
+            @Override
+            public void onSuccess(CommentResp resultValue, int code) {
+                if(null == getView()){
+                    return;
+                }
+                getView().commentSuccess(resultValue.getInfo());
+            }
+
+            @Override
+            public void onFail(String errorMessage) {
+                if(null == getView()){
+                    return;
+                }
+                BaseUtil.showToast(errorMessage);
+            }
+        };
+        getRepository().publishVoiceCom(resultCallback,vId,cId,cLength);
     }
 }

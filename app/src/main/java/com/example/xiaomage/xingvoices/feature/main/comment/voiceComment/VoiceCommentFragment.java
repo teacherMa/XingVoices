@@ -1,11 +1,8 @@
-package com.example.xiaomage.xingvoices.feature.main.textComment;
+package com.example.xiaomage.xingvoices.feature.main.comment.voiceComment;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.example.xiaomage.xingvoices.R;
 import com.example.xiaomage.xingvoices.framework.BaseFragment;
@@ -13,14 +10,14 @@ import com.example.xiaomage.xingvoices.model.bean.RemoteVoice.RemoteVoice;
 import com.example.xiaomage.xingvoices.utils.Injection;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 
-public class TextCommentFragment extends BaseFragment<TextCommentPresenter> {
-    @BindView(R.id.text_com_view)
-    TextCommentView mTextComView;
+public class VoiceCommentFragment extends BaseFragment<VoiceCommentPresenter> {
+    @BindView(R.id.voice_com_view)
+    VoiceCommentView mVoiceComView;
 
     private RemoteVoice mRemoteVoice;
+    private int mModel;
+
     @Override
     protected void initView(@Nullable Bundle savedInstanceState) {
 
@@ -28,20 +25,24 @@ public class TextCommentFragment extends BaseFragment<TextCommentPresenter> {
 
     @NonNull
     @Override
-    protected TextCommentPresenter createPresenter() {
-        mTextComView.setRemoteVoice(mRemoteVoice);
-        return new TextCommentPresenter(
+    protected VoiceCommentPresenter createPresenter() {
+        mVoiceComView.setRemoteVoice(mRemoteVoice);
+        return new VoiceCommentPresenter(
                 Injection.provideMainRepository(),
-                mTextComView
+                mVoiceComView
         );
     }
 
     @Override
     protected int getLayoutResId() {
-        return R.layout.main_text_com_frag;
+        return R.layout.main_voice_com_frag;
     }
 
     public void setRemoteVoice(RemoteVoice remoteVoice) {
         mRemoteVoice = remoteVoice;
+    }
+
+    public void setModel(int model) {
+        mModel = model;
     }
 }

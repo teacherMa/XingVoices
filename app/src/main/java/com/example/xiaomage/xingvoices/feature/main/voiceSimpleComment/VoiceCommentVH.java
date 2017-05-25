@@ -1,4 +1,4 @@
-package com.example.xiaomage.xingvoices.feature.main.voiceComment;
+package com.example.xiaomage.xingvoices.feature.main.voiceSimpleComment;
 
 import android.content.Context;
 import android.util.DisplayMetrics;
@@ -11,9 +11,14 @@ import android.widget.TextView;
 
 import com.example.xiaomage.xingvoices.R;
 import com.example.xiaomage.xingvoices.api.OnItemClickListener;
+import com.example.xiaomage.xingvoices.event.PlayVoiceComEvent;
+import com.example.xiaomage.xingvoices.event.ToLikeComEvent;
 import com.example.xiaomage.xingvoices.framework.BaseViewHolder;
 import com.example.xiaomage.xingvoices.model.bean.CommentBean.CommentBean;
 import com.example.xiaomage.xingvoices.utils.BaseUtil;
+import com.example.xiaomage.xingvoices.utils.Constants;
+
+import org.greenrobot.eventbus.EventBus;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -34,15 +39,21 @@ public class VoiceCommentVH extends BaseViewHolder<CommentBean> {
     ImageView mIvComLikeIt;
 
     private CommentBean mCommentBean;
+    private int mCurLike;
+    private int mCurPosition;
+    private OnItemClickListener<CommentBean> mCommentBeanOnItemClickListener;
 
     public VoiceCommentVH(Context context, ViewGroup root) {
-        super(context, root, R.layout.main_voice_comment_simple_item);
+        super(context, root, R.layout.main_simple_voice_comment_item);
     }
 
     @Override
     protected void bindData(CommentBean itemValue, int position, OnItemClickListener listener) {
 
         mCommentBean = itemValue;
+        mCurLike = mCommentBean.getIs_zan();
+        mCommentBeanOnItemClickListener = listener;
+        mCurPosition = position;
 
         BaseUtil.loadCirclePic(itemValue.getHeadpic()).into(mIvComUserAvatar);
         mTvComUserName.setText(itemValue.getUser());
@@ -63,7 +74,7 @@ public class VoiceCommentVH extends BaseViewHolder<CommentBean> {
         }
 
         mTvComLikeNum.setText(String.valueOf(itemValue.getZan()));
-        if(itemValue.getIs_zan() == 1){
+        if(mCurLike == 1){
             mIvComLikeIt.setImageDrawable(BaseUtil.getDrawable(R.drawable.ic_main_voice_down_like));
         }
     }
@@ -72,10 +83,17 @@ public class VoiceCommentVH extends BaseViewHolder<CommentBean> {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_com_content:
+                mCommentBeanOnItemClickListener.onItemClick(mCommentBean,R.id.iv_com_content,mCurPosition);
                 break;
             case R.id.iv_com_like_it:
+                if (mCurLike == 1) {
+                    BaseUtil.showToast(BaseUtil.getString(R.string.main_like_it_before));
+                    return;
+                }
                 mTvComLikeNum.setText(String.valueOf(mCommentBean.getZan()+1));
                 mIvComLikeIt.setImageDrawable(BaseUtil.getDrawable(R.drawable.ic_main_voice_down_like));
+                mCommentBeanOnItemClickListener.onItemClick(mCommentBean,R.id.iv_com_like_it,mCurPosition);
+                mCurLike = 1;
                 break;
         }
     }

@@ -8,22 +8,30 @@
     <string name="main_follow">关注</string>
     <string name="main_collection">收藏</string>
 
-    <string name="main_default_watch_times">666</string>
+    <string name="main_default_watch_times">0</string>
     <string name="main_default_comment">666666666666666666666666666666666666666666666666666666666666666666666666666666666</string>
-    <string name="main_default_voice_length">15</string>
+    <string name="main_default_voice_length">0</string>
 
     <string name="main_text_comments">文字评论</string>
     <string name="main_voice_comments">语音评论</string>
     <string name="main_more_comments">更多评论</string>
+    <string name="main_bottom_voice_com_hint">录制时间最短5s</string>
 
     <string name="main_menu_default_follow">0</string>
     <string name="main_menu_default_fans">0</string>
     <string name="main_menu_follow">关注</string>
     <string name="main_menu_fans">粉丝</string>
+    <string name="main_like_it_before">你已经点过赞了~</string>
+    <string name="main_like_success">点赞成功~</string>
+    <string name="main_setting_title">设置</string>
+    <string name="main_setting_about_us">关于我们</string>
+    <string name="main_clear_rom">清除缓存</string>
+    <string name="main_clear_success">清除成功</string>
 
     <string name="record_time_hint">录制时间最短10s</string>
     <string name="record_time_too_short">时间太短</string>
-    <string name="record_too_short_to_abandon">不够10s，无法保存</string>
+    <string name="record_less_than_ten">不够10s，无法保存</string>
+    <string name="record_less_than_five">不够5s，无法保存</string>
     <string name="record_init_time">0</string>
     <string name="record_split_time">:</string>
     <string name="record_again">重录</string>
@@ -39,6 +47,8 @@
     <string name="record_publish">上传</string>
     <string name="record_publish_success">上传成功</string>
     <string name="record_is_upload">正在上传</string>
+    <string name="record_com_no_content">没有内容</string>
+    <string name="record_com_need_content">评论需要内容哦~</string>
 
     <string name="personal_follow">关注</string>
     <string name="personal_fans">粉丝</string>

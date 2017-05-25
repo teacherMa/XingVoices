@@ -3,12 +3,16 @@ package com.example.xiaomage.xingvoices.model.main.remote;
 import com.example.xiaomage.xingvoices.api.ApiService;
 import com.example.xiaomage.xingvoices.api.OnResultCallback;
 import com.example.xiaomage.xingvoices.model.RetrofitClient;
+import com.example.xiaomage.xingvoices.model.UserManager;
 import com.example.xiaomage.xingvoices.model.bean.CommentBean.CommentBean;
 import com.example.xiaomage.xingvoices.model.bean.RemoteVoice.RemoteVoice;
 import com.example.xiaomage.xingvoices.model.bean.User.BasicUserInfo;
 import com.example.xiaomage.xingvoices.model.bean.User.XingVoiceUser;
 import com.example.xiaomage.xingvoices.model.bean.User.XingVoiceUserResp;
 import com.example.xiaomage.xingvoices.model.bean.WxBean.WxUserInfo;
+import com.example.xiaomage.xingvoices.model.bean.comment.CommentResp;
+import com.example.xiaomage.xingvoices.model.bean.likeIt.LikeItResp;
+import com.example.xiaomage.xingvoices.model.bean.upload.UploadResp;
 import com.example.xiaomage.xingvoices.model.main.MainDataSource;
 import com.example.xiaomage.xingvoices.utils.Constants;
 import com.example.xiaomage.xingvoices.utils.FileUtil;
@@ -16,6 +20,9 @@ import com.example.xiaomage.xingvoices.utils.FileUtil;
 import java.io.File;
 import java.util.List;
 
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -34,7 +41,7 @@ public class MainRemoteDS implements MainDataSource {
                       WxUserInfo info, XingVoiceUserResp xingVoiceUserResp) {
         RetrofitClient.buildService(ApiService.class)
                 .login(Constants.XingVoicesParamValue.CHANNEL,
-                        info.getOpenid(), info.getNickname(), info.getSex(),info.getHeadimgurl())
+                        info.getOpenid(), info.getNickname(), info.getSex(), info.getHeadimgurl())
                 .enqueue(new Callback<XingVoiceUserResp>() {
                     @Override
                     public void onResponse(Call<XingVoiceUserResp> call,
@@ -59,9 +66,9 @@ public class MainRemoteDS implements MainDataSource {
 
     @Override
     public void getUserInfo(final OnResultCallback<BasicUserInfo> resultCallback,
-                            String uid,String cid) {
+                            String uid, String cid) {
         RetrofitClient.buildService(ApiService.class)
-                .getUser(Constants.XingVoicesParamValue.CHANNEL,uid,
+                .getUser(Constants.XingVoicesParamValue.CHANNEL, uid,
                         cid)
                 .enqueue(new Callback<BasicUserInfo>() {
                     @Override
@@ -90,10 +97,10 @@ public class MainRemoteDS implements MainDataSource {
     }
 
     @Override
-    public void requestPopularVoicesList(final OnResultCallback<List<RemoteVoice>> resultCallback, String uid,
-                                         int is_u, String cid, int page, int num) {
+    public void requestPopularVoicesList(final OnResultCallback<List<RemoteVoice>> resultCallback,
+                                         String uid, int is_u, String cid, int page, int num) {
         Call<List<RemoteVoice>> respCall = RetrofitClient.buildService(ApiService.class)
-                .getAllVoice(Constants.XingVoicesParamValue.CHANNEL, uid,is_u,cid,page,num);
+                .getAllVoice(Constants.XingVoicesParamValue.CHANNEL, uid, is_u, cid, page, num);
         if (null == respCall) {
             return;
         }
@@ -148,29 +155,29 @@ public class MainRemoteDS implements MainDataSource {
 
     @Override
     public void downloadVoice(final OnResultCallback<ResponseBody> resultCallback,
-                              ResponseBody responseBody, String vUrl,String vId) {
+                              ResponseBody responseBody, String vUrl, String vId) {
 
         String[] strings = vUrl.split("/");
 
-        String id = strings[strings.length-4];
-        String date = strings[strings.length-2];
-        String voiceName = strings[strings.length-1];
+        String id = strings[strings.length - 4];
+        String date = strings[strings.length - 2];
+        String voiceName = strings[strings.length - 1];
 
         RetrofitClient.buildDownloadVoiceService(ApiService.class)
-                .downloadVoice(id,date,voiceName)
+                .downloadVoice(id, date, voiceName)
                 .enqueue(new Callback<ResponseBody>() {
                     @Override
                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                        if(null == response || !response.isSuccessful() || null == response.body()){
+                        if (null == response || !response.isSuccessful() || null == response.body()) {
                             resultCallback.onFail(Constants.ResponseError.SERVER_ERROR);
                             return;
                         }
-                        resultCallback.onSuccess(response.body(),Constants.ResultCode.REMOTE);
+                        resultCallback.onSuccess(response.body(), Constants.ResultCode.REMOTE);
                     }
 
                     @Override
                     public void onFailure(Call<ResponseBody> call, Throwable t) {
-                        if(t == null || null == t.getMessage()){
+                        if (t == null || null == t.getMessage()) {
                             resultCallback.onFail(Constants.ResponseError.SERVER_ERROR);
                             return;
                         }
@@ -182,6 +189,133 @@ public class MainRemoteDS implements MainDataSource {
     @Override
     public void playVoice(OnResultCallback<Boolean> resultCallback, String vId) {
 
+    }
+
+    @Override
+    public void likeIt(final OnResultCallback<String> resultCallback, String cId) {
+        RetrofitClient.buildService(ApiService.class)
+                .likeIt(Constants.XingVoicesParamValue.CHANNEL, UserManager.getInstance()
+                        .getCurrentUser().getId(),cId )
+                .enqueue(new Callback<LikeItResp>() {
+                    @Override
+                    public void onResponse(Call<LikeItResp> call, Response<LikeItResp> response) {
+                        if (null == response || !response.isSuccessful() || null == response.body()) {
+                            resultCallback.onFail(Constants.ResponseError.SERVER_ERROR);
+                            return;
+                        }
+                        resultCallback.onSuccess(response.body().getInfo(), Constants.ResultCode.REMOTE);
+                    }
+
+                    @Override
+                    public void onFailure(Call<LikeItResp> call, Throwable t) {
+                        if (t == null || null == t.getMessage()) {
+                            resultCallback.onFail(Constants.ResponseError.SERVER_ERROR);
+                            return;
+                        }
+                        resultCallback.onFail(t.getMessage());
+                    }
+                });
+    }
+
+    @Override
+    public void playVoiceCom(OnResultCallback<Boolean> resultCallback, CommentBean commentBean) {
+
+    }
+
+    @Override
+    public void recordAudio(OnResultCallback<String> resultCallback, boolean toStart) {
+
+    }
+
+    @Override
+    public void publishTextCom(final OnResultCallback<CommentResp> resultCallback, String vId, String content) {
+        RetrofitClient.buildService(ApiService.class)
+                .addComment(Constants.XingVoicesParamValue.CHANNEL,UserManager.getInstance().
+                                getCurrentUser().getId(), vId,0,content,0)
+                .enqueue(new Callback<CommentResp>() {
+                    @Override
+                    public void onResponse(Call<CommentResp> call, Response<CommentResp> response) {
+                        if (null == response || !response.isSuccessful() || null == response.body()) {
+                            resultCallback.onFail(Constants.ResponseError.SERVER_ERROR);
+                            return;
+                        }
+                        resultCallback.onSuccess(response.body(), Constants.ResultCode.REMOTE);
+                    }
+
+                    @Override
+                    public void onFailure(Call<CommentResp> call, Throwable t) {
+                        if (t == null || null == t.getMessage()) {
+                            resultCallback.onFail(Constants.ResponseError.SERVER_ERROR);
+                            return;
+                        }
+                        resultCallback.onFail(t.getMessage());
+                    }
+                });
+    }
+
+    @Override
+    public void publishVoiceCom(final OnResultCallback<CommentResp> resultCallback, final String vId, String cId, final int cLength) {
+        String comVoicePath = FileUtil.getVoicePath(cId);
+        if(null == comVoicePath){
+            resultCallback.onFail(Constants.ResponseError.DATA_EMPTY);
+            return;
+        }
+        File fileFirst = new File(comVoicePath);
+        if(!fileFirst.exists()){
+            resultCallback.onFail(Constants.ResponseError.DATA_EMPTY);
+            return;
+        }
+
+        RequestBody requestBodyFirst = RequestBody.create(MediaType.parse("multipart/form-data"), fileFirst);
+        MultipartBody.Part bodyFirst = MultipartBody.Part.createFormData("aFile",fileFirst.getName(),requestBodyFirst);
+        String descriptionString = "This is a description";
+        RequestBody description = RequestBody.create(MediaType.parse("multipart/form-data"), descriptionString);
+
+        //先做数据的上传，得到评论在服务器上的url
+        RetrofitClient.buildService(ApiService.class)
+                .upload(Constants.XingVoicesParamValue.CHANNEL,UserManager.getInstance().
+                        getCurrentUser().getId(),description,null,null,bodyFirst)
+                .enqueue(new Callback<UploadResp>() {
+                    @Override
+                    public void onResponse(Call<UploadResp> call, Response<UploadResp> response) {
+                        if (null == response || !response.isSuccessful() || null == response.body()) {
+                            resultCallback.onFail(Constants.ResponseError.SERVER_ERROR);
+                            return;
+                        }
+                        //上传成功了，再发布评论
+                        RetrofitClient.buildService(ApiService.class)
+                                .addComment(Constants.XingVoicesParamValue.CHANNEL,UserManager.getInstance().
+                                        getCurrentUser().getId(),vId,1,response.body().getData().getAFile(),cLength)
+                                .enqueue(new Callback<CommentResp>() {
+                                    @Override
+                                    public void onResponse(Call<CommentResp> call, Response<CommentResp> response) {
+                                        if (null == response || !response.isSuccessful() || null == response.body()) {
+                                            resultCallback.onFail(Constants.ResponseError.SERVER_ERROR);
+                                            return;
+                                        }
+                                        resultCallback.onSuccess(response.body(),Constants.ResultCode.REMOTE);
+                                    }
+
+                                    @Override
+                                    public void onFailure(Call<CommentResp> call, Throwable t) {
+                                        if (t == null || null == t.getMessage()) {
+                                            resultCallback.onFail(Constants.ResponseError.SERVER_ERROR);
+                                            return;
+                                        }
+                                        resultCallback.onFail(t.getMessage());
+                                    }
+                                });
+                    }
+
+                    @Override
+                    public void onFailure(Call<UploadResp> call, Throwable t) {
+                        if (t == null || null == t.getMessage()) {
+                            resultCallback.onFail(Constants.ResponseError.SERVER_ERROR);
+                            return;
+                        }
+                        resultCallback.onFail(t.getMessage());
+                    }
+                });
     }
 
     private static class SingletonHolder {

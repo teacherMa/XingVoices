@@ -44,6 +44,8 @@ public class Constants {
         String ADD_VOICE = "addVoice";
         String VOICE_TO_COMMENTS = "voiceToComments";
         String UPLOAD_OSS = "uploadOSS";
+        String LIKE_IT = "dianZan";
+        String ADD_COMMENTS = "addComments";
     }
 
     public interface XingVoicesRequestParam {
@@ -62,14 +64,24 @@ public class Constants {
         String TITLE = "title";
         String RE_URL = "reurl";
         String LENGTH = "length";
+        String CONTENT = "content";
+        String CLENGTH = "clength";
         String BACKGROUND = "backgrund";
-        String ALL_BACKGROUND= "allbackgrund";
+        String ALL_BACKGROUND = "allbackgrund";
     }
 
     public interface XingVoicesParamValue {
         String CHANNEL = "APP";
         int MAN = 1;
         int WOMEN = 0;
+    }
+
+    public interface ViewHolderTag {
+        String VoiceCommentVH = "VoiceCommentVH";
+        String SimpleTextCommentVH = "SimpleTextCommentVH";
+        String TextCommentVH = "TextCommentVH";
+        String SimpleVoiceCommentVH = "SimpleVoiceCommentVH";
+        String PopularVH = "PopularVH";
     }
 
     public interface VoiceType {
@@ -145,6 +157,10 @@ public class Constants {
         String HEAD_PIC = "headpic";
     }
 
+    /**
+     * BottomMenu的点击事件有可能需要再往外传递给PopularView，RecyclerView的Item点击事件也需要传递
+     * 给PopularView，可能发生冲突，所以这里从0开始赋值
+     */
     public interface BottomMenuItem {
         int COMMENT = 0;
         int COLLECTION = 1;
@@ -160,4 +176,19 @@ public class Constants {
     public interface MainPopularItem {
         int FOLLOW = 10;
     }
+
+    /**
+     * BottomMenu的点击事件有可能需要再往外传递给PopularView，RecyclerView的Item点击事件也需要传递
+     * 给PopularView，可能发生冲突，所以这里从20开始赋值
+     */
+    public interface BottomComItem {
+        int SEND_TEXT_COM = 20;
+        int START_RECORD = 21;
+        int STOP_RECORD = 22;
+        int TO_AUDITION = 23;
+        int SEND_VOICE_COM = 24;
+        int STOP_AUDITION = 25;
+    }
+
+
 }

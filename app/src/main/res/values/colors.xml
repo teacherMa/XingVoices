@@ -23,4 +23,7 @@
 
     <color name="colorBottomMenuRedText">#E51C23</color>
     <color name="colorSendButtonText">#7986cb</color>
+
+    <color name="colorRecyclerViewItemDivider">#BDBDBD</color>
+    <color name="colorSettingItemDivider">#E0E0E0</color>
 </resources>

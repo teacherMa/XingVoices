@@ -13,11 +13,22 @@ public class PopularContract {
         void loadData(List<RemoteVoice> data);
         void downloadSuccess(String vId);
         void playFinished();
+        void recordSuccess(String path);
+        void commentSuccess(String info);
     }
 
     interface Presenter extends BasePresenterApi {
+        void recordAudio(boolean toStart);
         void requestAllPopularVoice();
         void downloadVoice(String vUrl,String vId);
         void playVoice(String vId);
+
+        void publishTextCom(String vId,String content);
+
+        /**
+         * @param cId 评论在本地存储的id
+         * @param vId 被评论的语音id，在DS中进行转换
+         * @param cLength 评论长短*/
+        void publishVoiceCom(String vId,String cId,int cLength);
     }
 }

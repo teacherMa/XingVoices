@@ -1,4 +1,4 @@
-package com.example.xiaomage.xingvoices.feature.main.textComment;
+package com.example.xiaomage.xingvoices.feature.main.textSimpleComment;
 
 import android.support.annotation.NonNull;
 
@@ -47,5 +47,27 @@ public class TextCommentPresenter extends BasePresenter<TextCommentContract.View
             }
         };
         getRepository().requestComment(callback,voice,null, Constants.CommentType.TEXT);
+    }
+
+    @Override
+    public void likeIt(String cId) {
+        OnResultCallback<String> callback = new OnResultCallback<String>() {
+            @Override
+            public void onSuccess(String resultValue, int code) {
+                if (getView() == null) {
+                    return;
+                }
+                getView().likeSuccess(resultValue);
+            }
+
+            @Override
+            public void onFail(String errorMessage) {
+                if (getView() == null) {
+                    return;
+                }
+                BaseUtil.showToast(errorMessage);
+            }
+        };
+        getRepository().likeIt(callback,cId);
     }
 }

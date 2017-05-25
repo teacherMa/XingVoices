@@ -7,6 +7,7 @@ import com.example.xiaomage.xingvoices.model.bean.User.XingVoiceUser;
 import com.example.xiaomage.xingvoices.model.bean.User.BasicUserInfo;
 import com.example.xiaomage.xingvoices.model.bean.User.XingVoiceUserResp;
 import com.example.xiaomage.xingvoices.model.bean.WxBean.WxUserInfo;
+import com.example.xiaomage.xingvoices.model.bean.comment.CommentResp;
 
 import java.util.List;
 
@@ -37,5 +38,17 @@ public interface MainDataSource {
                        String vUrl,String vId);
 
     void playVoice(OnResultCallback<Boolean> resultCallback,String vId);
+
+    void likeIt(OnResultCallback<String> resultCallback,String cId);
+
+    void playVoiceCom(OnResultCallback<Boolean> resultCallback,CommentBean commentBean);
+
+    /**
+     * 录音，返回本次录音的id，可以通过id查询路径*/
+    void recordAudio(OnResultCallback<String> resultCallback, boolean toStart);
+
+    void publishTextCom(OnResultCallback<CommentResp> resultCallback, String vId, String content);
+
+    void publishVoiceCom(OnResultCallback<CommentResp> resultCallback, String vId, String cId, int cLength);
 
 }

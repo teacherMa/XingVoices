@@ -13,8 +13,14 @@ import com.example.xiaomage.xingvoices.api.OnItemClickListener;
 import com.example.xiaomage.xingvoices.event.EmptyEvent;
 import com.example.xiaomage.xingvoices.event.MainViewInitEvent;
 import com.example.xiaomage.xingvoices.event.ChangeAnimEvent;
+import com.example.xiaomage.xingvoices.event.VH.VHAuditionEvent;
+import com.example.xiaomage.xingvoices.event.VH.VHPublishTextComEvent;
+import com.example.xiaomage.xingvoices.event.VH.VHPublishVoiceComEvent;
+import com.example.xiaomage.xingvoices.event.VH.VHRecordEvent;
 import com.example.xiaomage.xingvoices.framework.BaseBusView;
 import com.example.xiaomage.xingvoices.model.bean.RemoteVoice.RemoteVoice;
+import com.example.xiaomage.xingvoices.utils.BaseUtil;
+import com.example.xiaomage.xingvoices.utils.Constants;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -31,6 +37,7 @@ public class PopularView extends BaseBusView<PopularContract.Presenter> implemen
 
     private PopularAdapter mAdapter;
     private int mCurPosition;
+    private String mCurVoiceComId;
 
     public PopularView(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
@@ -48,6 +55,38 @@ public class PopularView extends BaseBusView<PopularContract.Presenter> implemen
                 return;
             }
             getPresenter().requestAllPopularVoice();
+        }
+        if(event instanceof VHRecordEvent){
+            VHRecordEvent recordEvent = (VHRecordEvent) event;
+            if(!Constants.ViewHolderTag.PopularVH.equals(recordEvent.getTag())){
+                return;
+            }
+            getPresenter().recordAudio(recordEvent.isToStart());
+            return;
+        }
+        if(event instanceof VHAuditionEvent){
+            VHAuditionEvent auditionEvent = (VHAuditionEvent) event;
+            if(!Constants.ViewHolderTag.PopularVH.equals(auditionEvent.getTag())){
+                return;
+            }
+            getPresenter().playVoice(mCurVoiceComId);
+            return;
+        }
+        if (event instanceof VHPublishTextComEvent){
+            VHPublishTextComEvent textComEvent = (VHPublishTextComEvent)event;
+            if(!Constants.ViewHolderTag.PopularVH.equals(textComEvent.getTag())){
+                return;
+            }
+            getPresenter().publishTextCom(textComEvent.getRemoteVoice().getVid(),textComEvent.getContent());
+            return;
+        }
+        if(event instanceof VHPublishVoiceComEvent){
+            VHPublishVoiceComEvent voiceComEvent = (VHPublishVoiceComEvent)event;
+            if(!Constants.ViewHolderTag.PopularVH.equals(voiceComEvent.getTag())){
+                return;
+            }
+            int length = Integer.parseInt(voiceComEvent.getComLength());
+            getPresenter().publishVoiceCom(voiceComEvent.getRemoteVoice().getVid(),mCurVoiceComId,length);
         }
     }
 
@@ -84,6 +123,16 @@ public class PopularView extends BaseBusView<PopularContract.Presenter> implemen
     public void playFinished() {
         ChangeAnimEvent event = new ChangeAnimEvent(mCurPosition,false);
         EventBus.getDefault().post(event);
+    }
+
+    @Override
+    public void recordSuccess(String id) {
+        mCurVoiceComId = id;
+    }
+
+    @Override
+    public void commentSuccess(String info) {
+        BaseUtil.showToast(info);
     }
 
     @Override

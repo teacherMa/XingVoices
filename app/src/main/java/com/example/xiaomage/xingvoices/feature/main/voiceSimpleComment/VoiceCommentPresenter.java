@@ -1,10 +1,9 @@
-package com.example.xiaomage.xingvoices.feature.main.voiceComment;
+package com.example.xiaomage.xingvoices.feature.main.voiceSimpleComment;
 
 import android.support.annotation.NonNull;
 
 import com.example.xiaomage.xingvoices.api.OnResultCallback;
 import com.example.xiaomage.xingvoices.framework.BasePresenter;
-import com.example.xiaomage.xingvoices.framework.BasePresenterApi;
 import com.example.xiaomage.xingvoices.model.bean.CommentBean.CommentBean;
 import com.example.xiaomage.xingvoices.model.bean.RemoteVoice.RemoteVoice;
 import com.example.xiaomage.xingvoices.model.main.MainRepository;
@@ -48,5 +47,48 @@ public class VoiceCommentPresenter extends BasePresenter<VoiceCommentContract.Vi
             }
         };
         getRepository().requestComment(callback,voice,null, Constants.CommentType.VOICE);
+    }
+
+    @Override
+    public void likeIt(String cId) {
+        OnResultCallback<String> callback = new OnResultCallback<String>() {
+            @Override
+            public void onSuccess(String resultValue, int code) {
+                if (getView() == null) {
+                    return;
+                }
+                getView().likeSuccess(resultValue);
+            }
+
+            @Override
+            public void onFail(String errorMessage) {
+                if (getView() == null) {
+                    return;
+                }
+                BaseUtil.showToast(errorMessage);
+            }
+        };
+        getRepository().likeIt(callback,cId);
+    }
+
+    @Override
+    public void playComVoice(CommentBean commentBean) {
+        OnResultCallback<Boolean> callback = new OnResultCallback<Boolean>() {
+            @Override
+            public void onSuccess(Boolean resultValue, int code) {
+                if (getView() == null) {
+                    return;
+                }
+            }
+
+            @Override
+            public void onFail(String errorMessage) {
+                if(null == getView()){
+                    return;
+                }
+                BaseUtil.showToast(errorMessage);
+            }
+        };
+        getRepository().playVoiceCom(callback,commentBean);
     }
 }

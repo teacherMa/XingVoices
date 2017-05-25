@@ -59,6 +59,16 @@
 
         </activity>
 
+        <activity android:name=".feature.main.comment.CommentActivity"
+                  android:screenOrientation="portrait">
+
+        </activity>
+
+        <activity android:name=".feature.main.menu.SettingActivity"
+                  android:screenOrientation="portrait">
+
+        </activity>
+
     </application>
 
 </manifest>
