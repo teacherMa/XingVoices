@@ -39,4 +39,9 @@ public class PopularFragment extends BaseFragment<PopularPresenter> {
         return R.layout.main_popular_frag;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        mMainPopularView.refreshView();
+    }
 }

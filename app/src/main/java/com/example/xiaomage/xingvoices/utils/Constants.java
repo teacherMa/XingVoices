@@ -46,6 +46,7 @@ public class Constants {
         String UPLOAD_OSS = "uploadOSS";
         String LIKE_IT = "dianZan";
         String ADD_COMMENTS = "addComments";
+        String FOLLOW = "guanzhu";
     }
 
     public interface XingVoicesRequestParam {
@@ -62,6 +63,7 @@ public class Constants {
         String NUM = "num";
         String IS_U = "is_u";
         String TITLE = "title";
+        String STATE = "quxiao";
         String RE_URL = "reurl";
         String LENGTH = "length";
         String CONTENT = "content";

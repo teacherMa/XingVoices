@@ -10,9 +10,10 @@ import com.example.xiaomage.xingvoices.model.bean.User.BasicUserInfo;
 import com.example.xiaomage.xingvoices.model.bean.User.XingVoiceUser;
 import com.example.xiaomage.xingvoices.model.bean.User.XingVoiceUserResp;
 import com.example.xiaomage.xingvoices.model.bean.WxBean.WxUserInfo;
-import com.example.xiaomage.xingvoices.model.bean.comment.CommentResp;
-import com.example.xiaomage.xingvoices.model.bean.likeIt.LikeItResp;
-import com.example.xiaomage.xingvoices.model.bean.upload.UploadResp;
+import com.example.xiaomage.xingvoices.model.bean.followResp.FollowResp;
+import com.example.xiaomage.xingvoices.model.bean.publishCommentResp.CommentResp;
+import com.example.xiaomage.xingvoices.model.bean.likeCommentResp.LikeItResp;
+import com.example.xiaomage.xingvoices.model.bean.uploadResp.UploadResp;
 import com.example.xiaomage.xingvoices.model.main.MainDataSource;
 import com.example.xiaomage.xingvoices.utils.Constants;
 import com.example.xiaomage.xingvoices.utils.FileUtil;
@@ -309,6 +310,32 @@ public class MainRemoteDS implements MainDataSource {
 
                     @Override
                     public void onFailure(Call<UploadResp> call, Throwable t) {
+                        if (t == null || null == t.getMessage()) {
+                            resultCallback.onFail(Constants.ResponseError.SERVER_ERROR);
+                            return;
+                        }
+                        resultCallback.onFail(t.getMessage());
+                    }
+                });
+    }
+
+    @Override
+    public void changeFollowState(final OnResultCallback<FollowResp> resultCallback, String cid, int state) {
+        RetrofitClient.buildService(ApiService.class)
+                .followIt(Constants.XingVoicesParamValue.CHANNEL,UserManager.getInstance().
+                        getCurrentUser().getId(),cid,state)
+                .enqueue(new Callback<FollowResp>() {
+                    @Override
+                    public void onResponse(Call<FollowResp> call, Response<FollowResp> response) {
+                        if (null == response || !response.isSuccessful() || null == response.body()) {
+                            resultCallback.onFail(Constants.ResponseError.SERVER_ERROR);
+                            return;
+                        }
+                        resultCallback.onSuccess(response.body(), Constants.ResultCode.REMOTE);
+                    }
+
+                    @Override
+                    public void onFailure(Call<FollowResp> call, Throwable t) {
                         if (t == null || null == t.getMessage()) {
                             resultCallback.onFail(Constants.ResponseError.SERVER_ERROR);
                             return;

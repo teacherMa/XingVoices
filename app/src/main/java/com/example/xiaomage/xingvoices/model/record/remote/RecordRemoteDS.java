@@ -4,8 +4,8 @@ import com.example.xiaomage.xingvoices.api.ApiService;
 import com.example.xiaomage.xingvoices.api.OnResultCallback;
 import com.example.xiaomage.xingvoices.model.RetrofitClient;
 import com.example.xiaomage.xingvoices.model.UserManager;
-import com.example.xiaomage.xingvoices.model.bean.publish.PublishResp;
-import com.example.xiaomage.xingvoices.model.bean.upload.UploadResp;
+import com.example.xiaomage.xingvoices.model.bean.publishVoiceResp.PublishResp;
+import com.example.xiaomage.xingvoices.model.bean.uploadResp.UploadResp;
 import com.example.xiaomage.xingvoices.model.record.RecordDataSource;
 import com.example.xiaomage.xingvoices.utils.Constants;
 

@@ -40,8 +40,12 @@ public class PersonalView extends BaseView<PersonalContract.Presenter> implement
     @BindView(R.id.tv_fans_num)
     TextView mTvFansNum;
 
+    //这两个User都是被浏览的用户，前者包含id，昵称，头像三个信息，后者包含昵称头像粉丝关注四个信息
+    //后者通过前者获取
     private XingVoiceUser mXingVoiceUser;
     private BasicUserInfo mScanedUser;
+
+    private int mCurIsFollow;
 
     public void setXingVoiceUser(XingVoiceUser xingVoiceUser) {
         mXingVoiceUser = xingVoiceUser;
@@ -73,6 +77,16 @@ public class PersonalView extends BaseView<PersonalContract.Presenter> implement
 
     @OnClick(R.id.iv_to_follow)
     public void onMIvToFollowClicked() {
+        getPresenter().changeFollowState(mXingVoiceUser.getUid(),mCurIsFollow);
+
+        if(1 == mCurIsFollow){
+            mCurIsFollow = 0;
+            mIvToFollow.setImageDrawable(BaseUtil.getDrawable(R.drawable.ic_personal_cancle_follow));
+            return;
+        }
+
+        mCurIsFollow = 1;
+        mIvToFollow.setImageDrawable(BaseUtil.getDrawable(R.drawable.ic_personal_to_follow));
     }
 
     @Override
@@ -83,9 +97,12 @@ public class PersonalView extends BaseView<PersonalContract.Presenter> implement
 
         mAdapter.refreshData(voices);
 
-        if(0 == voices.get(0).getIs_focus()){
-            mIvToFollow.setVisibility(VISIBLE);
+        mCurIsFollow = 1;
+        if(1 == voices.get(0).getIs_focus()){
+            mIvToFollow.setImageDrawable(BaseUtil.getDrawable(R.drawable.ic_personal_cancle_follow));
+            mCurIsFollow = 0;
         }
+        mIvToFollow.setVisibility(VISIBLE);
 
     }
 
@@ -93,16 +110,21 @@ public class PersonalView extends BaseView<PersonalContract.Presenter> implement
     public void loadData(BasicUserInfo userInfo) {
         mScanedUser = userInfo;
 
-        BaseUtil.loadCirclePic(userInfo.getHeadpic()).into(mPersonalUserAvatar);
+        BaseUtil.loadCirclePic(mScanedUser.getHeadpic()).into(mPersonalUserAvatar);
 
-        mPersonalUserName.setText(userInfo.getNickname());
-        mTvFansNum.setText(String.valueOf(userInfo.getFensi()));
-        mTvFollowNumber.setText(String.valueOf(userInfo.getGuanzhu()));
+        mPersonalUserName.setText(mScanedUser.getNickname());
+        mTvFansNum.setText(String.valueOf(mScanedUser.getFensi()));
+        mTvFollowNumber.setText(String.valueOf(mScanedUser.getGuanzhu()));
 
         getPresenter().requestUserVoices(mXingVoiceUser);
     }
 
     public XingVoiceUser getXingVoiceUser() {
         return mXingVoiceUser;
+    }
+
+    @Override
+    public void changeStateSuccess(String info) {
+        BaseUtil.showToast(info);
     }
 }

@@ -7,6 +7,7 @@ import com.example.xiaomage.xingvoices.framework.BasePresenter;
 import com.example.xiaomage.xingvoices.model.bean.RemoteVoice.RemoteVoice;
 import com.example.xiaomage.xingvoices.model.bean.User.BasicUserInfo;
 import com.example.xiaomage.xingvoices.model.bean.User.XingVoiceUser;
+import com.example.xiaomage.xingvoices.model.bean.followResp.FollowResp;
 import com.example.xiaomage.xingvoices.model.main.MainRepository;
 import com.example.xiaomage.xingvoices.utils.BaseUtil;
 
@@ -71,5 +72,28 @@ public class PersonalPresenter extends BasePresenter<PersonalContract.View, Main
             }
         };
         getRepository().getUserInfo(onResultCallback,null,xingVoiceUser.getUid());
+    }
+
+    @Override
+    public void changeFollowState(String cid, int state) {
+        OnResultCallback<FollowResp> onResultCallback = new OnResultCallback<FollowResp>() {
+            @Override
+            public void onSuccess(FollowResp resultValue, int code) {
+                if(null == getView()){
+                    return;
+                }
+                getView().changeStateSuccess(resultValue.getInfo());
+            }
+
+            @Override
+            public void onFail(String errorMessage) {
+                if(null == getView()){
+                    return;
+                }
+                BaseUtil.showToast(errorMessage);
+
+            }
+        };
+        getRepository().changeFollowState(onResultCallback,cid,state);
     }
 }

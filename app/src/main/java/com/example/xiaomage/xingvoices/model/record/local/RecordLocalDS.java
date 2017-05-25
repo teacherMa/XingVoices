@@ -5,7 +5,7 @@ import android.media.MediaPlayer;
 import com.czt.mp3recorder.MP3Recorder;
 import com.example.xiaomage.xingvoices.api.OnResultCallback;
 import com.example.xiaomage.xingvoices.event.UpdateAuditionProgressEvent;
-import com.example.xiaomage.xingvoices.model.bean.upload.UploadResp;
+import com.example.xiaomage.xingvoices.model.bean.uploadResp.UploadResp;
 import com.example.xiaomage.xingvoices.model.record.RecordDataSource;
 import com.example.xiaomage.xingvoices.utils.Constants;
 import com.example.xiaomage.xingvoices.utils.FileUtil;

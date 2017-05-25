@@ -4,7 +4,7 @@ import android.support.annotation.NonNull;
 
 import com.example.xiaomage.xingvoices.api.OnResultCallback;
 import com.example.xiaomage.xingvoices.framework.BaseRepository;
-import com.example.xiaomage.xingvoices.model.bean.upload.UploadResp;
+import com.example.xiaomage.xingvoices.model.bean.uploadResp.UploadResp;
 
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;

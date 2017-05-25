@@ -6,7 +6,8 @@ import com.example.xiaomage.xingvoices.api.OnResultCallback;
 import com.example.xiaomage.xingvoices.framework.BasePresenter;
 import com.example.xiaomage.xingvoices.model.bean.RemoteVoice.RemoteVoice;
 import com.example.xiaomage.xingvoices.model.bean.User.XingVoiceUser;
-import com.example.xiaomage.xingvoices.model.bean.comment.CommentResp;
+import com.example.xiaomage.xingvoices.model.bean.followResp.FollowResp;
+import com.example.xiaomage.xingvoices.model.bean.publishCommentResp.CommentResp;
 import com.example.xiaomage.xingvoices.model.main.MainRepository;
 import com.example.xiaomage.xingvoices.utils.BaseUtil;
 
@@ -48,7 +49,7 @@ public class PopularPresenter extends BasePresenter<PopularContract.View, MainRe
     }
 
     @Override
-    public void requestAllPopularVoice() {
+    public void requestAllPopularVoice(final int page) {
         final OnResultCallback<List<RemoteVoice>> callback = new OnResultCallback<List<RemoteVoice>>() {
             @Override
             public void onSuccess(List<RemoteVoice> resultValue, int code) {
@@ -70,7 +71,7 @@ public class PopularPresenter extends BasePresenter<PopularContract.View, MainRe
             @Override
             public void onSuccess(XingVoiceUser resultValue, int code) {
                 getRepository().requestPopularVoicesList(callback, resultValue.getUid(),
-                        0,null,1,10);
+                        0,null,1,10*page);
             }
 
             @Override
@@ -164,5 +165,28 @@ public class PopularPresenter extends BasePresenter<PopularContract.View, MainRe
             }
         };
         getRepository().publishVoiceCom(resultCallback,vId,cId,cLength);
+    }
+
+    @Override
+    public void changeFollowState(String cid, int state) {
+        OnResultCallback<FollowResp> onResultCallback = new OnResultCallback<FollowResp>() {
+            @Override
+            public void onSuccess(FollowResp resultValue, int code) {
+                if(null == getView()){
+                    return;
+                }
+                getView().changeStateSuccess(resultValue.getInfo());
+            }
+
+            @Override
+            public void onFail(String errorMessage) {
+                if(null == getView()){
+                    return;
+                }
+                BaseUtil.showToast(errorMessage);
+
+            }
+        };
+        getRepository().changeFollowState(onResultCallback,cid,state);
     }
 }

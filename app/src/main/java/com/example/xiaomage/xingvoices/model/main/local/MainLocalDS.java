@@ -14,7 +14,8 @@ import com.example.xiaomage.xingvoices.model.bean.User.XingVoiceUser;
 import com.example.xiaomage.xingvoices.model.bean.User.BasicUserInfo;
 import com.example.xiaomage.xingvoices.model.bean.User.XingVoiceUserResp;
 import com.example.xiaomage.xingvoices.model.bean.WxBean.WxUserInfo;
-import com.example.xiaomage.xingvoices.model.bean.comment.CommentResp;
+import com.example.xiaomage.xingvoices.model.bean.followResp.FollowResp;
+import com.example.xiaomage.xingvoices.model.bean.publishCommentResp.CommentResp;
 import com.example.xiaomage.xingvoices.model.main.MainDataSource;
 import com.example.xiaomage.xingvoices.utils.Constants;
 import com.example.xiaomage.xingvoices.utils.FileUtil;
@@ -304,6 +305,11 @@ public class MainLocalDS implements MainDataSource {
 
     @Override
     public void publishVoiceCom(OnResultCallback<CommentResp> resultCallback, String vId, String cId, int cLength) {
+
+    }
+
+    @Override
+    public void changeFollowState(OnResultCallback<FollowResp> resultCallback, String cid, int state) {
 
     }
 

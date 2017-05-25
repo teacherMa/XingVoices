@@ -1,4 +1,4 @@
-package com.example.xiaomage.xingvoices.model.bean.upload;
+package com.example.xiaomage.xingvoices.model.bean.uploadResp;
 
 /**
  * Created by xiaomage on 2017/5/24.

@@ -16,7 +16,7 @@ import com.example.xiaomage.xingvoices.R;
 import com.example.xiaomage.xingvoices.api.OnDialogButtonClickListener;
 import com.example.xiaomage.xingvoices.framework.BaseView;
 import com.example.xiaomage.xingvoices.model.bean.LocalVoice.LocalVoice;
-import com.example.xiaomage.xingvoices.model.bean.upload.UploadResp;
+import com.example.xiaomage.xingvoices.model.bean.uploadResp.UploadResp;
 import com.example.xiaomage.xingvoices.utils.AlertUtil;
 import com.example.xiaomage.xingvoices.utils.BaseUtil;
 import com.example.xiaomage.xingvoices.utils.Constants;

@@ -15,11 +15,12 @@ public class PopularContract {
         void playFinished();
         void recordSuccess(String path);
         void commentSuccess(String info);
+        void changeStateSuccess(String info);
     }
 
     interface Presenter extends BasePresenterApi {
         void recordAudio(boolean toStart);
-        void requestAllPopularVoice();
+        void requestAllPopularVoice(int page);
         void downloadVoice(String vUrl,String vId);
         void playVoice(String vId);
 
@@ -30,5 +31,8 @@ public class PopularContract {
          * @param vId 被评论的语音id，在DS中进行转换
          * @param cLength 评论长短*/
         void publishVoiceCom(String vId,String cId,int cLength);
+
+
+        void changeFollowState(String cid,int state);
     }
 }

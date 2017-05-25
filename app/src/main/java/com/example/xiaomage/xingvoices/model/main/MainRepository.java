@@ -10,7 +10,8 @@ import com.example.xiaomage.xingvoices.model.bean.User.XingVoiceUser;
 import com.example.xiaomage.xingvoices.model.bean.User.BasicUserInfo;
 import com.example.xiaomage.xingvoices.model.bean.User.XingVoiceUserResp;
 import com.example.xiaomage.xingvoices.model.bean.WxBean.WxUserInfo;
-import com.example.xiaomage.xingvoices.model.bean.comment.CommentResp;
+import com.example.xiaomage.xingvoices.model.bean.followResp.FollowResp;
+import com.example.xiaomage.xingvoices.model.bean.publishCommentResp.CommentResp;
 import com.example.xiaomage.xingvoices.utils.Constants;
 import com.example.xiaomage.xingvoices.utils.FileUtil;
 
@@ -302,5 +303,21 @@ public class MainRepository extends BaseRepository implements MainDataSource {
             }
         };
         mRemoteDS.publishVoiceCom(callback,vId,cId,cLength);
+    }
+
+    @Override
+    public void changeFollowState(final OnResultCallback<FollowResp> resultCallback, String cid, int state) {
+        OnResultCallback<FollowResp> callback = new OnResultCallback<FollowResp>() {
+            @Override
+            public void onSuccess(FollowResp resultValue, int code) {
+                resultCallback.onSuccess(resultValue,code);
+            }
+
+            @Override
+            public void onFail(String errorMessage) {
+                resultCallback.onFail(errorMessage);
+            }
+        };
+        mRemoteDS.changeFollowState(callback,cid,state);
     }
 }

@@ -94,8 +94,6 @@ public class PopularVH extends BaseViewHolder<RemoteVoice> implements OnBottomMe
     TextView mTvVoiceLength;
     @BindView(R.id.vp_comments)
     WrapContentViewPager mVpComments;
-    @BindView(R.id.iv_play_anim)
-    ImageView mIvPlayAnim;
 
     private OnItemClickListener<RemoteVoice> mOnItemClickListener;
     private RemoteVoice mRemoteVoice;
@@ -115,7 +113,7 @@ public class PopularVH extends BaseViewHolder<RemoteVoice> implements OnBottomMe
         if(null == event){
             return;
         }
-        if(event instanceof ChangeAnimEvent){
+       /* if(event instanceof ChangeAnimEvent){
             ChangeAnimEvent changeAnimEvent = (ChangeAnimEvent)event;
             if(mPosition != changeAnimEvent.getPosition()){
                 return;
@@ -126,7 +124,7 @@ public class PopularVH extends BaseViewHolder<RemoteVoice> implements OnBottomMe
             }
 
             stopAnim();
-        }
+        }*/
     }
 
     @Override
@@ -134,7 +132,7 @@ public class PopularVH extends BaseViewHolder<RemoteVoice> implements OnBottomMe
 
         if (null == mAnimationDrawable) {
             mAnimationDrawable = new AnimationDrawable();
-            initAnimation();
+//            initAnimation();
         }
 
         mOnItemClickListener = listener;
@@ -181,6 +179,11 @@ public class PopularVH extends BaseViewHolder<RemoteVoice> implements OnBottomMe
     @OnClick(R.id.iv_follow)
     public void onMIvFollowClicked() {
         mOnItemClickListener.onItemClick(mRemoteVoice, R.id.iv_follow, FOLLOW);
+        if(mRemoteVoice.getIs_focus() == 1){
+            mIvFollow.setVisibility(INVISIBLE);
+            return;
+        }
+        mIvFollow.setVisibility(VISIBLE);
     }
 
     @OnClick(R.id.iv_more)
@@ -305,7 +308,7 @@ public class PopularVH extends BaseViewHolder<RemoteVoice> implements OnBottomMe
         return this;
     }
 
-    private void stopAnim(){
+   /* private void stopAnim(){
         mAnimationDrawable.stop();
         mIvPlayAnim.setVisibility(INVISIBLE);
     }
@@ -339,7 +342,7 @@ public class PopularVH extends BaseViewHolder<RemoteVoice> implements OnBottomMe
         }
         mAnimationDrawable.setOneShot(false);
         mIvPlayAnim.setBackgroundDrawable(mAnimationDrawable);
-    }
+    }*/
 
     @Override
     public void onBottomCommentItemClick(int position, String content) {

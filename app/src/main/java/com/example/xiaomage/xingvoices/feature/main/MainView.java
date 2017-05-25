@@ -232,9 +232,9 @@ public class MainView extends BaseBusView<MainContract.Presenter> implements Mai
 
     @Override
     public void initMainUi() {
-        mMainSlidingMenu.openMenu();
+//        mMainSlidingMenu.openMenu();
 
-        new Thread(new Runnable() {
+        /*new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
@@ -245,6 +245,6 @@ public class MainView extends BaseBusView<MainContract.Presenter> implements Mai
                 MainViewInitEvent initEvent = new MainViewInitEvent(true);
                 EventBus.getDefault().post(initEvent);
             }
-        }).start();
+        }).start();*/
     }
 }

@@ -6,10 +6,11 @@ import com.example.xiaomage.xingvoices.model.bean.User.BasicUserInfo;
 import com.example.xiaomage.xingvoices.model.bean.User.XingVoiceUserResp;
 import com.example.xiaomage.xingvoices.model.bean.WxBean.AccessToken;
 import com.example.xiaomage.xingvoices.model.bean.WxBean.WxUserInfo;
-import com.example.xiaomage.xingvoices.model.bean.comment.CommentResp;
-import com.example.xiaomage.xingvoices.model.bean.likeIt.LikeItResp;
-import com.example.xiaomage.xingvoices.model.bean.publish.PublishResp;
-import com.example.xiaomage.xingvoices.model.bean.upload.UploadResp;
+import com.example.xiaomage.xingvoices.model.bean.followResp.FollowResp;
+import com.example.xiaomage.xingvoices.model.bean.publishCommentResp.CommentResp;
+import com.example.xiaomage.xingvoices.model.bean.likeCommentResp.LikeItResp;
+import com.example.xiaomage.xingvoices.model.bean.publishVoiceResp.PublishResp;
+import com.example.xiaomage.xingvoices.model.bean.uploadResp.UploadResp;
 import com.example.xiaomage.xingvoices.utils.Constants;
 
 import java.util.List;
@@ -105,6 +106,12 @@ public interface ApiService {
     Call<LikeItResp> likeIt(@Query(Constants.XingVoicesRequestParam.CHANNEL) String channel,
                             @Query(Constants.XingVoicesRequestParam.UID) String uid,
                             @Query(Constants.XingVoicesRequestParam.CID) String cid);
+
+    @GET(Constants.XingVoicesApi.FOLLOW)
+    Call<FollowResp> followIt(@Query(Constants.XingVoicesRequestParam.CHANNEL) String channel,
+                              @Query(Constants.XingVoicesRequestParam.UID) String uid,
+                              @Query(Constants.XingVoicesRequestParam.CID) String cid,
+                              @Query(Constants.XingVoicesRequestParam.STATE) int state);
 
     @Multipart
     @POST(Constants.XingVoicesApi.UPLOAD_OSS)
