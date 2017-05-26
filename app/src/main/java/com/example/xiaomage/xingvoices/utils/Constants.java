@@ -12,6 +12,10 @@ public class Constants {
     public static String WEXIN_HEAD_PIC = "http://wx.qlogo.cn/mmopen/";
     public static String VOICE_URL = "http://app.starsound.xyz/user/";
     public static String PIC_API;
+    public static String QQ_AAP_ID = "1106189366";
+    public static String QQ_APP_KEY = "dDbHS4KW4rISrnSO";
+    public static String SINA_APP_ID = "792058943";
+    public static String SINA_APP_SECRET = "8e20634801c239d24df21a0934313085";
 
     public interface WxParamValue {
         String APP_ID = "wxc988255a4b16c8cf";
@@ -191,6 +195,12 @@ public class Constants {
         int TO_AUDITION = 23;
         int SEND_VOICE_COM = 24;
         int STOP_AUDITION = 25;
+    }
+
+    public interface BottomShareItem{
+        int QQ_SHARE = 30;
+        int WECHAT_SHARE  = 31;
+        int SINA_SHARE = 32;
     }
 
 

@@ -14,6 +14,8 @@ import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import butterknife.BindView;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
+import me.shaohui.shareutil.ShareConfig;
+import me.shaohui.shareutil.ShareManager;
 
 public class LogInActivity extends BaseActivity<LogInPresenter> {
     @BindView(R.id.login_view)
@@ -39,6 +41,12 @@ public class LogInActivity extends BaseActivity<LogInPresenter> {
                 .build();
 
         Realm.setDefaultConfiguration(config);
+
+        ShareConfig shareConfig = ShareConfig.instance()
+                .qqId(Constants.QQ_AAP_ID)
+                .wxId(Constants.WxParamValue.APP_ID)
+                .weiboId(Constants.SINA_APP_ID);
+        ShareManager.init(shareConfig);
 
         super.onCreate(savedInstanceState);
 

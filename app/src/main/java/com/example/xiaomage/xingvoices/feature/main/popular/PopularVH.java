@@ -2,6 +2,8 @@ package com.example.xiaomage.xingvoices.feature.main.popular;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.Drawable;
 import android.support.v4.app.Fragment;
@@ -20,7 +22,9 @@ import com.example.xiaomage.xingvoices.R;
 import com.example.xiaomage.xingvoices.api.OnItemClickListener;
 import com.example.xiaomage.xingvoices.api.main.OnBottomCommentItemClickListener;
 import com.example.xiaomage.xingvoices.api.main.OnBottomMenuItemClickListener;
+import com.example.xiaomage.xingvoices.api.main.OnBottomShareItemClickListener;
 import com.example.xiaomage.xingvoices.custom.view.BottomCommentView;
+import com.example.xiaomage.xingvoices.custom.view.BottomShareView;
 import com.example.xiaomage.xingvoices.custom.view.WrapContentViewPager;
 import com.example.xiaomage.xingvoices.custom.view.BottomMenu;
 import com.example.xiaomage.xingvoices.event.EmptyEvent;
@@ -49,6 +53,9 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import me.shaohui.shareutil.ShareUtil;
+import me.shaohui.shareutil.share.ShareListener;
+import me.shaohui.shareutil.share.SharePlatform;
 
 import static android.view.View.INVISIBLE;
 import static android.view.View.VISIBLE;
@@ -60,7 +67,7 @@ import static com.example.xiaomage.xingvoices.utils.Constants.BottomMenuItem.SHA
 import static com.example.xiaomage.xingvoices.utils.Constants.MainPopularItem.FOLLOW;
 
 public class PopularVH extends BaseViewHolder<RemoteVoice> implements OnBottomMenuItemClickListener,
-        OnBottomCommentItemClickListener {
+        OnBottomCommentItemClickListener,OnBottomShareItemClickListener {
 
     private static final int DURATION = 500;
 
@@ -232,7 +239,10 @@ public class PopularVH extends BaseViewHolder<RemoteVoice> implements OnBottomMe
                 mOnItemClickListener.onItemClick(mRemoteVoice, R.id.tv_collection, COLLECTION);
                 break;
             case SHARE:
-                // TODO: 2017/5/14
+                BottomShareView bottomShareView = new BottomShareView(getContext());
+                bottomShareView.setOnBottomShareItemClickListener(this);
+                View shareRoot = LayoutInflater.from(getContext()).inflate(R.layout.main_view, null);
+                bottomShareView.showAtLocation(shareRoot,Gravity.BOTTOM,0,0);
                 break;
             case LOOK_UP_PIC:
                 // TODO: 2017/5/14
@@ -367,6 +377,32 @@ public class PopularVH extends BaseViewHolder<RemoteVoice> implements OnBottomMe
                 EventBus.getDefault().post(new VHPublishVoiceComEvent(Constants.ViewHolderTag.PopularVH,mRemoteVoice,content));
                 break;
             default:
+                break;
+        }
+    }
+
+    @Override
+    public void onBottomShareItemClick(int position) {
+        switch (position){
+            case Constants.BottomShareItem.QQ_SHARE:
+                ShareUtil.shareMedia(getContext(), SharePlatform.WEIBO, null, null, mRemoteVoice.getReurl(),
+                        BitmapFactory.decodeResource(getContext().getResources(),R.drawable.ic_main_voice_down_like),
+                        new ShareListener() {
+                            @Override
+                            public void shareSuccess() {
+
+                            }
+
+                            @Override
+                            public void shareFailure(Exception e) {
+
+                            }
+
+                            @Override
+                            public void shareCancel() {
+
+                            }
+                        });
                 break;
         }
     }
