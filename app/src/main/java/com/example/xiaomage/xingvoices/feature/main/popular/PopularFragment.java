@@ -44,4 +44,9 @@ public class PopularFragment extends BaseFragment<PopularPresenter> {
         super.onResume();
         mMainPopularView.refreshView();
     }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+    }
 }

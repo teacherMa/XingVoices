@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.example.xiaomage.xingvoices.R;
 import com.example.xiaomage.xingvoices.feature.main.popular.PopularAdapter;
 import com.example.xiaomage.xingvoices.framework.BaseView;
+import com.example.xiaomage.xingvoices.model.UserManager;
 import com.example.xiaomage.xingvoices.model.bean.RemoteVoice.RemoteVoice;
 import com.example.xiaomage.xingvoices.model.bean.User.BasicUserInfo;
 import com.example.xiaomage.xingvoices.model.bean.User.XingVoiceUser;
@@ -57,6 +58,9 @@ public class PersonalView extends BaseView<PersonalContract.Presenter> implement
 
     public void setXingVoiceUser(XingVoiceUser xingVoiceUser) {
         mXingVoiceUser = xingVoiceUser;
+        if(mXingVoiceUser.getUid().equals(UserManager.getInstance().getCurrentUser().getId())){
+            mIvToFollow.setVisibility(GONE);
+        }
     }
 
     private PersonalAdapter mAdapter;
@@ -102,6 +106,7 @@ public class PersonalView extends BaseView<PersonalContract.Presenter> implement
                 mIsloadingMore = false;
             }
         });
+
     }
 
     @Override
@@ -116,6 +121,11 @@ public class PersonalView extends BaseView<PersonalContract.Presenter> implement
 
     @OnClick(R.id.iv_to_follow)
     public void onMIvToFollowClicked() {
+        if(mXingVoiceUser.getUid().equals(UserManager.getInstance().getCurrentUser().getId())){
+            mIvToFollow.setVisibility(GONE);
+            return;
+        }
+
         getPresenter().changeFollowState(mXingVoiceUser.getUid(), mCurIsFollow);
 
         if (1 == mCurIsFollow) {
@@ -141,7 +151,9 @@ public class PersonalView extends BaseView<PersonalContract.Presenter> implement
             mIvToFollow.setImageDrawable(BaseUtil.getDrawable(R.drawable.ic_personal_cancle_follow));
             mCurIsFollow = 0;
         }
-        mIvToFollow.setVisibility(VISIBLE);
+        if(!mXingVoiceUser.getUid().equals(UserManager.getInstance().getCurrentUser().getId())) {
+            mIvToFollow.setVisibility(VISIBLE);
+        }
 
         mSrlRefresh.setRefreshing(false);
         mLoadBar.setVisibility(GONE);

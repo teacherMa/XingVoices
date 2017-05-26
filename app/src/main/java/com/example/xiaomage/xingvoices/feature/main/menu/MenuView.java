@@ -1,6 +1,7 @@
 package com.example.xiaomage.xingvoices.feature.main.menu;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -18,9 +19,11 @@ import com.example.xiaomage.xingvoices.event.MenuCloseEvent;
 import com.example.xiaomage.xingvoices.event.MainViewInitEvent;
 import com.example.xiaomage.xingvoices.feature.main.MainActivity;
 import com.example.xiaomage.xingvoices.feature.main.menu.systemMessage.MessageActivity;
+import com.example.xiaomage.xingvoices.feature.personal.PersonalActivity;
 import com.example.xiaomage.xingvoices.framework.BaseBusView;
 import com.example.xiaomage.xingvoices.model.UserManager;
 import com.example.xiaomage.xingvoices.model.bean.User.BasicUserInfo;
+import com.example.xiaomage.xingvoices.model.bean.User.XingVoiceUser;
 import com.example.xiaomage.xingvoices.model.bean.User.XingVoiceUserResp;
 import com.example.xiaomage.xingvoices.utils.BaseUtil;
 import com.example.xiaomage.xingvoices.utils.FileUtil;
@@ -109,6 +112,14 @@ public class MenuView extends BaseBusView<MenuContract.Presenter> implements Men
             case R.id.tv_fans_num:
                 break;
             case R.id.menu_my_publish:
+                XingVoiceUser xingVoiceUser = new XingVoiceUser();
+
+                xingVoiceUser.setHeadpic(UserManager.getInstance().getCurrentUser().getAvatar());
+                xingVoiceUser.setNickname(UserManager.getInstance().getCurrentUser().getName());
+                xingVoiceUser.setUid(UserManager.getInstance().getCurrentUser().getId());
+
+                Intent intent = PersonalActivity.getNewIntent(xingVoiceUser, getContext());
+                getContext().startActivity(intent);
                 break;
             case R.id.menu_my_draft:
                 break;

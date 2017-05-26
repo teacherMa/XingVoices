@@ -52,6 +52,8 @@ public class Constants {
         String ADD_COMMENTS = "addComments";
         String FOLLOW = "guanzhu";
         String MY_VOICE_COMMENTS = "myVoiceToComments";
+        String COLLECTION = "favorites";
+        String SHIELD_VOICE = "pbVoice";
     }
 
     public interface XingVoicesRequestParam {
@@ -89,6 +91,8 @@ public class Constants {
         String TextCommentVH = "TextCommentVH";
         String SimpleVoiceCommentVH = "SimpleVoiceCommentVH";
         String PopularVH = "PopularVH";
+        String FollowVH = "FollowVH";
+        String CollectionVH = "CollectionVH";
     }
 
     public interface VoiceType {
@@ -197,9 +201,9 @@ public class Constants {
         int STOP_AUDITION = 25;
     }
 
-    public interface BottomShareItem{
+    public interface BottomShareItem {
         int QQ_SHARE = 30;
-        int WECHAT_SHARE  = 31;
+        int WECHAT_SHARE = 31;
         int SINA_SHARE = 32;
     }
 

@@ -9,9 +9,6 @@ import com.example.xiaomage.xingvoices.model.personal.remote.PersonalRemoteDS;
 import com.example.xiaomage.xingvoices.model.record.RecordRepository;
 import com.example.xiaomage.xingvoices.model.record.local.RecordLocalDS;
 import com.example.xiaomage.xingvoices.model.record.remote.RecordRemoteDS;
-import com.example.xiaomage.xingvoices.model.wxapi.WXEntryRepository;
-import com.example.xiaomage.xingvoices.model.wxapi.local.WXEntryLocalDS;
-import com.example.xiaomage.xingvoices.model.wxapi.remote.WXEntryRemoteDS;
 
 /**
  * Inject repository .
@@ -41,10 +38,4 @@ public class Injection {
         );
     }
 
-    public static WXEntryRepository provideWXEntryRepository(){
-        return WXEntryRepository.getInstance(
-                WXEntryLocalDS.getInstance(),
-                WXEntryRemoteDS.getInstance()
-        );
-    }
 }

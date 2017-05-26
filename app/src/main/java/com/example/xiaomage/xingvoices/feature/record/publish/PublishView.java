@@ -14,12 +14,16 @@ import android.widget.TextView;
 
 import com.example.xiaomage.xingvoices.R;
 import com.example.xiaomage.xingvoices.api.OnDialogButtonClickListener;
+import com.example.xiaomage.xingvoices.event.ShowNewMessage;
+import com.example.xiaomage.xingvoices.feature.main.MainActivity;
 import com.example.xiaomage.xingvoices.framework.BaseView;
 import com.example.xiaomage.xingvoices.model.bean.LocalVoice.LocalVoice;
-import com.example.xiaomage.xingvoices.model.bean.uploadResp.UploadResp;
+import com.example.xiaomage.xingvoices.model.bean.Resp.uploadResp.UploadResp;
 import com.example.xiaomage.xingvoices.utils.AlertUtil;
 import com.example.xiaomage.xingvoices.utils.BaseUtil;
 import com.example.xiaomage.xingvoices.utils.Constants;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.io.File;
 
@@ -148,7 +152,8 @@ public class PublishView extends BaseView<PublishContract.Presenter> implements 
                 BaseUtil.getString(R.string.record_publish_success), new OnDialogButtonClickListener() {
                     @Override
                     public void onDialogButtonClick() {
-                        ((PublishActivity)getContext()).onBackPressed();
+                        getContext().startActivity(new Intent(getContext(), MainActivity.class));
+                        EventBus.getDefault().post(new ShowNewMessage(true));
                     }
                 });
 

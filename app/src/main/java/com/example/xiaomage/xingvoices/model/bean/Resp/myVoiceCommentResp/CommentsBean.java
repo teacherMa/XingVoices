@@ -1,4 +1,4 @@
-package com.example.xiaomage.xingvoices.model.bean.myVoiceCommentResp;
+package com.example.xiaomage.xingvoices.model.bean.Resp.myVoiceCommentResp;
 
 /**
  * Created by xiaomage on 2017/5/26.

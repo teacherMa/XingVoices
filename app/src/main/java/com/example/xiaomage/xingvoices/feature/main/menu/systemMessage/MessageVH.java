@@ -12,9 +12,8 @@ import com.example.xiaomage.xingvoices.R;
 import com.example.xiaomage.xingvoices.api.OnItemClickListener;
 import com.example.xiaomage.xingvoices.framework.BaseAdapter;
 import com.example.xiaomage.xingvoices.framework.BaseViewHolder;
-import com.example.xiaomage.xingvoices.model.bean.CommentBean.CommentBean;
-import com.example.xiaomage.xingvoices.model.bean.myVoiceCommentResp.CommentsBean;
-import com.example.xiaomage.xingvoices.model.bean.myVoiceCommentResp.MyVoiceCommentResp;
+import com.example.xiaomage.xingvoices.model.bean.Resp.myVoiceCommentResp.CommentsBean;
+import com.example.xiaomage.xingvoices.model.bean.Resp.myVoiceCommentResp.MyVoiceCommentResp;
 import com.example.xiaomage.xingvoices.utils.BaseUtil;
 
 import butterknife.BindView;

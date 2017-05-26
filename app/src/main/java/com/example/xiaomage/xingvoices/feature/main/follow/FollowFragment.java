@@ -39,4 +39,9 @@ public class FollowFragment extends BaseFragment<FollowPresenter> {
         return R.layout.main_follow_frag;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        mMainFollowView.refreshView();
+    }
 }

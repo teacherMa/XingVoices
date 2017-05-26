@@ -6,15 +6,17 @@ import com.example.xiaomage.xingvoices.model.RetrofitClient;
 import com.example.xiaomage.xingvoices.model.UserManager;
 import com.example.xiaomage.xingvoices.model.bean.CommentBean.CommentBean;
 import com.example.xiaomage.xingvoices.model.bean.RemoteVoice.RemoteVoice;
+import com.example.xiaomage.xingvoices.model.bean.Resp.shieldResp.ShieldResp;
 import com.example.xiaomage.xingvoices.model.bean.User.BasicUserInfo;
 import com.example.xiaomage.xingvoices.model.bean.User.XingVoiceUser;
 import com.example.xiaomage.xingvoices.model.bean.User.XingVoiceUserResp;
 import com.example.xiaomage.xingvoices.model.bean.WxBean.WxUserInfo;
-import com.example.xiaomage.xingvoices.model.bean.followResp.FollowResp;
-import com.example.xiaomage.xingvoices.model.bean.myVoiceCommentResp.MyVoiceCommentResp;
-import com.example.xiaomage.xingvoices.model.bean.publishCommentResp.CommentResp;
-import com.example.xiaomage.xingvoices.model.bean.likeCommentResp.LikeItResp;
-import com.example.xiaomage.xingvoices.model.bean.uploadResp.UploadResp;
+import com.example.xiaomage.xingvoices.model.bean.Resp.collectionResp.CollectionResp;
+import com.example.xiaomage.xingvoices.model.bean.Resp.followResp.FollowResp;
+import com.example.xiaomage.xingvoices.model.bean.Resp.myVoiceCommentResp.MyVoiceCommentResp;
+import com.example.xiaomage.xingvoices.model.bean.Resp.publishCommentResp.CommentResp;
+import com.example.xiaomage.xingvoices.model.bean.Resp.likeCommentResp.LikeItResp;
+import com.example.xiaomage.xingvoices.model.bean.Resp.uploadResp.UploadResp;
 import com.example.xiaomage.xingvoices.model.main.MainDataSource;
 import com.example.xiaomage.xingvoices.utils.Constants;
 import com.example.xiaomage.xingvoices.utils.FileUtil;
@@ -128,6 +130,58 @@ public class MainRemoteDS implements MainDataSource {
     }
 
     @Override
+    public void requestCollectionVoicesList(final OnResultCallback<List<RemoteVoice>> resultCallback, int num) {
+        RetrofitClient.buildService(ApiService.class)
+                .getMyCollection(Constants.XingVoicesParamValue.CHANNEL,UserManager.getInstance().
+                        getCurrentUser().getId(),num)
+                .enqueue(new Callback<List<RemoteVoice>>() {
+                    @Override
+                    public void onResponse(Call<List<RemoteVoice>> call, Response<List<RemoteVoice>> response) {
+                        if (null == response || !response.isSuccessful() || null == response.body()) {
+                            resultCallback.onFail(Constants.ResponseError.SERVER_ERROR);
+                            return;
+                        }
+                        resultCallback.onSuccess(response.body(), Constants.ResultCode.REMOTE);
+                    }
+
+                    @Override
+                    public void onFailure(Call<List<RemoteVoice>> call, Throwable t) {
+                        if (t == null || null == t.getMessage()) {
+                            resultCallback.onFail(Constants.ResponseError.SERVER_ERROR);
+                            return;
+                        }
+                        resultCallback.onFail(t.getMessage());
+                    }
+                });
+    }
+
+    @Override
+    public void requestFollowVoicesList(final OnResultCallback<List<RemoteVoice>> resultCallback, int num) {
+        RetrofitClient.buildService(ApiService.class)
+                .getMyFollow(Constants.XingVoicesParamValue.CHANNEL,UserManager.getInstance().
+                        getCurrentUser().getId(),num)
+                .enqueue(new Callback<List<RemoteVoice>>() {
+                    @Override
+                    public void onResponse(Call<List<RemoteVoice>> call, Response<List<RemoteVoice>> response) {
+                        if (null == response || !response.isSuccessful() || null == response.body()) {
+                            resultCallback.onFail(Constants.ResponseError.SERVER_ERROR);
+                            return;
+                        }
+                        resultCallback.onSuccess(response.body(), Constants.ResultCode.REMOTE);
+                    }
+
+                    @Override
+                    public void onFailure(Call<List<RemoteVoice>> call, Throwable t) {
+                        if (t == null || null == t.getMessage()) {
+                            resultCallback.onFail(Constants.ResponseError.SERVER_ERROR);
+                            return;
+                        }
+                        resultCallback.onFail(t.getMessage());
+                    }
+                });
+    }
+
+    @Override
     public void requestComment(final OnResultCallback<List<CommentBean>> resultCallback,
                                RemoteVoice voice, XingVoiceUser bean, int commentType) {
         RetrofitClient.buildService(ApiService.class)
@@ -167,6 +221,34 @@ public class MainRemoteDS implements MainDataSource {
 
         RetrofitClient.buildDownloadVoiceService(ApiService.class)
                 .downloadVoice(id, date, voiceName)
+                .enqueue(new Callback<ResponseBody>() {
+                    @Override
+                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                        if (null == response || !response.isSuccessful() || null == response.body()) {
+                            resultCallback.onFail(Constants.ResponseError.SERVER_ERROR);
+                            return;
+                        }
+                        resultCallback.onSuccess(response.body(), Constants.ResultCode.REMOTE);
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResponseBody> call, Throwable t) {
+                        if (t == null || null == t.getMessage()) {
+                            resultCallback.onFail(Constants.ResponseError.SERVER_ERROR);
+                            return;
+                        }
+                        resultCallback.onFail(t.getMessage());
+                    }
+                });
+    }
+
+    @Override
+    public void downloadHeadPic(final OnResultCallback<ResponseBody> resultCallback, ResponseBody responseBody, String url) {
+        String[] strings = url.split("/");
+        String id = strings[strings.length-2];
+
+        RetrofitClient.buildDownloadWxHeadPicService(ApiService.class)
+                .downloadHeadPic(id)
                 .enqueue(new Callback<ResponseBody>() {
                     @Override
                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -321,6 +403,46 @@ public class MainRemoteDS implements MainDataSource {
     }
 
     @Override
+    public void uploadHeadPic(final OnResultCallback<UploadResp> resultCallback) {
+        String path = FileUtil.AVATAR_FILE.concat("/").concat("HEAD").concat(".png");
+
+        File fileFirst = new File(path);
+        if(!fileFirst.exists()){
+            resultCallback.onFail(Constants.ResponseError.DATA_EMPTY);
+            return;
+        }
+
+        RequestBody requestBodyFirst = RequestBody.create(MediaType.parse("multipart/form-data"), fileFirst);
+        MultipartBody.Part bodyFirst = MultipartBody.Part.createFormData("aFile",fileFirst.getName(),requestBodyFirst);
+        String descriptionString = "This is a description";
+        RequestBody description = RequestBody.create(MediaType.parse("multipart/form-data"), descriptionString);
+
+        RetrofitClient.buildService(ApiService.class)
+                .upload(Constants.XingVoicesParamValue.CHANNEL,UserManager.getInstance().
+                        getCurrentUser().getId(),description,null,null,bodyFirst)
+                .enqueue(new Callback<UploadResp>() {
+                    @Override
+                    public void onResponse(Call<UploadResp> call, Response<UploadResp> response) {
+                        if (null == response || !response.isSuccessful() || null == response.body()) {
+                            resultCallback.onFail(Constants.ResponseError.SERVER_ERROR);
+                            return;
+                        }
+                        resultCallback.onSuccess(response.body(),Constants.ResultCode.REMOTE);
+                    }
+
+                    @Override
+                    public void onFailure(Call<UploadResp> call, Throwable t) {
+                        if (t == null || null == t.getMessage()) {
+                            resultCallback.onFail(Constants.ResponseError.SERVER_ERROR);
+                            return;
+                        }
+                        resultCallback.onFail(t.getMessage());
+                    }
+                });
+
+    }
+
+    @Override
     public void changeFollowState(final OnResultCallback<FollowResp> resultCallback, String cid, int state) {
         RetrofitClient.buildService(ApiService.class)
                 .followIt(Constants.XingVoicesParamValue.CHANNEL,UserManager.getInstance().
@@ -337,6 +459,32 @@ public class MainRemoteDS implements MainDataSource {
 
                     @Override
                     public void onFailure(Call<FollowResp> call, Throwable t) {
+                        if (t == null || null == t.getMessage()) {
+                            resultCallback.onFail(Constants.ResponseError.SERVER_ERROR);
+                            return;
+                        }
+                        resultCallback.onFail(t.getMessage());
+                    }
+                });
+    }
+
+    @Override
+    public void toCollection(final OnResultCallback<CollectionResp> resultCallback, String cid, int state) {
+        RetrofitClient.buildService(ApiService.class)
+                .collection(Constants.XingVoicesParamValue.CHANNEL,UserManager.getInstance().
+                        getCurrentUser().getId(),cid,state)
+                .enqueue(new Callback<CollectionResp>() {
+                    @Override
+                    public void onResponse(Call<CollectionResp> call, Response<CollectionResp> response) {
+                        if (null == response || !response.isSuccessful() || null == response.body()) {
+                            resultCallback.onFail(Constants.ResponseError.SERVER_ERROR);
+                            return;
+                        }
+                        resultCallback.onSuccess(response.body(), Constants.ResultCode.REMOTE);
+                    }
+
+                    @Override
+                    public void onFailure(Call<CollectionResp> call, Throwable t) {
                         if (t == null || null == t.getMessage()) {
                             resultCallback.onFail(Constants.ResponseError.SERVER_ERROR);
                             return;
@@ -370,6 +518,37 @@ public class MainRemoteDS implements MainDataSource {
                         resultCallback.onFail(t.getMessage());
                     }
                 });
+    }
+
+    @Override
+    public void shieldVoice(final OnResultCallback<ShieldResp> resultCallback, String vid) {
+        RetrofitClient.buildService(ApiService.class)
+                .shieldVoice(Constants.XingVoicesParamValue.CHANNEL,UserManager.getInstance().
+                        getCurrentUser().getId(),vid)
+                .enqueue(new Callback<ShieldResp>() {
+                    @Override
+                    public void onResponse(Call<ShieldResp> call, Response<ShieldResp> response) {
+                        if (null == response || !response.isSuccessful() || null == response.body()) {
+                            resultCallback.onFail(Constants.ResponseError.SERVER_ERROR);
+                            return;
+                        }
+                        resultCallback.onSuccess(response.body(), Constants.ResultCode.REMOTE);
+                    }
+
+                    @Override
+                    public void onFailure(Call<ShieldResp> call, Throwable t) {
+                        if (t == null || null == t.getMessage()) {
+                            resultCallback.onFail(Constants.ResponseError.SERVER_ERROR);
+                            return;
+                        }
+                        resultCallback.onFail(t.getMessage());
+                    }
+                });
+    }
+
+    @Override
+    public void stopPlayVoice(OnResultCallback<String> resultCallback) {
+
     }
 
     private static class SingletonHolder {

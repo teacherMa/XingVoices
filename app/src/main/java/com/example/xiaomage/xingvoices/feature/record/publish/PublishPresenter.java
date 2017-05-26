@@ -4,7 +4,7 @@ import android.support.annotation.NonNull;
 
 import com.example.xiaomage.xingvoices.api.OnResultCallback;
 import com.example.xiaomage.xingvoices.framework.BasePresenter;
-import com.example.xiaomage.xingvoices.model.bean.uploadResp.UploadResp;
+import com.example.xiaomage.xingvoices.model.bean.Resp.uploadResp.UploadResp;
 import com.example.xiaomage.xingvoices.model.record.RecordRepository;
 import com.example.xiaomage.xingvoices.utils.BaseUtil;
 

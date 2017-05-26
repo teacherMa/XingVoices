@@ -5,7 +5,7 @@ import android.view.ViewGroup;
 
 import com.example.xiaomage.xingvoices.framework.BaseAdapter;
 import com.example.xiaomage.xingvoices.framework.BaseViewHolder;
-import com.example.xiaomage.xingvoices.model.bean.myVoiceCommentResp.MyVoiceCommentResp;
+import com.example.xiaomage.xingvoices.model.bean.Resp.myVoiceCommentResp.MyVoiceCommentResp;
 
 public class MessageAdapter extends BaseAdapter<MyVoiceCommentResp> {
     @Override

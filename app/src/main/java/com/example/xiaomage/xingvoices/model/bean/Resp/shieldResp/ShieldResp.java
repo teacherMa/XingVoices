@@ -1,13 +1,13 @@
-package com.example.xiaomage.xingvoices.model.bean.likeCommentResp;
+package com.example.xiaomage.xingvoices.model.bean.Resp.shieldResp;
 
 /**
- * Created by xiaomage on 2017/5/25.
+ * Created by xiaomage on 2017/5/26.
  */
 
-public class LikeItResp {
+public class ShieldResp {
     /**
-     * status : -1
-     * info : 你已经点过赞了
+     * status : 1
+     * info : 当前语音屏蔽成功
      */
 
     private int status;

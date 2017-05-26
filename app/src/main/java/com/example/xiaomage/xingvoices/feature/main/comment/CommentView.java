@@ -12,12 +12,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.xiaomage.xingvoices.R;
+import com.example.xiaomage.xingvoices.event.ShowNewMessage;
 import com.example.xiaomage.xingvoices.feature.main.comment.textComment.TextCommentFragment;
 import com.example.xiaomage.xingvoices.feature.main.comment.voiceComment.VoiceCommentFragment;
 import com.example.xiaomage.xingvoices.framework.BaseView;
 import com.example.xiaomage.xingvoices.model.bean.RemoteVoice.RemoteVoice;
 import com.example.xiaomage.xingvoices.utils.BaseUtil;
 import com.example.xiaomage.xingvoices.utils.Constants;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -127,6 +130,7 @@ public class CommentView extends BaseView<CommentContract.Presenter> implements 
     @OnClick(R.id.iv_back)
     public void onMIvBackClicked() {
         ((CommentActivity)getContext()).onBackPressed();
+        EventBus.getDefault().post(new ShowNewMessage(false));
     }
 
     @OnClick(R.id.tv_text_com)

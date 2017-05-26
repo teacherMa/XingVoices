@@ -1,15 +1,19 @@
 package com.example.xiaomage.xingvoices.model.main;
 
+import com.example.xiaomage.xingvoices.R;
 import com.example.xiaomage.xingvoices.api.OnResultCallback;
 import com.example.xiaomage.xingvoices.model.bean.CommentBean.CommentBean;
 import com.example.xiaomage.xingvoices.model.bean.RemoteVoice.RemoteVoice;
+import com.example.xiaomage.xingvoices.model.bean.Resp.shieldResp.ShieldResp;
+import com.example.xiaomage.xingvoices.model.bean.Resp.uploadResp.UploadResp;
 import com.example.xiaomage.xingvoices.model.bean.User.XingVoiceUser;
 import com.example.xiaomage.xingvoices.model.bean.User.BasicUserInfo;
 import com.example.xiaomage.xingvoices.model.bean.User.XingVoiceUserResp;
 import com.example.xiaomage.xingvoices.model.bean.WxBean.WxUserInfo;
-import com.example.xiaomage.xingvoices.model.bean.followResp.FollowResp;
-import com.example.xiaomage.xingvoices.model.bean.myVoiceCommentResp.MyVoiceCommentResp;
-import com.example.xiaomage.xingvoices.model.bean.publishCommentResp.CommentResp;
+import com.example.xiaomage.xingvoices.model.bean.Resp.collectionResp.CollectionResp;
+import com.example.xiaomage.xingvoices.model.bean.Resp.followResp.FollowResp;
+import com.example.xiaomage.xingvoices.model.bean.Resp.myVoiceCommentResp.MyVoiceCommentResp;
+import com.example.xiaomage.xingvoices.model.bean.Resp.publishCommentResp.CommentResp;
 
 import java.util.List;
 
@@ -33,11 +37,18 @@ public interface MainDataSource {
     void requestPopularVoicesList(OnResultCallback<List<RemoteVoice>> resultCallback, String uid ,
                                   int is_u, String cid, int page, int num);
 
+    void requestCollectionVoicesList(OnResultCallback<List<RemoteVoice>>resultCallback,int num);
+
+    void requestFollowVoicesList(OnResultCallback<List<RemoteVoice>>resultCallback,int num);
+
     void requestComment(OnResultCallback<List<CommentBean>> resultCallback, RemoteVoice voice,
                         XingVoiceUser bean,int commentType);
 
     void downloadVoice(OnResultCallback<ResponseBody> resultCallback, ResponseBody responseBody,
                        String vUrl,String vId);
+
+    void downloadHeadPic(OnResultCallback<ResponseBody> resultCallback,ResponseBody responseBody,
+                         String url);
 
     void playVoice(OnResultCallback<Boolean> resultCallback,String vId);
 
@@ -53,14 +64,22 @@ public interface MainDataSource {
 
     void publishVoiceCom(OnResultCallback<CommentResp> resultCallback, String vId, String cId, int cLength);
 
+    void uploadHeadPic(OnResultCallback<UploadResp> resultCallback);
+
     /**
      * 关注/取消关注
      * @param state 期望的状态，0表示关注，1表示取消
      * @param cid 被（取消）关注者的id*/
     void changeFollowState(OnResultCallback<FollowResp> resultCallback,String cid,int state);
 
+    void toCollection(OnResultCallback<CollectionResp> resultCallback,String cid,int state);
+
     /**
      * 请求我发布的语音的评论*/
     void requestMyVoiceComments(OnResultCallback<List<MyVoiceCommentResp>> resultCallback,int num);
+
+    void shieldVoice(OnResultCallback<ShieldResp> resultCallback,String vid);
+
+    void stopPlayVoice(OnResultCallback<String> resultCallback);
 
 }

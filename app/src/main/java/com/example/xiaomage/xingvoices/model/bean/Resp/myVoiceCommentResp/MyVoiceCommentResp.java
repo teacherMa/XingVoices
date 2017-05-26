@@ -1,4 +1,4 @@
-package com.example.xiaomage.xingvoices.model.bean.myVoiceCommentResp;
+package com.example.xiaomage.xingvoices.model.bean.Resp.myVoiceCommentResp;
 
 import java.util.List;
 

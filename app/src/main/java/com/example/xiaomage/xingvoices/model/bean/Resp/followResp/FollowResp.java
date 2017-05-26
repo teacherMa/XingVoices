@@ -1,16 +1,18 @@
-package com.example.xiaomage.xingvoices.model.bean.publishVoiceResp;
+package com.example.xiaomage.xingvoices.model.bean.Resp.followResp;
 
 /**
- * Created by xiaomage on 2017/5/24.
+ * Created by xiaomage on 2017/5/26.
  */
 
-public class PublishResp {
+public class FollowResp {
     /**
      * status : 1
-     * info : 当前语音发布成功
+     * res : 0
+     * info : 取消关注成功
      */
 
     private int status;
+    private String res;
     private String info;
 
     public int getStatus() {
@@ -19,6 +21,14 @@ public class PublishResp {
 
     public void setStatus(int status) {
         this.status = status;
+    }
+
+    public String getRes() {
+        return res;
+    }
+
+    public void setRes(String res) {
+        this.res = res;
     }
 
     public String getInfo() {

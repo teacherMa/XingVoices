@@ -13,7 +13,7 @@ import android.widget.ProgressBar;
 
 import com.example.xiaomage.xingvoices.R;
 import com.example.xiaomage.xingvoices.framework.BaseView;
-import com.example.xiaomage.xingvoices.model.bean.myVoiceCommentResp.MyVoiceCommentResp;
+import com.example.xiaomage.xingvoices.model.bean.Resp.myVoiceCommentResp.MyVoiceCommentResp;
 
 import java.util.List;
 

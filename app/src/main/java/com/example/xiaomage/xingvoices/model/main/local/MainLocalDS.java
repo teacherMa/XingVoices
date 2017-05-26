@@ -9,14 +9,17 @@ import com.example.xiaomage.xingvoices.model.UserManager;
 import com.example.xiaomage.xingvoices.model.bean.CommentBean.CommentBean;
 import com.example.xiaomage.xingvoices.model.bean.LocalVoice.LocalVoice;
 import com.example.xiaomage.xingvoices.model.bean.RemoteVoice.RemoteVoice;
+import com.example.xiaomage.xingvoices.model.bean.Resp.shieldResp.ShieldResp;
+import com.example.xiaomage.xingvoices.model.bean.Resp.uploadResp.UploadResp;
 import com.example.xiaomage.xingvoices.model.bean.User.User;
 import com.example.xiaomage.xingvoices.model.bean.User.XingVoiceUser;
 import com.example.xiaomage.xingvoices.model.bean.User.BasicUserInfo;
 import com.example.xiaomage.xingvoices.model.bean.User.XingVoiceUserResp;
 import com.example.xiaomage.xingvoices.model.bean.WxBean.WxUserInfo;
-import com.example.xiaomage.xingvoices.model.bean.followResp.FollowResp;
-import com.example.xiaomage.xingvoices.model.bean.myVoiceCommentResp.MyVoiceCommentResp;
-import com.example.xiaomage.xingvoices.model.bean.publishCommentResp.CommentResp;
+import com.example.xiaomage.xingvoices.model.bean.Resp.collectionResp.CollectionResp;
+import com.example.xiaomage.xingvoices.model.bean.Resp.followResp.FollowResp;
+import com.example.xiaomage.xingvoices.model.bean.Resp.myVoiceCommentResp.MyVoiceCommentResp;
+import com.example.xiaomage.xingvoices.model.bean.Resp.publishCommentResp.CommentResp;
 import com.example.xiaomage.xingvoices.model.main.MainDataSource;
 import com.example.xiaomage.xingvoices.utils.Constants;
 import com.example.xiaomage.xingvoices.utils.FileUtil;
@@ -104,6 +107,16 @@ public class MainLocalDS implements MainDataSource {
 
     }
 
+    @Override
+    public void requestCollectionVoicesList(OnResultCallback<List<RemoteVoice>> resultCallback, int num) {
+
+    }
+
+    @Override
+    public void requestFollowVoicesList(OnResultCallback<List<RemoteVoice>> resultCallback, int num) {
+
+    }
+
 
     @Override
     public void requestComment(OnResultCallback<List<CommentBean>> resultCallback, RemoteVoice voice,
@@ -118,6 +131,13 @@ public class MainLocalDS implements MainDataSource {
         SaveVoiceTask saveVoiceTask = new SaveVoiceTask(responseBody,path,resultCallback,vId);
         saveVoiceTask.execute();
 
+    }
+
+    @Override
+    public void downloadHeadPic(OnResultCallback<ResponseBody> resultCallback, ResponseBody responseBody, String url) {
+        String path = FileUtil.AVATAR_FILE.concat("/").concat("HEAD").concat(".png");
+        SaveHeadPicTask saveHeadPicTask = new SaveHeadPicTask(responseBody,path,resultCallback);
+        saveHeadPicTask.execute();
     }
 
     private class SaveVoiceTask extends AsyncTask<Void,Void,Boolean>{
@@ -189,6 +209,77 @@ public class MainLocalDS implements MainDataSource {
                 realm.copyToRealm(localVoice);
 
                 realm.commitTransaction();
+
+                mResponseBodyOnResultCallback.onSuccess(mResponseBody,Constants.ResultCode.LOCAL);
+                return;
+            }
+            mResponseBodyOnResultCallback.onFail(Constants.ResponseError.DATA_EMPTY);
+        }
+    }
+
+    private class SaveHeadPicTask extends AsyncTask<Void,Void,Boolean>{
+
+        private ResponseBody mResponseBody;
+        private String mPath;
+        private OnResultCallback<ResponseBody> mResponseBodyOnResultCallback;
+
+        public SaveHeadPicTask(ResponseBody responseBody, String path, OnResultCallback<ResponseBody>
+                responseBodyOnResultCallback) {
+            mResponseBody = responseBody;
+            mPath = path;
+            mResponseBodyOnResultCallback = responseBodyOnResultCallback;
+        }
+
+        @Override
+        protected Boolean doInBackground(Void... params) {
+
+            File file = new File(mPath);
+            if(file.exists()){
+                file.delete();
+            }
+            if(!file.exists()){
+                file.getParentFile().mkdir();
+                try {
+                    file.createNewFile();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    mResponseBodyOnResultCallback.onFail(Constants.ResponseError.UNKNOWN);
+                }
+            }
+
+            byte[] readFile = new byte[4096];
+            InputStream inputStream = mResponseBody.byteStream();
+            try {
+                OutputStream outputStream = new FileOutputStream(file);
+                while (true){
+                    int read = inputStream.read(readFile);
+                    if(read == -1){
+                        break;
+                    }
+                    outputStream.write(readFile,0,read);
+                }
+
+                outputStream.flush();
+                inputStream.close();
+                outputStream.close();
+
+                return true;
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                return false;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(Boolean aBoolean) {
+            super.onPostExecute(aBoolean);
+
+            if(null == mResponseBodyOnResultCallback){
+                return;
+            }
+
+            if(aBoolean){
 
                 mResponseBodyOnResultCallback.onSuccess(mResponseBody,Constants.ResultCode.LOCAL);
                 return;
@@ -310,13 +401,45 @@ public class MainLocalDS implements MainDataSource {
     }
 
     @Override
+    public void uploadHeadPic(OnResultCallback<UploadResp> resultCallback) {
+
+    }
+
+    @Override
     public void changeFollowState(OnResultCallback<FollowResp> resultCallback, String cid, int state) {
+
+    }
+
+    @Override
+    public void toCollection(OnResultCallback<CollectionResp> resultCallback, String cid, int state) {
 
     }
 
     @Override
     public void requestMyVoiceComments(OnResultCallback<List<MyVoiceCommentResp>> resultCallback, int num) {
 
+    }
+
+    @Override
+    public void shieldVoice(OnResultCallback<ShieldResp> resultCallback, String cid) {
+
+    }
+
+    @Override
+    public void stopPlayVoice(OnResultCallback<String> resultCallback) {
+        if(null == mMediaPlayer){
+            resultCallback.onSuccess("stopped!",Constants.ResultCode.LOCAL);
+        }
+
+        if (mMediaPlayer.isPlaying()) {
+            mMediaPlayer.stop();
+            //reset之后，会移除一系列的listener
+            mMediaPlayer.reset();
+            //判断:仅暂停当前播放，还是需要播放新语言?
+            resultCallback.onSuccess("stopped!",Constants.ResultCode.LOCAL);
+            return;
+        }
+        mMediaPlayer.reset();
     }
 
 

@@ -1,13 +1,13 @@
-package com.example.xiaomage.xingvoices.model.bean.publishCommentResp;
+package com.example.xiaomage.xingvoices.model.bean.Resp.likeCommentResp;
 
 /**
- * Created by xiaomage on 2017/5/26.
+ * Created by xiaomage on 2017/5/25.
  */
 
-public class CommentResp {
+public class LikeItResp {
     /**
-     * status : 1
-     * info : 当前语音评论成功
+     * status : -1
+     * info : 你已经点过赞了
      */
 
     private int status;

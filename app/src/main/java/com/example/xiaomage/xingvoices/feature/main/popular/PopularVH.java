@@ -34,6 +34,7 @@ import com.example.xiaomage.xingvoices.event.VH.VHPublishTextComEvent;
 import com.example.xiaomage.xingvoices.event.VH.VHPublishVoiceComEvent;
 import com.example.xiaomage.xingvoices.event.VH.VHRecordEvent;
 import com.example.xiaomage.xingvoices.feature.main.MainActivity;
+import com.example.xiaomage.xingvoices.feature.main.WatchPicActivity;
 import com.example.xiaomage.xingvoices.feature.main.comment.CommentActivity;
 import com.example.xiaomage.xingvoices.feature.main.textSimpleComment.TextCommentFragment;
 import com.example.xiaomage.xingvoices.feature.main.voiceSimpleComment.VoiceCommentFragment;
@@ -68,8 +69,6 @@ import static com.example.xiaomage.xingvoices.utils.Constants.MainPopularItem.FO
 
 public class PopularVH extends BaseViewHolder<RemoteVoice> implements OnBottomMenuItemClickListener,
         OnBottomCommentItemClickListener,OnBottomShareItemClickListener {
-
-    private static final int DURATION = 500;
 
     @BindView(R.id.civ_user_avatar)
     ImageView mCivUserAvatar;
@@ -245,7 +244,7 @@ public class PopularVH extends BaseViewHolder<RemoteVoice> implements OnBottomMe
                 bottomShareView.showAtLocation(shareRoot,Gravity.BOTTOM,0,0);
                 break;
             case LOOK_UP_PIC:
-                // TODO: 2017/5/14
+                getContext().startActivity(WatchPicActivity.getIntent(getContext(),mRemoteVoice.getAllbackgrund()));
                 break;
             case ADD_TO_BLACK_LIST:
                 mOnItemClickListener.onItemClick(mRemoteVoice, R.id.tv_add_to_blacklist, ADD_TO_BLACK_LIST);
@@ -318,41 +317,6 @@ public class PopularVH extends BaseViewHolder<RemoteVoice> implements OnBottomMe
         return this;
     }
 
-   /* private void stopAnim(){
-        mAnimationDrawable.stop();
-        mIvPlayAnim.setVisibility(INVISIBLE);
-    }
-
-    private void startAnim(){
-
-        mIvPlayAnim.setVisibility(VISIBLE);
-        mIvPlayAnim.bringToFront();
-        mIvPlayAnim.setBackgroundDrawable(mAnimationDrawable);
-
-        if (null == mAnimationDrawable){
-            mAnimationDrawable = new AnimationDrawable();
-            initAnimation();
-        }
-
-        if(mAnimationDrawable.isRunning()){
-            mAnimationDrawable.stop();
-        }
-
-        mAnimationDrawable.run();
-    }
-
-    private void initAnimation(){
-        List<Drawable> drawables = new ArrayList<>();
-        drawables.add(BaseUtil.getDrawable(R.drawable.ic_volume_s));
-        drawables.add(BaseUtil.getDrawable(R.drawable.ic_volume_m));
-        drawables.add(BaseUtil.getDrawable(R.drawable.ic_volume_l));
-
-        for (int i = 0; i < drawables.size(); i++) {
-            mAnimationDrawable.addFrame(drawables.get(i), DURATION);
-        }
-        mAnimationDrawable.setOneShot(false);
-        mIvPlayAnim.setBackgroundDrawable(mAnimationDrawable);
-    }*/
 
     @Override
     public void onBottomCommentItemClick(int position, String content) {
@@ -385,22 +349,65 @@ public class PopularVH extends BaseViewHolder<RemoteVoice> implements OnBottomMe
     public void onBottomShareItemClick(int position) {
         switch (position){
             case Constants.BottomShareItem.QQ_SHARE:
-                ShareUtil.shareMedia(getContext(), SharePlatform.WEIBO, null, null, mRemoteVoice.getReurl(),
+                ShareUtil.shareMedia(getContext(), SharePlatform.QQ, mRemoteVoice.getTitle(),
+                        BaseUtil.getString(R.string.vista_share_title), mRemoteVoice.getReurl(),
                         BitmapFactory.decodeResource(getContext().getResources(),R.drawable.ic_main_voice_down_like),
                         new ShareListener() {
                             @Override
                             public void shareSuccess() {
-
+                                BaseUtil.showToast(BaseUtil.getString(R.string.main_share_success));
                             }
 
                             @Override
                             public void shareFailure(Exception e) {
-
+                                e.printStackTrace();
                             }
 
                             @Override
                             public void shareCancel() {
+                                BaseUtil.showToast(BaseUtil.getString(R.string.main_share_cancel));
+                            }
+                        });
+                break;
+            case Constants.BottomShareItem.SINA_SHARE:
+                ShareUtil.shareMedia(getContext(), SharePlatform.WEIBO, mRemoteVoice.getTitle(),
+                        BaseUtil.getString(R.string.vista_share_title), mRemoteVoice.getReurl(),
+                        BitmapFactory.decodeResource(getContext().getResources(),R.drawable.ic_main_voice_down_like),
+                        new ShareListener() {
+                            @Override
+                            public void shareSuccess() {
+                                BaseUtil.showToast(BaseUtil.getString(R.string.main_share_success));
+                            }
 
+                            @Override
+                            public void shareFailure(Exception e) {
+                                e.printStackTrace();
+                            }
+
+                            @Override
+                            public void shareCancel() {
+                                BaseUtil.showToast(BaseUtil.getString(R.string.main_share_cancel));
+                            }
+                        });
+                break;
+            case Constants.BottomShareItem.WECHAT_SHARE:
+                ShareUtil.shareMedia(getContext(), SharePlatform.WX, mRemoteVoice.getTitle(),
+                        BaseUtil.getString(R.string.vista_share_title), mRemoteVoice.getReurl(),
+                        BitmapFactory.decodeResource(getContext().getResources(),R.drawable.ic_main_voice_down_like),
+                        new ShareListener() {
+                            @Override
+                            public void shareSuccess() {
+                                BaseUtil.showToast(BaseUtil.getString(R.string.main_share_success));
+                            }
+
+                            @Override
+                            public void shareFailure(Exception e) {
+                                e.printStackTrace();
+                            }
+
+                            @Override
+                            public void shareCancel() {
+                                BaseUtil.showToast(BaseUtil.getString(R.string.main_share_cancel));
                             }
                         });
                 break;

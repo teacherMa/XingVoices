@@ -2,7 +2,7 @@ package com.example.xiaomage.xingvoices.feature.main.menu.systemMessage;
 
 import com.example.xiaomage.xingvoices.framework.BasePresenterApi;
 import com.example.xiaomage.xingvoices.framework.BaseViewApi;
-import com.example.xiaomage.xingvoices.model.bean.myVoiceCommentResp.MyVoiceCommentResp;
+import com.example.xiaomage.xingvoices.model.bean.Resp.myVoiceCommentResp.MyVoiceCommentResp;
 
 import java.util.List;
 

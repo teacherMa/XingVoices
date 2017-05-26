@@ -37,7 +37,7 @@ public class BottomShareView extends PopupWindow {
         setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
         setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
 
-        View contentView = LayoutInflater.from(mContext).inflate(R.layout.main_bottom_com, null);
+        View contentView = LayoutInflater.from(mContext).inflate(R.layout.main_bottom_share, null);
 
         setContentView(contentView);
 

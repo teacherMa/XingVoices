@@ -16,6 +16,7 @@ import com.example.xiaomage.xingvoices.custom.view.WrapContentViewPager;
 import com.example.xiaomage.xingvoices.feature.main.textSimpleComment.TextCommentFragment;
 import com.example.xiaomage.xingvoices.feature.main.voiceSimpleComment.VoiceCommentFragment;
 import com.example.xiaomage.xingvoices.framework.BaseViewHolder;
+import com.example.xiaomage.xingvoices.model.UserManager;
 import com.example.xiaomage.xingvoices.model.bean.RemoteVoice.RemoteVoice;
 import com.example.xiaomage.xingvoices.utils.BaseUtil;
 import com.example.xiaomage.xingvoices.utils.Constants;
@@ -84,6 +85,8 @@ public class PersonalVH extends BaseViewHolder<RemoteVoice> {
 
         prepareFragment();
         initViewPager();
+
+        mIvFollow.setVisibility(INVISIBLE);
 
     }
 

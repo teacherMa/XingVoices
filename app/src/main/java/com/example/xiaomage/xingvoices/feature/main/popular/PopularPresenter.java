@@ -5,9 +5,11 @@ import android.support.annotation.NonNull;
 import com.example.xiaomage.xingvoices.api.OnResultCallback;
 import com.example.xiaomage.xingvoices.framework.BasePresenter;
 import com.example.xiaomage.xingvoices.model.bean.RemoteVoice.RemoteVoice;
+import com.example.xiaomage.xingvoices.model.bean.Resp.shieldResp.ShieldResp;
 import com.example.xiaomage.xingvoices.model.bean.User.XingVoiceUser;
-import com.example.xiaomage.xingvoices.model.bean.followResp.FollowResp;
-import com.example.xiaomage.xingvoices.model.bean.publishCommentResp.CommentResp;
+import com.example.xiaomage.xingvoices.model.bean.Resp.collectionResp.CollectionResp;
+import com.example.xiaomage.xingvoices.model.bean.Resp.followResp.FollowResp;
+import com.example.xiaomage.xingvoices.model.bean.Resp.publishCommentResp.CommentResp;
 import com.example.xiaomage.xingvoices.model.main.MainRepository;
 import com.example.xiaomage.xingvoices.utils.BaseUtil;
 
@@ -188,5 +190,69 @@ public class PopularPresenter extends BasePresenter<PopularContract.View, MainRe
             }
         };
         getRepository().changeFollowState(onResultCallback,cid,state);
+    }
+
+    @Override
+    public void toCollection(String vid, int state) {
+        OnResultCallback<CollectionResp> onResultCallback = new OnResultCallback<CollectionResp>() {
+            @Override
+            public void onSuccess(CollectionResp resultValue, int code) {
+                if(null == getView()){
+                    return;
+                }
+                getView().changeStateSuccess(resultValue.getInfo());
+            }
+
+            @Override
+            public void onFail(String errorMessage) {
+                if(null == getView()){
+                    return;
+                }
+                BaseUtil.showToast(errorMessage);
+            }
+        };
+        getRepository().toCollection(onResultCallback,vid,state);
+    }
+
+    @Override
+    public void toShield(String vid) {
+        OnResultCallback<ShieldResp> callback = new OnResultCallback<ShieldResp>() {
+            @Override
+            public void onSuccess(ShieldResp resultValue, int code) {
+                if(null == getView()){
+                    return;
+                }
+                getView().shieldResult(resultValue.getInfo());
+            }
+
+            @Override
+            public void onFail(String errorMessage) {
+                if(null == getView()){
+                    return;
+                }
+                BaseUtil.showToast(errorMessage);
+            }
+        };
+        getRepository().shieldVoice(callback,vid);
+    }
+
+    @Override
+    public void toStopPlayVoice() {
+        OnResultCallback<String> onResultCallback = new OnResultCallback<String>() {
+            @Override
+            public void onSuccess(String resultValue, int code) {
+                if (getView() == null) {
+                    return;
+                }
+            }
+
+            @Override
+            public void onFail(String errorMessage) {
+                if (getView() == null) {
+                    return;
+                }
+            }
+        };
+        getRepository().stopPlayVoice(onResultCallback);
     }
 }

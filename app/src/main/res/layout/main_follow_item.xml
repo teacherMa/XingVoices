@@ -45,7 +45,8 @@
             android:layout_centerVertical="true"
             android:layout_marginEnd="25dp"
             android:contentDescription="@string/iv_con_des"
-            android:src="@drawable/ic_main_btn_follow"/>
+            android:src="@drawable/ic_main_btn_follow"
+            android:visibility="gone"/>
 
     </RelativeLayout>
 
@@ -54,13 +55,34 @@
         android:layout_height="wrap_content"
         app:ratio="0.5625">
 
-        <ImageView
-            android:id="@+id/iv_pic_of_voice"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:src="@drawable/pic"
-            android:scaleType="centerCrop"
-            android:contentDescription="@string/iv_con_des"/>
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/tv_voice_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:textColor="@color/colorPrimary"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/tv_voice_length"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_voice_name"
+                android:layout_marginTop="8dp"
+                android:textColor="@color/colorPrimary"
+                android:layout_centerHorizontal="true"/>
+
+            <ImageView
+                android:id="@+id/iv_pic_of_voice"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:contentDescription="@string/iv_con_des"/>
+        </RelativeLayout>
     </com.example.xiaomage.xingvoices.custom.view.RatioLayout>
 
     <RelativeLayout
@@ -138,23 +160,13 @@
 
         </RelativeLayout>
 
-        <FrameLayout
+        <com.example.xiaomage.xingvoices.custom.view.WrapContentViewPager
+            android:id="@+id/vp_comments"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/rv_text_com_list"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-            </android.support.v7.widget.RecyclerView>
+        </com.example.xiaomage.xingvoices.custom.view.WrapContentViewPager>
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/rv_voice_com_list"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="gone">
-            </android.support.v7.widget.RecyclerView>
-        </FrameLayout>
 
         <TextView
             android:id="@+id/tv_more_com"

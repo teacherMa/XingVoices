@@ -16,6 +16,7 @@ public class PopularContract {
         void recordSuccess(String path);
         void commentSuccess(String info);
         void changeStateSuccess(String info);
+        void shieldResult(String info);
     }
 
     interface Presenter extends BasePresenterApi {
@@ -32,7 +33,12 @@ public class PopularContract {
          * @param cLength 评论长短*/
         void publishVoiceCom(String vId,String cId,int cLength);
 
-
         void changeFollowState(String cid,int state);
+
+        void toCollection(String vid,int state);
+
+        void toShield(String vid);
+
+        void toStopPlayVoice();
     }
 }

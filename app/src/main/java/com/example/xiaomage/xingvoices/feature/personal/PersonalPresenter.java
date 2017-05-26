@@ -7,7 +7,7 @@ import com.example.xiaomage.xingvoices.framework.BasePresenter;
 import com.example.xiaomage.xingvoices.model.bean.RemoteVoice.RemoteVoice;
 import com.example.xiaomage.xingvoices.model.bean.User.BasicUserInfo;
 import com.example.xiaomage.xingvoices.model.bean.User.XingVoiceUser;
-import com.example.xiaomage.xingvoices.model.bean.followResp.FollowResp;
+import com.example.xiaomage.xingvoices.model.bean.Resp.followResp.FollowResp;
 import com.example.xiaomage.xingvoices.model.main.MainRepository;
 import com.example.xiaomage.xingvoices.utils.BaseUtil;
 

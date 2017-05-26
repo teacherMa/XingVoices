@@ -1,7 +1,7 @@
 package com.example.xiaomage.xingvoices.model.record;
 
 import com.example.xiaomage.xingvoices.api.OnResultCallback;
-import com.example.xiaomage.xingvoices.model.bean.uploadResp.UploadResp;
+import com.example.xiaomage.xingvoices.model.bean.Resp.uploadResp.UploadResp;
 
 public interface RecordDataSource {
     void recordAudio(OnResultCallback<String> resultCallback, boolean toStart);

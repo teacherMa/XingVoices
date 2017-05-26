@@ -16,6 +16,7 @@ import com.example.xiaomage.xingvoices.api.OnItemClickListener;
 import com.example.xiaomage.xingvoices.event.ChangeAnimEvent;
 import com.example.xiaomage.xingvoices.event.EmptyEvent;
 import com.example.xiaomage.xingvoices.event.MainViewInitEvent;
+import com.example.xiaomage.xingvoices.event.StopPlayVoice;
 import com.example.xiaomage.xingvoices.event.VH.VHAuditionEvent;
 import com.example.xiaomage.xingvoices.event.VH.VHPublishTextComEvent;
 import com.example.xiaomage.xingvoices.event.VH.VHPublishVoiceComEvent;
@@ -49,11 +50,6 @@ public class PopularView extends BaseBusView<PopularContract.Presenter> implemen
     private String mCurVoiceComId;
     private int mCurPage = 1;
     private boolean mIsloadingMore;
-
-    @Override
-    protected Parcelable onSaveInstanceState() {
-        return super.onSaveInstanceState();
-    }
 
     public PopularView(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
@@ -104,6 +100,14 @@ public class PopularView extends BaseBusView<PopularContract.Presenter> implemen
             }
             int length = Integer.parseInt(voiceComEvent.getComLength());
             getPresenter().publishVoiceCom(voiceComEvent.getRemoteVoice().getVid(), mCurVoiceComId, length);
+            return;
+        }
+        if(event instanceof StopPlayVoice){
+            StopPlayVoice stopPlayVoice = (StopPlayVoice)event;
+            if(!stopPlayVoice.isToStop()){
+                return;
+            }
+            getPresenter().toStopPlayVoice();
         }
     }
 
@@ -118,12 +122,12 @@ public class PopularView extends BaseBusView<PopularContract.Presenter> implemen
                 LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
                 int enable = linearLayoutManager.findFirstCompletelyVisibleItemPosition();
                 mSrlRefresh.setEnabled(enable == 0);
-                if(mIsloadingMore){
+                if (mIsloadingMore) {
                     super.onScrolled(recyclerView, dx, dy);
                     return;
 
                 }
-                if(!recyclerView.canScrollVertically(1)){
+                if (!recyclerView.canScrollVertically(1)) {
                     mCurPage++;
                     mLoadBar.setVisibility(VISIBLE);
                     mIsloadingMore = true;
@@ -156,13 +160,13 @@ public class PopularView extends BaseBusView<PopularContract.Presenter> implemen
     @Override
     public void loadData(List<RemoteVoice> data) {
         int origin = 0;
-        if(null != mAdapter.getValueList()) {
+        if (null != mAdapter.getValueList()) {
             origin = mAdapter.getValueList().size();
         }
         mSrlRefresh.setRefreshing(false);
         mLoadBar.setVisibility(GONE);
         ((PopularAdapter) mMainPopularRv.getAdapter()).refreshData(data);
-        if(mIsloadingMore) {
+        if (mIsloadingMore) {
             mMainPopularRv.scrollToPosition(origin - 1);
         }
     }
@@ -196,6 +200,11 @@ public class PopularView extends BaseBusView<PopularContract.Presenter> implemen
     }
 
     @Override
+    public void shieldResult(String info) {
+        BaseUtil.showToast(info);
+    }
+
+    @Override
     public void onItemClick(RemoteVoice itemValue, int viewID, int position) {
         switch (viewID) {
             case R.id.iv_pic_of_voice:
@@ -203,6 +212,12 @@ public class PopularView extends BaseBusView<PopularContract.Presenter> implemen
                 break;
             case R.id.iv_follow:
                 getPresenter().changeFollowState(itemValue.getUser().getUid(), 0);
+                break;
+            case R.id.tv_collection:
+                getPresenter().toCollection(itemValue.getVid(), 0);
+                break;
+            case R.id.tv_add_to_blacklist:
+                getPresenter().toShield(itemValue.getVid());
                 break;
         }
     }
@@ -212,4 +227,9 @@ public class PopularView extends BaseBusView<PopularContract.Presenter> implemen
         mIsloadingMore = false;
     }
 
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        getPresenter().toStopPlayVoice();
+    }
 }
