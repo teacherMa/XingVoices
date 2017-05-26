@@ -8,6 +8,7 @@ import com.example.xiaomage.xingvoices.model.bean.User.BasicUserInfo;
 import com.example.xiaomage.xingvoices.model.bean.User.XingVoiceUserResp;
 import com.example.xiaomage.xingvoices.model.bean.WxBean.WxUserInfo;
 import com.example.xiaomage.xingvoices.model.bean.followResp.FollowResp;
+import com.example.xiaomage.xingvoices.model.bean.myVoiceCommentResp.MyVoiceCommentResp;
 import com.example.xiaomage.xingvoices.model.bean.publishCommentResp.CommentResp;
 
 import java.util.List;
@@ -57,5 +58,9 @@ public interface MainDataSource {
      * @param state 期望的状态，0表示关注，1表示取消
      * @param cid 被（取消）关注者的id*/
     void changeFollowState(OnResultCallback<FollowResp> resultCallback,String cid,int state);
+
+    /**
+     * 请求我发布的语音的评论*/
+    void requestMyVoiceComments(OnResultCallback<List<MyVoiceCommentResp>> resultCallback,int num);
 
 }

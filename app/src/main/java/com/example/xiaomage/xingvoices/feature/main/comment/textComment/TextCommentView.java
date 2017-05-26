@@ -7,12 +7,12 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
+import android.widget.ProgressBar;
 
 import com.example.xiaomage.xingvoices.R;
 import com.example.xiaomage.xingvoices.event.EmptyEvent;
 import com.example.xiaomage.xingvoices.event.ToLikeComEvent;
 import com.example.xiaomage.xingvoices.framework.BaseBusView;
-import com.example.xiaomage.xingvoices.framework.BaseView;
 import com.example.xiaomage.xingvoices.model.bean.CommentBean.CommentBean;
 import com.example.xiaomage.xingvoices.model.bean.RemoteVoice.RemoteVoice;
 import com.example.xiaomage.xingvoices.utils.BaseUtil;
@@ -29,6 +29,8 @@ public class TextCommentView extends BaseBusView<TextCommentContract.Presenter> 
 
     @BindView(R.id.rv_text_com)
     RecyclerView mRvTextCom;
+    @BindView(R.id.load_bar)
+    ProgressBar mLoadBar;
 
     private TextCommentAdapter mAdapter;
     private RemoteVoice mRemoteVoice;
@@ -44,9 +46,9 @@ public class TextCommentView extends BaseBusView<TextCommentContract.Presenter> 
         if (event == null) {
             return;
         }
-        if(event instanceof ToLikeComEvent){
-            ToLikeComEvent likeComEvent = (ToLikeComEvent)event;
-            if(!likeComEvent.getTag().equals(Constants.ViewHolderTag.TextCommentVH)){
+        if (event instanceof ToLikeComEvent) {
+            ToLikeComEvent likeComEvent = (ToLikeComEvent) event;
+            if (!likeComEvent.getTag().equals(Constants.ViewHolderTag.TextCommentVH)) {
                 return;
             }
             if (likeComEvent.getId() == null) {
@@ -66,7 +68,7 @@ public class TextCommentView extends BaseBusView<TextCommentContract.Presenter> 
 
     @Override
     protected int getLayoutResId() {
-        return R.layout.main_simple_text_com_view;
+        return R.layout.main_text_com_view;
     }
 
     @Override
@@ -76,11 +78,11 @@ public class TextCommentView extends BaseBusView<TextCommentContract.Presenter> 
 
     @Override
     public void updateData(List<CommentBean> been) {
-        if(null == mRvTextCom.getAdapter()){
+        if (null == mRvTextCom.getAdapter()) {
             TextCommentAdapter adapter = new TextCommentAdapter();
             mRvTextCom.setAdapter(adapter);
         }
-        ((TextCommentAdapter)mRvTextCom.getAdapter()).refreshData(been);
+        ((TextCommentAdapter) mRvTextCom.getAdapter()).refreshData(been);
     }
 
     @Override
@@ -96,7 +98,7 @@ public class TextCommentView extends BaseBusView<TextCommentContract.Presenter> 
         mModel = model;
     }
 
-    private void toLikeCom(String cId){
+    private void toLikeCom(String cId) {
         getPresenter().likeIt(cId);
     }
 

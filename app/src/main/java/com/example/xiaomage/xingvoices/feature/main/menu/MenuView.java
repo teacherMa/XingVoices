@@ -16,6 +16,8 @@ import com.example.xiaomage.xingvoices.custom.view.RatioLayout;
 import com.example.xiaomage.xingvoices.event.EmptyEvent;
 import com.example.xiaomage.xingvoices.event.MenuCloseEvent;
 import com.example.xiaomage.xingvoices.event.MainViewInitEvent;
+import com.example.xiaomage.xingvoices.feature.main.MainActivity;
+import com.example.xiaomage.xingvoices.feature.main.menu.systemMessage.MessageActivity;
 import com.example.xiaomage.xingvoices.framework.BaseBusView;
 import com.example.xiaomage.xingvoices.model.UserManager;
 import com.example.xiaomage.xingvoices.model.bean.User.BasicUserInfo;
@@ -111,6 +113,7 @@ public class MenuView extends BaseBusView<MenuContract.Presenter> implements Men
             case R.id.menu_my_draft:
                 break;
             case R.id.menu_sys_message:
+                getContext().startActivity(MessageActivity.getIntent(getContext()));
                 break;
             case R.id.menu_my_setting:
                 getContext().startActivity(SettingActivity.getIntent(getContext()));

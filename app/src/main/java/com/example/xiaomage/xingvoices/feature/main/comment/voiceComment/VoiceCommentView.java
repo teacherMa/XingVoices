@@ -7,6 +7,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
+import android.widget.ProgressBar;
 
 import com.example.xiaomage.xingvoices.R;
 import com.example.xiaomage.xingvoices.event.EmptyEvent;
@@ -29,6 +30,8 @@ public class VoiceCommentView extends BaseBusView<VoiceCommentContract.Presenter
 
     @BindView(R.id.rv_voice_com)
     RecyclerView mRvVoiceCom;
+    @BindView(R.id.load_bar)
+    ProgressBar mLoadBar;
 
     private VoiceCommentAdapter mAdapter;
     private RemoteVoice mRemoteVoice;
@@ -45,9 +48,9 @@ public class VoiceCommentView extends BaseBusView<VoiceCommentContract.Presenter
             return;
         }
 
-        if(event instanceof ToLikeComEvent){
-            ToLikeComEvent likeComEvent = (ToLikeComEvent)event;
-            if(!likeComEvent.getTag().equals(Constants.ViewHolderTag.VoiceCommentVH)){
+        if (event instanceof ToLikeComEvent) {
+            ToLikeComEvent likeComEvent = (ToLikeComEvent) event;
+            if (!likeComEvent.getTag().equals(Constants.ViewHolderTag.VoiceCommentVH)) {
                 return;
             }
             if (likeComEvent.getId() == null) {
@@ -56,12 +59,12 @@ public class VoiceCommentView extends BaseBusView<VoiceCommentContract.Presenter
             toLikeCom(likeComEvent.getId());
         }
 
-        if(event instanceof PlayVoiceComEvent){
-            PlayVoiceComEvent playVoiceComEvent = (PlayVoiceComEvent)event;
-            if(!playVoiceComEvent.getTag().equals(Constants.ViewHolderTag.VoiceCommentVH)){
+        if (event instanceof PlayVoiceComEvent) {
+            PlayVoiceComEvent playVoiceComEvent = (PlayVoiceComEvent) event;
+            if (!playVoiceComEvent.getTag().equals(Constants.ViewHolderTag.VoiceCommentVH)) {
                 return;
             }
-            if(null == playVoiceComEvent.getCommentBean()){
+            if (null == playVoiceComEvent.getCommentBean()) {
                 return;
             }
             toPlayCom(playVoiceComEvent.getCommentBean());
@@ -74,11 +77,18 @@ public class VoiceCommentView extends BaseBusView<VoiceCommentContract.Presenter
         mRvVoiceCom.setItemAnimator(new DefaultItemAnimator());
         mRvVoiceCom.setLayoutManager(new LinearLayoutManager(getContext()));
         mRvVoiceCom.setAdapter(mAdapter);
+
+        mRvVoiceCom.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+            }
+        });
     }
 
     @Override
     protected int getLayoutResId() {
-        return R.layout.main_simple_voice_com_view;
+        return R.layout.main_voice_com_view;
     }
 
     @Override
@@ -88,11 +98,11 @@ public class VoiceCommentView extends BaseBusView<VoiceCommentContract.Presenter
 
     @Override
     public void updateData(List<CommentBean> been) {
-        if(null == mRvVoiceCom.getAdapter()){
+        if (null == mRvVoiceCom.getAdapter()) {
             VoiceCommentAdapter adapter = new VoiceCommentAdapter();
             mRvVoiceCom.setAdapter(adapter);
         }
-        ((VoiceCommentAdapter)mRvVoiceCom.getAdapter()).refreshData(been);
+        ((VoiceCommentAdapter) mRvVoiceCom.getAdapter()).refreshData(been);
     }
 
     @Override
@@ -108,11 +118,11 @@ public class VoiceCommentView extends BaseBusView<VoiceCommentContract.Presenter
         mModel = model;
     }
 
-    private void toLikeCom(String cId){
+    private void toLikeCom(String cId) {
         getPresenter().likeIt(cId);
     }
 
-    private void toPlayCom(CommentBean commentBean){
+    private void toPlayCom(CommentBean commentBean) {
         getPresenter().playVoiceCom(commentBean);
     }
 }

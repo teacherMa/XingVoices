@@ -7,6 +7,7 @@ import com.example.xiaomage.xingvoices.model.bean.User.XingVoiceUserResp;
 import com.example.xiaomage.xingvoices.model.bean.WxBean.AccessToken;
 import com.example.xiaomage.xingvoices.model.bean.WxBean.WxUserInfo;
 import com.example.xiaomage.xingvoices.model.bean.followResp.FollowResp;
+import com.example.xiaomage.xingvoices.model.bean.myVoiceCommentResp.MyVoiceCommentResp;
 import com.example.xiaomage.xingvoices.model.bean.publishCommentResp.CommentResp;
 import com.example.xiaomage.xingvoices.model.bean.likeCommentResp.LikeItResp;
 import com.example.xiaomage.xingvoices.model.bean.publishVoiceResp.PublishResp;
@@ -100,6 +101,11 @@ public interface ApiService {
                                       @Query(Constants.XingVoicesRequestParam.VID) String vid,
                                       @Query(Constants.XingVoicesRequestParam.TYPE) int type);
 
+
+    @GET(Constants.XingVoicesApi.MY_VOICE_COMMENTS)
+    Call<List<MyVoiceCommentResp>> getMyVoiceComments(@Query(Constants.XingVoicesRequestParam.CHANNEL) String channel,
+                                                      @Query(Constants.XingVoicesRequestParam.UID) String uid,
+                                                      @Query(Constants.XingVoicesRequestParam.NUM) int num);
 
 
     @GET(Constants.XingVoicesApi.LIKE_IT)

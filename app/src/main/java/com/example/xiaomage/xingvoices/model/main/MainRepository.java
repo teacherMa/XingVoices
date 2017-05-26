@@ -11,6 +11,7 @@ import com.example.xiaomage.xingvoices.model.bean.User.BasicUserInfo;
 import com.example.xiaomage.xingvoices.model.bean.User.XingVoiceUserResp;
 import com.example.xiaomage.xingvoices.model.bean.WxBean.WxUserInfo;
 import com.example.xiaomage.xingvoices.model.bean.followResp.FollowResp;
+import com.example.xiaomage.xingvoices.model.bean.myVoiceCommentResp.MyVoiceCommentResp;
 import com.example.xiaomage.xingvoices.model.bean.publishCommentResp.CommentResp;
 import com.example.xiaomage.xingvoices.utils.Constants;
 import com.example.xiaomage.xingvoices.utils.FileUtil;
@@ -319,5 +320,21 @@ public class MainRepository extends BaseRepository implements MainDataSource {
             }
         };
         mRemoteDS.changeFollowState(callback,cid,state);
+    }
+
+    @Override
+    public void requestMyVoiceComments(final OnResultCallback<List<MyVoiceCommentResp>> resultCallback, int num) {
+        OnResultCallback<List<MyVoiceCommentResp>> callback = new OnResultCallback<List<MyVoiceCommentResp>>() {
+            @Override
+            public void onSuccess(List<MyVoiceCommentResp> resultValue, int code) {
+                resultCallback.onSuccess(resultValue,code);
+            }
+
+            @Override
+            public void onFail(String errorMessage) {
+                resultCallback.onFail(errorMessage);
+            }
+        };
+        mRemoteDS.requestMyVoiceComments(callback,num);
     }
 }

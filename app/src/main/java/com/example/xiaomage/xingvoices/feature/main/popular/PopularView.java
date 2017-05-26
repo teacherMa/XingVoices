@@ -115,6 +115,14 @@ public class PopularView extends BaseBusView<PopularContract.Presenter> implemen
         mMainPopularRv.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+                int enable = linearLayoutManager.findFirstCompletelyVisibleItemPosition();
+                mSrlRefresh.setEnabled(enable == 0);
+                if(mIsloadingMore){
+                    super.onScrolled(recyclerView, dx, dy);
+                    return;
+
+                }
                 if(!recyclerView.canScrollVertically(1)){
                     mCurPage++;
                     mLoadBar.setVisibility(VISIBLE);
@@ -133,13 +141,11 @@ public class PopularView extends BaseBusView<PopularContract.Presenter> implemen
         mSrlRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                getPresenter().requestAllPopularVoice(1);
+                getPresenter().requestAllPopularVoice(mCurPage);
+                mIsloadingMore = false;
             }
         });
-        mSrlRefresh.setColorSchemeResources(android.R.color.holo_blue_bright,
-                android.R.color.holo_green_light,
-                android.R.color.holo_orange_light,
-                android.R.color.holo_red_light);
+
     }
 
     @Override
@@ -149,9 +155,16 @@ public class PopularView extends BaseBusView<PopularContract.Presenter> implemen
 
     @Override
     public void loadData(List<RemoteVoice> data) {
+        int origin = 0;
+        if(null != mAdapter.getValueList()) {
+            origin = mAdapter.getValueList().size();
+        }
         mSrlRefresh.setRefreshing(false);
         mLoadBar.setVisibility(GONE);
         ((PopularAdapter) mMainPopularRv.getAdapter()).refreshData(data);
+        if(mIsloadingMore) {
+            mMainPopularRv.scrollToPosition(origin - 1);
+        }
     }
 
     @Override
@@ -196,6 +209,7 @@ public class PopularView extends BaseBusView<PopularContract.Presenter> implemen
 
     public void refreshView() {
         getPresenter().requestAllPopularVoice(mCurPage);
+        mIsloadingMore = false;
     }
 
 }

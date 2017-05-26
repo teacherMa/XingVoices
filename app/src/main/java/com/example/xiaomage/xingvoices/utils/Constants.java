@@ -47,6 +47,7 @@ public class Constants {
         String LIKE_IT = "dianZan";
         String ADD_COMMENTS = "addComments";
         String FOLLOW = "guanzhu";
+        String MY_VOICE_COMMENTS = "myVoiceToComments";
     }
 
     public interface XingVoicesRequestParam {

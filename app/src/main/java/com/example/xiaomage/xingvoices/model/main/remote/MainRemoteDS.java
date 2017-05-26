@@ -11,6 +11,7 @@ import com.example.xiaomage.xingvoices.model.bean.User.XingVoiceUser;
 import com.example.xiaomage.xingvoices.model.bean.User.XingVoiceUserResp;
 import com.example.xiaomage.xingvoices.model.bean.WxBean.WxUserInfo;
 import com.example.xiaomage.xingvoices.model.bean.followResp.FollowResp;
+import com.example.xiaomage.xingvoices.model.bean.myVoiceCommentResp.MyVoiceCommentResp;
 import com.example.xiaomage.xingvoices.model.bean.publishCommentResp.CommentResp;
 import com.example.xiaomage.xingvoices.model.bean.likeCommentResp.LikeItResp;
 import com.example.xiaomage.xingvoices.model.bean.uploadResp.UploadResp;
@@ -336,6 +337,32 @@ public class MainRemoteDS implements MainDataSource {
 
                     @Override
                     public void onFailure(Call<FollowResp> call, Throwable t) {
+                        if (t == null || null == t.getMessage()) {
+                            resultCallback.onFail(Constants.ResponseError.SERVER_ERROR);
+                            return;
+                        }
+                        resultCallback.onFail(t.getMessage());
+                    }
+                });
+    }
+
+    @Override
+    public void requestMyVoiceComments(final OnResultCallback<List<MyVoiceCommentResp>> resultCallback, int num) {
+        RetrofitClient.buildService(ApiService.class)
+                .getMyVoiceComments(Constants.XingVoicesParamValue.CHANNEL,UserManager.getInstance().
+                        getCurrentUser().getId(),num*10)
+                .enqueue(new Callback<List<MyVoiceCommentResp>>() {
+                    @Override
+                    public void onResponse(Call<List<MyVoiceCommentResp>> call, Response<List<MyVoiceCommentResp>> response) {
+                        if (null == response || !response.isSuccessful() || null == response.body()) {
+                            resultCallback.onFail(Constants.ResponseError.SERVER_ERROR);
+                            return;
+                        }
+                        resultCallback.onSuccess(response.body(), Constants.ResultCode.REMOTE);
+                    }
+
+                    @Override
+                    public void onFailure(Call<List<MyVoiceCommentResp>> call, Throwable t) {
                         if (t == null || null == t.getMessage()) {
                             resultCallback.onFail(Constants.ResponseError.SERVER_ERROR);
                             return;

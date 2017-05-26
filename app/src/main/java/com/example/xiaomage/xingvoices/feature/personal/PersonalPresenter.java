@@ -29,7 +29,7 @@ public class PersonalPresenter extends BasePresenter<PersonalContract.View, Main
     }
 
     @Override
-    public void requestUserVoices(XingVoiceUser xingVoiceUser) {
+    public void requestUserVoices(XingVoiceUser xingVoiceUser,int num) {
         OnResultCallback<List<RemoteVoice>> onResultCallback = new OnResultCallback<List<RemoteVoice>>() {
             @Override
             public void onSuccess(List<RemoteVoice> resultValue, int code) {
@@ -47,7 +47,7 @@ public class PersonalPresenter extends BasePresenter<PersonalContract.View, Main
                 BaseUtil.showToast(errorMessage);
             }
         };
-        getRepository().requestPopularVoicesList(onResultCallback,xingVoiceUser.getUid(),1,null,1,10);
+        getRepository().requestPopularVoicesList(onResultCallback,xingVoiceUser.getUid(),1,null,1,10*num);
     }
 
     @Override
@@ -68,7 +68,7 @@ public class PersonalPresenter extends BasePresenter<PersonalContract.View, Main
                     return;
                 }
                 BaseUtil.showToast(errorMessage);
-                requestUserVoices(xingVoiceUser);
+                requestUserVoices(xingVoiceUser,1);
             }
         };
         getRepository().getUserInfo(onResultCallback,null,xingVoiceUser.getUid());

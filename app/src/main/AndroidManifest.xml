@@ -56,17 +56,18 @@
         <activity
             android:name=".feature.personal.PersonalActivity"
             android:screenOrientation="portrait">
-
         </activity>
 
         <activity android:name=".feature.main.comment.CommentActivity"
                   android:screenOrientation="portrait">
-
         </activity>
 
         <activity android:name=".feature.main.menu.SettingActivity"
                   android:screenOrientation="portrait">
+        </activity>
 
+        <activity android:name=".feature.main.menu.systemMessage.MessageActivity"
+                  android:screenOrientation="portrait">
         </activity>
 
     </application>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingTop="10dp">
+
+    <RelativeLayout
+        android:id="@+id/rl_com_basic_info"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/iv_com_user_avatar"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="8dp"
+            android:src="@drawable/avatar"/>
+
+        <TextView
+            android:id="@+id/tv_com_user_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/iv_com_user_avatar"
+            android:layout_marginStart="8dp"
+            android:textSize="10sp"
+            android:textColor="@color/colorTextUnselected"
+            android:layout_centerVertical="true"
+            android:text="@string/app_name"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="16dp"
+        android:layout_below="@id/rl_com_basic_info"
+        android:layout_marginTop="8dp">
+
+        <TextView
+            android:id="@+id/tv_com_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="46dp"
+            android:layout_marginEnd="90dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="@string/main_default_comment"
+            android:textSize="12sp"
+            android:textColor="@color/colorCommentTextColor"/>
+
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/iv_to_some_where"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="4dp"
+        android:src="@drawable/ic_arrow_right"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:contentDescription="@string/iv_con_des"/>
+
+
+</RelativeLayout>

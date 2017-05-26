@@ -18,7 +18,7 @@ public class PersonalContract {
     }
 
     interface Presenter extends BasePresenterApi {
-        void requestUserVoices(XingVoiceUser xingVoiceUser);
+        void requestUserVoices(XingVoiceUser xingVoiceUser,int num);
         void requestUserInfo(XingVoiceUser xingVoiceUser);
         void changeFollowState(String cid,int state);
     }
