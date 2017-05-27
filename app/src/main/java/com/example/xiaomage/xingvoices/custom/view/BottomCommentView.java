@@ -86,6 +86,9 @@ public class BottomCommentView extends PopupWindow {
         this.setAnimationStyle(R.style.BottomMenuAnim);
         this.setBackgroundDrawable(new BitmapDrawable());
 
+        setSoftInputMode(PopupWindow.INPUT_METHOD_NEEDED);
+        setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+
     }
 
     @Override

@@ -150,7 +150,8 @@ public class CollectionVH extends BaseViewHolder<RemoteVoice> implements OnBotto
         xingVoiceUser.setNickname(mRemoteVoice.getUser().getNickname());
         xingVoiceUser.setUid(mRemoteVoice.getUser().getUid());
 
-        Intent intent = PersonalActivity.getNewIntent(xingVoiceUser, getContext());
+        boolean isFollow = mRemoteVoice.getIs_focus() == 1;
+        Intent intent = PersonalActivity.getNewIntent(xingVoiceUser,isFollow, getContext());
         getContext().startActivity(intent);
     }
 

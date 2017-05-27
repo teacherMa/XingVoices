@@ -118,7 +118,8 @@ public class MenuView extends BaseBusView<MenuContract.Presenter> implements Men
                 xingVoiceUser.setNickname(UserManager.getInstance().getCurrentUser().getName());
                 xingVoiceUser.setUid(UserManager.getInstance().getCurrentUser().getId());
 
-                Intent intent = PersonalActivity.getNewIntent(xingVoiceUser, getContext());
+                boolean isFollow = false;
+                Intent intent = PersonalActivity.getNewIntent(xingVoiceUser,isFollow, getContext());
                 getContext().startActivity(intent);
                 break;
             case R.id.menu_my_draft:

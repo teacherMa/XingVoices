@@ -55,6 +55,7 @@ public class PersonalView extends BaseView<PersonalContract.Presenter> implement
     private int mCurIsFollow;
     private int mCurPage = 1;
     private boolean mIsloadingMore;
+    private boolean mIsFollow;
 
     public void setXingVoiceUser(XingVoiceUser xingVoiceUser) {
         mXingVoiceUser = xingVoiceUser;
@@ -147,7 +148,7 @@ public class PersonalView extends BaseView<PersonalContract.Presenter> implement
         mAdapter.refreshData(voices);
 
         mCurIsFollow = 1;
-        if (1 == voices.get(0).getIs_focus()) {
+        if (mIsFollow) {
             mIvToFollow.setImageDrawable(BaseUtil.getDrawable(R.drawable.ic_personal_cancle_follow));
             mCurIsFollow = 0;
         }
@@ -188,5 +189,9 @@ public class PersonalView extends BaseView<PersonalContract.Presenter> implement
     @Override
     public void changeStateSuccess(String info) {
         BaseUtil.showToast(info);
+    }
+
+    public void setFollow(boolean follow) {
+        mIsFollow = follow;
     }
 }
