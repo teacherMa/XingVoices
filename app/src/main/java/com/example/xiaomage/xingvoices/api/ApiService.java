@@ -143,5 +143,12 @@ public interface ApiService {
                             @Part MultipartBody.Part fileSecond,
                             @Part MultipartBody.Part fileThird);
 
+    @Multipart
+    @POST(Constants.XingVoicesApi.EDIT_USER)
+    Call<UploadResp> editUser(@Query(Constants.XingVoicesRequestParam.CHANNEL) String channel,
+                            @Query(Constants.XingVoicesRequestParam.UID) String uid,
+                            @Part("description") RequestBody requestBody,
+                            @Part MultipartBody.Part fileFirst);
+
 
 }

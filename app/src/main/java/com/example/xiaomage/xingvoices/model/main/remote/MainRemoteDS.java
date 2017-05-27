@@ -418,8 +418,8 @@ public class MainRemoteDS implements MainDataSource {
         RequestBody description = RequestBody.create(MediaType.parse("multipart/form-data"), descriptionString);
 
         RetrofitClient.buildService(ApiService.class)
-                .upload(Constants.XingVoicesParamValue.CHANNEL,UserManager.getInstance().
-                        getCurrentUser().getId(),description,null,null,bodyFirst)
+                .editUser(Constants.XingVoicesParamValue.CHANNEL,UserManager.getInstance().
+                        getCurrentUser().getId(),description,bodyFirst)
                 .enqueue(new Callback<UploadResp>() {
                     @Override
                     public void onResponse(Call<UploadResp> call, Response<UploadResp> response) {

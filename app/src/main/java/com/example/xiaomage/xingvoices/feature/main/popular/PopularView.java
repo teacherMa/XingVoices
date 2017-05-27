@@ -220,6 +220,7 @@ public class PopularView extends BaseBusView<PopularContract.Presenter> implemen
                 getPresenter().toShield(itemValue.getVid());
                 break;
         }
+        getPresenter().requestAllPopularVoice(mCurPage);
     }
 
     public void refreshView() {

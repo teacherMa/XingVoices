@@ -48,12 +48,7 @@ public class LogInView extends BaseView<LogInContract.Presenter> implements LogI
 
     @OnClick(R.id.iv_wx_login)
     public void onViewClicked() {
-        int phoneSDK = Build.VERSION.SDK_INT;
-        if(phoneSDK>=23) {
-            LogInActivityPermissionsDispatcher.loginWithCheck((LogInActivity) getContext());
-        }else {
-            wxLogin();
-        }
+        wxLogin();
     }
 
     @Override

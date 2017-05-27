@@ -147,12 +147,7 @@ public class MainView extends BaseBusView<MainContract.Presenter> implements Mai
                 mTvLastItem = mTvMainCollection;
                 break;
             case R.id.iv_main_record:
-                int phoneSDK = Build.VERSION.SDK_INT;
-                if(phoneSDK>=23) {
-                    MainActivityPermissionsDispatcher.tryRecordWithCheck((MainActivity) getContext());
-                }else {
-                    toRecord();
-                }
+                toRecord();
                 break;
             case R.id.content:
                 if (mMainSlidingMenu.isOpen()) {
@@ -249,12 +244,7 @@ public class MainView extends BaseBusView<MainContract.Presenter> implements Mai
     @Override
     public void initMainUi() {
         mMainSlidingMenu.openMenu();
-        int phoneSDK = Build.VERSION.SDK_INT;
-        if(phoneSDK>=23){
-            MainActivityPermissionsDispatcher.tryInitWithCheck((MainActivity)getContext());
-        }else {
-            toInitFragmentAndVp();
-        }
+        toInitFragmentAndVp();
         new Thread(new Runnable() {
             @Override
             public void run() {

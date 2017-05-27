@@ -54,6 +54,7 @@ public class Constants {
         String MY_VOICE_COMMENTS = "myVoiceToComments";
         String COLLECTION = "favorites";
         String SHIELD_VOICE = "pbVoice";
+        String EDIT_USER = "editUser";
     }
 
     public interface XingVoicesRequestParam {

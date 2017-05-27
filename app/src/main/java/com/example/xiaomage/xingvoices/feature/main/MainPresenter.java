@@ -38,7 +38,7 @@ public class MainPresenter extends BasePresenter<MainContract.View, MainReposito
                     return;
                 }
                 getView().initMainUi();
-                uploadHeadPic(info);
+//                uploadHeadPic(info);
             }
 
             @Override

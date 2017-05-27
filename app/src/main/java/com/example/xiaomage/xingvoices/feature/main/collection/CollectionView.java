@@ -222,6 +222,7 @@ public class CollectionView extends BaseBusView<CollectionContract.Presenter> im
                 getPresenter().toShield(itemValue.getVid());
                 break;
         }
+        getPresenter().requestCollectionVoice(mCurPage);
     }
 
     public void refreshView() {

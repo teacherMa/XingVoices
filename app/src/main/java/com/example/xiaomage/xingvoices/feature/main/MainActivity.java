@@ -147,4 +147,9 @@ public class MainActivity extends BaseActivity<MainPresenter> {
         return super.onKeyDown(keyCode, event);
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        EventBus.getDefault().post(new StopPlayVoice(true));
+    }
 }

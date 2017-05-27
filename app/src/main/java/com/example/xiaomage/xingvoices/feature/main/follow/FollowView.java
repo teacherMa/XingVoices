@@ -217,6 +217,7 @@ public class FollowView extends BaseBusView<FollowContract.Presenter> implements
                 getPresenter().toShield(itemValue.getVid());
                 break;
         }
+        getPresenter().requestAllFollowVoice(mCurPage);
     }
 
     public void refreshView() {
