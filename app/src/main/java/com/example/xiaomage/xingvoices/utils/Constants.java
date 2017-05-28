@@ -183,14 +183,6 @@ public class Constants {
 
     /**
      * BottomMenu的点击事件有可能需要再往外传递给PopularView，RecyclerView的Item点击事件也需要传递
-     * 给PopularView，可能发生冲突，所以这里从10开始赋值
-     */
-    public interface MainPopularItem {
-        int FOLLOW = 10;
-    }
-
-    /**
-     * BottomMenu的点击事件有可能需要再往外传递给PopularView，RecyclerView的Item点击事件也需要传递
      * 给PopularView，可能发生冲突，所以这里从20开始赋值
      */
     public interface BottomComItem {
@@ -202,11 +194,18 @@ public class Constants {
         int STOP_AUDITION = 25;
     }
 
+    /**
+     * BottomMenu的点击事件有可能需要再往外传递给PopularView，RecyclerView的Item点击事件也需要传递
+     * 给PopularView，可能发生冲突，所以这里从20开始赋值
+     */
     public interface BottomShareItem {
         int QQ_SHARE = 30;
         int WECHAT_SHARE = 31;
         int SINA_SHARE = 32;
     }
 
-
+    public interface ViewPagerScroll{
+        int VP_IS_SCROLL = 40;
+        int VP_STOP_SCROLL = 41;
+    }
 }

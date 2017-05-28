@@ -214,15 +214,25 @@ public class CollectionView extends BaseBusView<CollectionContract.Presenter> im
                 break;
             case R.id.iv_follow:
                 getPresenter().changeFollowState(itemValue.getUser().getUid(), 0);
+                getPresenter().requestCollectionVoice(mCurPage);
                 break;
             case R.id.tv_collection:
                 getPresenter().toCollection(itemValue.getVid(), 1);
+                getPresenter().requestCollectionVoice(mCurPage);
                 break;
             case R.id.tv_add_to_blacklist:
                 getPresenter().toShield(itemValue.getVid());
+                getPresenter().requestCollectionVoice(mCurPage);
+                break;
+            case Constants.ViewPagerScroll.VP_IS_SCROLL:
+                mSrlRefresh.setEnabled(false);
+                break;
+            case Constants.ViewPagerScroll.VP_STOP_SCROLL:
+                mSrlRefresh.setEnabled(true);
+                break;
+            default:
                 break;
         }
-        getPresenter().requestCollectionVoice(mCurPage);
     }
 
     public void refreshView() {

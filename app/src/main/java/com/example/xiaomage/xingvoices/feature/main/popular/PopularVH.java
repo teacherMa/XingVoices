@@ -20,6 +20,7 @@ import android.widget.TextView;
 
 import com.example.xiaomage.xingvoices.R;
 import com.example.xiaomage.xingvoices.api.OnItemClickListener;
+import com.example.xiaomage.xingvoices.api.OnVpScrollListener;
 import com.example.xiaomage.xingvoices.api.main.OnBottomCommentItemClickListener;
 import com.example.xiaomage.xingvoices.api.main.OnBottomMenuItemClickListener;
 import com.example.xiaomage.xingvoices.api.main.OnBottomShareItemClickListener;
@@ -65,10 +66,9 @@ import static com.example.xiaomage.xingvoices.utils.Constants.BottomMenuItem.COL
 import static com.example.xiaomage.xingvoices.utils.Constants.BottomMenuItem.COMMENT;
 import static com.example.xiaomage.xingvoices.utils.Constants.BottomMenuItem.LOOK_UP_PIC;
 import static com.example.xiaomage.xingvoices.utils.Constants.BottomMenuItem.SHARE;
-import static com.example.xiaomage.xingvoices.utils.Constants.MainPopularItem.FOLLOW;
 
 public class PopularVH extends BaseViewHolder<RemoteVoice> implements OnBottomMenuItemClickListener,
-        OnBottomCommentItemClickListener,OnBottomShareItemClickListener {
+        OnBottomCommentItemClickListener,OnBottomShareItemClickListener, OnVpScrollListener {
 
     @BindView(R.id.civ_user_avatar)
     ImageView mCivUserAvatar;
@@ -185,7 +185,7 @@ public class PopularVH extends BaseViewHolder<RemoteVoice> implements OnBottomMe
 
     @OnClick(R.id.iv_follow)
     public void onMIvFollowClicked() {
-        mOnItemClickListener.onItemClick(mRemoteVoice, R.id.iv_follow, FOLLOW);
+        mOnItemClickListener.onItemClick(mRemoteVoice, R.id.iv_follow, 0);
         if(mRemoteVoice.getIs_focus() == 1){
             mIvFollow.setVisibility(INVISIBLE);
             return;
@@ -310,6 +310,9 @@ public class PopularVH extends BaseViewHolder<RemoteVoice> implements OnBottomMe
         });
 
         mVpComments.setCurrentItem(0);
+
+        mVpComments.setOnVpScrollListener(this);
+
         mTvTextCom.setTextColor(BaseUtil.getColorInt(R.color.colorTextSelected));
     }
 
@@ -413,5 +416,14 @@ public class PopularVH extends BaseViewHolder<RemoteVoice> implements OnBottomMe
                         });
                 break;
         }
+    }
+
+    @Override
+    public void onVpScroll(boolean isScroll) {
+        if (isScroll) {
+            mOnItemClickListener.onItemClick(mRemoteVoice, Constants.ViewPagerScroll.VP_IS_SCROLL, 0);
+            return;
+        }
+        mOnItemClickListener.onItemClick(mRemoteVoice,Constants.ViewPagerScroll.VP_STOP_SCROLL,0);
     }
 }

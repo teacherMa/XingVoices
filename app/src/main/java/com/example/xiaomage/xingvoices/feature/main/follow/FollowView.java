@@ -8,6 +8,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.widget.ProgressBar;
 
 import com.example.xiaomage.xingvoices.R;
@@ -20,7 +21,6 @@ import com.example.xiaomage.xingvoices.event.VH.VHAuditionEvent;
 import com.example.xiaomage.xingvoices.event.VH.VHPublishTextComEvent;
 import com.example.xiaomage.xingvoices.event.VH.VHPublishVoiceComEvent;
 import com.example.xiaomage.xingvoices.event.VH.VHRecordEvent;
-import com.example.xiaomage.xingvoices.feature.main.popular.PopularAdapter;
 import com.example.xiaomage.xingvoices.framework.BaseBusView;
 import com.example.xiaomage.xingvoices.model.bean.RemoteVoice.RemoteVoice;
 import com.example.xiaomage.xingvoices.utils.BaseUtil;
@@ -36,6 +36,8 @@ import butterknife.BindView;
 
 public class FollowView extends BaseBusView<FollowContract.Presenter> implements FollowContract.View , OnItemClickListener<RemoteVoice> {
 
+    private static final String TAG = "FollowView";
+
     @BindView(R.id.main_follow_rv)
     RecyclerView mMainFollowRv;
     @BindView(R.id.srl_refresh)
@@ -46,7 +48,7 @@ public class FollowView extends BaseBusView<FollowContract.Presenter> implements
     private int mCurPosition;
     private String mCurVoiceComId;
     private int mCurPage = 1;
-    private boolean mIsloadingMore;
+    private boolean mIsLoadingMore;
 
     private FollowAdapter mAdapter;
 
@@ -117,10 +119,12 @@ public class FollowView extends BaseBusView<FollowContract.Presenter> implements
         mMainFollowRv.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                Log.e(TAG, "onScrolled: dx = "+dx+" dy = "+dy+"canScrollVertically"+recyclerView.canScrollVertically(1) );
+
                 LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
                 int enable = linearLayoutManager.findFirstCompletelyVisibleItemPosition();
                 mSrlRefresh.setEnabled(enable == 0);
-                if (mIsloadingMore) {
+                if (mIsLoadingMore) {
                     super.onScrolled(recyclerView, dx, dy);
                     return;
 
@@ -128,7 +132,7 @@ public class FollowView extends BaseBusView<FollowContract.Presenter> implements
                 if (!recyclerView.canScrollVertically(1)) {
                     mCurPage++;
                     mLoadBar.setVisibility(VISIBLE);
-                    mIsloadingMore = true;
+                    mIsLoadingMore = true;
                     getPresenter().requestAllFollowVoice(mCurPage);
                 }
                 super.onScrolled(recyclerView, dx, dy);
@@ -144,7 +148,7 @@ public class FollowView extends BaseBusView<FollowContract.Presenter> implements
             @Override
             public void onRefresh() {
                 getPresenter().requestAllFollowVoice(mCurPage);
-                mIsloadingMore = false;
+                mIsLoadingMore = false;
             }
         });
     }
@@ -163,7 +167,7 @@ public class FollowView extends BaseBusView<FollowContract.Presenter> implements
         mSrlRefresh.setRefreshing(false);
         mLoadBar.setVisibility(GONE);
         ((FollowAdapter) mMainFollowRv.getAdapter()).refreshData(data);
-        if (mIsloadingMore) {
+        if (mIsLoadingMore) {
             mMainFollowRv.scrollToPosition(origin - 1);
         }
     }
@@ -209,20 +213,30 @@ public class FollowView extends BaseBusView<FollowContract.Presenter> implements
                 break;
             case R.id.iv_follow:
                 getPresenter().changeFollowState(itemValue.getUser().getUid(), 0);
+                getPresenter().requestAllFollowVoice(mCurPage);
                 break;
             case R.id.tv_collection:
                 getPresenter().toCollection(itemValue.getVid(), 0);
+                getPresenter().requestAllFollowVoice(mCurPage);
                 break;
             case R.id.tv_add_to_blacklist:
                 getPresenter().toShield(itemValue.getVid());
+                getPresenter().requestAllFollowVoice(mCurPage);
+                break;
+            case Constants.ViewPagerScroll.VP_IS_SCROLL:
+                mSrlRefresh.setEnabled(false);
+                break;
+            case Constants.ViewPagerScroll.VP_STOP_SCROLL:
+                mSrlRefresh.setEnabled(true);
+                break;
+            default:
                 break;
         }
-        getPresenter().requestAllFollowVoice(mCurPage);
     }
 
     public void refreshView() {
         getPresenter().requestAllFollowVoice(mCurPage);
-        mIsloadingMore = false;
+        mIsLoadingMore = false;
     }
 
     @Override

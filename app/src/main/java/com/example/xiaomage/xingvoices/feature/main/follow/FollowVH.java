@@ -8,8 +8,10 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -18,6 +20,7 @@ import android.widget.TextView;
 
 import com.example.xiaomage.xingvoices.R;
 import com.example.xiaomage.xingvoices.api.OnItemClickListener;
+import com.example.xiaomage.xingvoices.api.OnVpScrollListener;
 import com.example.xiaomage.xingvoices.api.main.OnBottomCommentItemClickListener;
 import com.example.xiaomage.xingvoices.api.main.OnBottomMenuItemClickListener;
 import com.example.xiaomage.xingvoices.api.main.OnBottomShareItemClickListener;
@@ -61,8 +64,7 @@ import static com.example.xiaomage.xingvoices.utils.Constants.BottomMenuItem.LOO
 import static com.example.xiaomage.xingvoices.utils.Constants.BottomMenuItem.SHARE;
 
 public class FollowVH extends BaseViewHolder<RemoteVoice> implements OnBottomMenuItemClickListener,
-        OnBottomCommentItemClickListener, OnBottomShareItemClickListener {
-
+        OnBottomCommentItemClickListener, OnBottomShareItemClickListener, OnVpScrollListener {
 
     @BindView(R.id.civ_user_avatar)
     CircleImageView mCivUserAvatar;
@@ -149,7 +151,7 @@ public class FollowVH extends BaseViewHolder<RemoteVoice> implements OnBottomMen
         xingVoiceUser.setUid(mRemoteVoice.getUser().getUid());
 
         boolean isFollow = mRemoteVoice.getIs_focus() == 1;
-        Intent intent = PersonalActivity.getNewIntent(xingVoiceUser,isFollow, getContext());
+        Intent intent = PersonalActivity.getNewIntent(xingVoiceUser, isFollow, getContext());
         getContext().startActivity(intent);
     }
 
@@ -255,7 +257,6 @@ public class FollowVH extends BaseViewHolder<RemoteVoice> implements OnBottomMen
         mVpComments.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
             }
 
             @Override
@@ -276,11 +277,13 @@ public class FollowVH extends BaseViewHolder<RemoteVoice> implements OnBottomMen
 
             @Override
             public void onPageScrollStateChanged(int state) {
-
             }
         });
 
         mVpComments.setCurrentItem(0);
+
+        mVpComments.setOnVpScrollListener(this);
+
         mTvTextCom.setTextColor(BaseUtil.getColorInt(R.color.colorTextSelected));
     }
 
@@ -383,5 +386,14 @@ public class FollowVH extends BaseViewHolder<RemoteVoice> implements OnBottomMen
                         });
                 break;
         }
+    }
+
+    @Override
+    public void onVpScroll(boolean isScroll) {
+        if (isScroll) {
+            mOnItemClickListener.onItemClick(mRemoteVoice, Constants.ViewPagerScroll.VP_IS_SCROLL, 0);
+            return;
+        }
+        mOnItemClickListener.onItemClick(mRemoteVoice,Constants.ViewPagerScroll.VP_STOP_SCROLL,0);
     }
 }

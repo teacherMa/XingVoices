@@ -9,6 +9,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.widget.ProgressBar;
 
 import com.example.xiaomage.xingvoices.R;
@@ -37,6 +38,8 @@ import java.util.List;
 import butterknife.BindView;
 
 public class PopularView extends BaseBusView<PopularContract.Presenter> implements PopularContract.View, OnItemClickListener<RemoteVoice> {
+
+    private static final String TAG = "PopularView";
 
     @BindView(R.id.main_popular_rv)
     RecyclerView mMainPopularRv;
@@ -119,6 +122,7 @@ public class PopularView extends BaseBusView<PopularContract.Presenter> implemen
         mMainPopularRv.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+
                 LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
                 int enable = linearLayoutManager.findFirstCompletelyVisibleItemPosition();
                 mSrlRefresh.setEnabled(enable == 0);
@@ -212,15 +216,25 @@ public class PopularView extends BaseBusView<PopularContract.Presenter> implemen
                 break;
             case R.id.iv_follow:
                 getPresenter().changeFollowState(itemValue.getUser().getUid(), 0);
+                getPresenter().requestAllPopularVoice(mCurPage);
                 break;
             case R.id.tv_collection:
                 getPresenter().toCollection(itemValue.getVid(), 0);
+                getPresenter().requestAllPopularVoice(mCurPage);
                 break;
             case R.id.tv_add_to_blacklist:
                 getPresenter().toShield(itemValue.getVid());
+                getPresenter().requestAllPopularVoice(mCurPage);
+                break;
+            case Constants.ViewPagerScroll.VP_IS_SCROLL:
+                mSrlRefresh.setEnabled(false);
+                break;
+            case Constants.ViewPagerScroll.VP_STOP_SCROLL:
+                mSrlRefresh.setEnabled(true);
+                break;
+            default:
                 break;
         }
-        getPresenter().requestAllPopularVoice(mCurPage);
     }
 
     public void refreshView() {

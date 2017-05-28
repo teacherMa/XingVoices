@@ -362,7 +362,7 @@ public class MainRepository extends BaseRepository implements MainDataSource {
 
     @Override
     public void uploadHeadPic(OnResultCallback<UploadResp> resultCallback) {
-        mRemoteDS.uploadHeadPic(resultCallback);
+//        mRemoteDS.uploadHeadPic(resultCallback);
     }
 
     @Override
