@@ -55,8 +55,6 @@ public class MenuView extends BaseBusView<MenuContract.Presenter> implements Men
     RatioLayout mRlPhHead;
     @BindView(R.id.menu_my_publish)
     ImageView mMenuMyPublish;
-    @BindView(R.id.menu_my_draft)
-    ImageView mMenuMyDraft;
     @BindView(R.id.menu_sys_message)
     ImageView mMenuSysMessage;
     @BindView(R.id.menu_my_setting)
@@ -96,7 +94,7 @@ public class MenuView extends BaseBusView<MenuContract.Presenter> implements Men
 
     @OnClick({R.id.iv_back_content, R.id.menu_user_avatar, R.id.menu_user_name,
             R.id.tv_follow_number, R.id.tv_fans_num, R.id.menu_my_publish,
-            R.id.menu_my_draft, R.id.menu_sys_message, R.id.menu_my_setting})
+            R.id.menu_sys_message, R.id.menu_my_setting})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_back_content:
@@ -121,8 +119,6 @@ public class MenuView extends BaseBusView<MenuContract.Presenter> implements Men
                 boolean isFollow = false;
                 Intent intent = PersonalActivity.getNewIntent(xingVoiceUser,isFollow, getContext());
                 getContext().startActivity(intent);
-                break;
-            case R.id.menu_my_draft:
                 break;
             case R.id.menu_sys_message:
                 getContext().startActivity(MessageActivity.getIntent(getContext()));

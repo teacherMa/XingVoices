@@ -103,7 +103,8 @@ public interface ApiService {
     Call<List<CommentBean>> getVoiceComment(@Query(Constants.XingVoicesRequestParam.CHANNEL) String channel,
                                             @Query(Constants.XingVoicesRequestParam.UID) String uid,
                                             @Query(Constants.XingVoicesRequestParam.VID) String vid,
-                                            @Query(Constants.XingVoicesRequestParam.TYPE) int type);
+                                            @Query(Constants.XingVoicesRequestParam.TYPE) int type,
+                                            @Query(Constants.XingVoicesRequestParam.NUM) int num);
 
 
     @GET(Constants.XingVoicesApi.MY_VOICE_COMMENTS)

@@ -183,11 +183,11 @@ public class MainRepository extends BaseRepository implements MainDataSource {
 
     @Override
     public void requestComment(final OnResultCallback<List<CommentBean>> resultCallback,
-                               final RemoteVoice voice, XingVoiceUser bean, final int commentType) {
+                               final RemoteVoice voice, XingVoiceUser bean, final int commentType, final int num) {
         OnResultCallback<XingVoiceUser> loackCallback = new OnResultCallback<XingVoiceUser>() {
             @Override
             public void onSuccess(XingVoiceUser resultValue, int code) {
-                mRemoteDS.requestComment(resultCallback, voice, resultValue, commentType);
+                mRemoteDS.requestComment(resultCallback, voice, resultValue, commentType,num);
             }
 
             @Override

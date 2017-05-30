@@ -65,9 +65,8 @@ import static com.example.xiaomage.xingvoices.utils.Constants.BottomMenuItem.SHA
 public class CollectionVH extends BaseViewHolder<RemoteVoice> implements OnBottomMenuItemClickListener,
         OnBottomCommentItemClickListener, OnBottomShareItemClickListener, OnVpScrollListener {
 
-
     @BindView(R.id.civ_user_avatar)
-    CircleImageView mCivUserAvatar;
+    ImageView mCivUserAvatar;
     @BindView(R.id.tv_user_name)
     TextView mTvUserName;
     @BindView(R.id.iv_follow)

@@ -26,7 +26,7 @@
             android:layout_marginStart="8dp"
             android:layout_toEndOf="@id/iv_com_user_avatar"
             android:text="@string/app_name"
-            android:textColor="@color/colorTextUnselected"
+            android:textColor="@color/colorTextSelected"
             android:textSize="10sp"/>
 
     </RelativeLayout>

@@ -137,7 +137,7 @@ public class MainActivity extends BaseActivity<MainPresenter> {
         }
 
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            EventBus.getDefault().post(new StopPlayVoice(true));
+//            EventBus.getDefault().post(new StopPlayVoice(true));
             Intent home = new Intent(Intent.ACTION_MAIN);
             home.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             home.addCategory(Intent.CATEGORY_HOME);
@@ -147,9 +147,9 @@ public class MainActivity extends BaseActivity<MainPresenter> {
         return super.onKeyDown(keyCode, event);
     }
 
-    @Override
+   /* @Override
     protected void onPause() {
         super.onPause();
         EventBus.getDefault().post(new StopPlayVoice(true));
-    }
+    }*/
 }

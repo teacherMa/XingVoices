@@ -3,6 +3,7 @@ package com.example.xiaomage.xingvoices.feature.main.comment.voiceComment;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -32,10 +33,14 @@ public class VoiceCommentView extends BaseBusView<VoiceCommentContract.Presenter
     RecyclerView mRvVoiceCom;
     @BindView(R.id.load_bar)
     ProgressBar mLoadBar;
+    @BindView(R.id.srl_refresh)
+    SwipeRefreshLayout mSrlRefresh;
 
     private VoiceCommentAdapter mAdapter;
     private RemoteVoice mRemoteVoice;
     private int mModel;
+    private int mCurPage = 1;
+    private boolean mIsLoadingMore;
 
     public VoiceCommentView(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
@@ -81,7 +86,29 @@ public class VoiceCommentView extends BaseBusView<VoiceCommentContract.Presenter
         mRvVoiceCom.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+                int enable = linearLayoutManager.findFirstCompletelyVisibleItemPosition();
+                mSrlRefresh.setEnabled(enable == 0);
+                if (mIsLoadingMore) {
+                    super.onScrolled(recyclerView, dx, dy);
+                    return;
+
+                }
+                if (!recyclerView.canScrollVertically(1)) {
+                    mCurPage++;
+                    mLoadBar.setVisibility(VISIBLE);
+                    mIsLoadingMore = true;
+                    getPresenter().requestComment(mRemoteVoice,mCurPage*10);
+                }
                 super.onScrolled(recyclerView, dx, dy);
+            }
+        });
+
+        mSrlRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                getPresenter().requestComment(mRemoteVoice,mCurPage);
+                mIsLoadingMore = false;
             }
         });
     }
@@ -103,6 +130,9 @@ public class VoiceCommentView extends BaseBusView<VoiceCommentContract.Presenter
             mRvVoiceCom.setAdapter(adapter);
         }
         ((VoiceCommentAdapter) mRvVoiceCom.getAdapter()).refreshData(been);
+
+        mSrlRefresh.setRefreshing(false);
+        mLoadBar.setVisibility(GONE);
     }
 
     @Override

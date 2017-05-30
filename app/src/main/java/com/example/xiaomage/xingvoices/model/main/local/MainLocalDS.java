@@ -120,7 +120,7 @@ public class MainLocalDS implements MainDataSource {
 
     @Override
     public void requestComment(OnResultCallback<List<CommentBean>> resultCallback, RemoteVoice voice,
-                               XingVoiceUser bean,int commentType) {
+                               XingVoiceUser bean,int commentType,int num) {
 
     }
 

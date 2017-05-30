@@ -17,7 +17,7 @@ public class VoiceCommentContract {
     }
 
     interface Presenter extends BasePresenterApi {
-        void requestComment(RemoteVoice voice);
+        void requestComment(RemoteVoice voice,int num);
         void likeIt(String cId);
         void playComVoice(CommentBean commentBean);
     }

@@ -36,8 +36,6 @@ import butterknife.BindView;
 
 public class FollowView extends BaseBusView<FollowContract.Presenter> implements FollowContract.View , OnItemClickListener<RemoteVoice> {
 
-    private static final String TAG = "FollowView";
-
     @BindView(R.id.main_follow_rv)
     RecyclerView mMainFollowRv;
     @BindView(R.id.srl_refresh)
@@ -119,7 +117,6 @@ public class FollowView extends BaseBusView<FollowContract.Presenter> implements
         mMainFollowRv.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                Log.e(TAG, "onScrolled: dx = "+dx+" dy = "+dy+"canScrollVertically"+recyclerView.canScrollVertically(1) );
 
                 LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
                 int enable = linearLayoutManager.findFirstCompletelyVisibleItemPosition();

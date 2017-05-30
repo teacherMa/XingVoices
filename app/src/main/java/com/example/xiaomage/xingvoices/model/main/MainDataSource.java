@@ -42,7 +42,7 @@ public interface MainDataSource {
     void requestFollowVoicesList(OnResultCallback<List<RemoteVoice>>resultCallback,int num);
 
     void requestComment(OnResultCallback<List<CommentBean>> resultCallback, RemoteVoice voice,
-                        XingVoiceUser bean,int commentType);
+                        XingVoiceUser bean,int commentType,int num);
 
     void downloadVoice(OnResultCallback<ResponseBody> resultCallback, ResponseBody responseBody,
                        String vUrl,String vId);

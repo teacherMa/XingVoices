@@ -3,6 +3,7 @@ package com.example.xiaomage.xingvoices.feature.main.comment.textComment;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -31,10 +32,14 @@ public class TextCommentView extends BaseBusView<TextCommentContract.Presenter> 
     RecyclerView mRvTextCom;
     @BindView(R.id.load_bar)
     ProgressBar mLoadBar;
+    @BindView(R.id.srl_refresh)
+    SwipeRefreshLayout mSrlRefresh;
 
     private TextCommentAdapter mAdapter;
     private RemoteVoice mRemoteVoice;
     private int mModel;
+    private int mCurPage = 1;
+    private boolean mIsLoadingMore;
 
     public TextCommentView(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
@@ -64,6 +69,34 @@ public class TextCommentView extends BaseBusView<TextCommentContract.Presenter> 
         mRvTextCom.setItemAnimator(new DefaultItemAnimator());
         mRvTextCom.setLayoutManager(new LinearLayoutManager(getContext()));
         mRvTextCom.setAdapter(mAdapter);
+
+        mRvTextCom.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+                int enable = linearLayoutManager.findFirstCompletelyVisibleItemPosition();
+                mSrlRefresh.setEnabled(enable == 0);
+                if (mIsLoadingMore) {
+                    super.onScrolled(recyclerView, dx, dy);
+                    return;
+                }
+                if (!recyclerView.canScrollVertically(1)) {
+                    mCurPage++;
+                    mLoadBar.setVisibility(VISIBLE);
+                    mIsLoadingMore = true;
+                    getPresenter().requestComment(mRemoteVoice,mCurPage*10);
+                }
+                super.onScrolled(recyclerView, dx, dy);
+            }
+        });
+
+        mSrlRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                getPresenter().requestComment(mRemoteVoice,mCurPage);
+                mIsLoadingMore = false;
+            }
+        });
     }
 
     @Override
@@ -83,6 +116,9 @@ public class TextCommentView extends BaseBusView<TextCommentContract.Presenter> 
             mRvTextCom.setAdapter(adapter);
         }
         ((TextCommentAdapter) mRvTextCom.getAdapter()).refreshData(been);
+
+        mSrlRefresh.setRefreshing(false);
+        mLoadBar.setVisibility(GONE);
     }
 
     @Override

@@ -1,7 +1,6 @@
 package com.example.xiaomage.xingvoices.feature.main.popular;
 
 import android.content.Context;
-import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -9,7 +8,6 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.widget.ProgressBar;
 
 import com.example.xiaomage.xingvoices.R;
@@ -31,8 +29,6 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import butterknife.BindView;
@@ -52,7 +48,7 @@ public class PopularView extends BaseBusView<PopularContract.Presenter> implemen
     private int mCurPosition;
     private String mCurVoiceComId;
     private int mCurPage = 1;
-    private boolean mIsloadingMore;
+    private boolean mIsLoadingMore;
 
     public PopularView(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
@@ -126,7 +122,7 @@ public class PopularView extends BaseBusView<PopularContract.Presenter> implemen
                 LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
                 int enable = linearLayoutManager.findFirstCompletelyVisibleItemPosition();
                 mSrlRefresh.setEnabled(enable == 0);
-                if (mIsloadingMore) {
+                if (mIsLoadingMore) {
                     super.onScrolled(recyclerView, dx, dy);
                     return;
 
@@ -134,7 +130,7 @@ public class PopularView extends BaseBusView<PopularContract.Presenter> implemen
                 if (!recyclerView.canScrollVertically(1)) {
                     mCurPage++;
                     mLoadBar.setVisibility(VISIBLE);
-                    mIsloadingMore = true;
+                    mIsLoadingMore = true;
                     getPresenter().requestAllPopularVoice(mCurPage);
                 }
                 super.onScrolled(recyclerView, dx, dy);
@@ -150,7 +146,7 @@ public class PopularView extends BaseBusView<PopularContract.Presenter> implemen
             @Override
             public void onRefresh() {
                 getPresenter().requestAllPopularVoice(mCurPage);
-                mIsloadingMore = false;
+                mIsLoadingMore = false;
             }
         });
 
@@ -170,7 +166,7 @@ public class PopularView extends BaseBusView<PopularContract.Presenter> implemen
         mSrlRefresh.setRefreshing(false);
         mLoadBar.setVisibility(GONE);
         ((PopularAdapter) mMainPopularRv.getAdapter()).refreshData(data);
-        if (mIsloadingMore) {
+        if (mIsLoadingMore) {
             mMainPopularRv.scrollToPosition(origin - 1);
         }
     }
@@ -239,7 +235,7 @@ public class PopularView extends BaseBusView<PopularContract.Presenter> implemen
 
     public void refreshView() {
         getPresenter().requestAllPopularVoice(mCurPage);
-        mIsloadingMore = false;
+        mIsLoadingMore = false;
     }
 
     @Override

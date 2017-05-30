@@ -26,11 +26,11 @@ public class VoiceCommentPresenter extends BasePresenter<VoiceCommentContract.Vi
         if(null == remoteVoice){
             return;
         }
-        requestComment(remoteVoice);
+        requestComment(remoteVoice,20);
     }
 
     @Override
-    public void requestComment(RemoteVoice voice) {
+    public void requestComment(RemoteVoice voice,int num) {
         OnResultCallback<List<CommentBean>> callback = new OnResultCallback<List<CommentBean>>() {
             @Override
             public void onSuccess(List<CommentBean> resultValue, int code) {
@@ -48,7 +48,7 @@ public class VoiceCommentPresenter extends BasePresenter<VoiceCommentContract.Vi
                 BaseUtil.showToast(errorMessage);
             }
         };
-        getRepository().requestComment(callback,voice,null, Constants.CommentType.VOICE);
+        getRepository().requestComment(callback,voice,null, Constants.CommentType.VOICE,num);
     }
 
     @Override

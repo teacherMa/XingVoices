@@ -17,7 +17,7 @@
         android:layout_height="50dp"
         android:orientation="horizontal">
 
-        <com.example.xiaomage.xingvoices.custom.view.CircleImageView
+        <ImageView
             android:id="@+id/civ_user_avatar"
             android:layout_width="30dp"
             android:layout_height="30dp"
@@ -119,6 +119,7 @@
             android:layout_centerVertical="true"
             android:layout_marginEnd="28dp"
             android:contentDescription="@string/iv_con_des"
+            android:padding="8dp"
             android:src="@drawable/ic_main_btn_more"/>
 
     </RelativeLayout>
@@ -145,6 +146,7 @@
                 android:layout_marginStart="8dp"
                 android:text="@string/main_text_comments"
                 android:textColor="@color/colorTextUnselected"
+                android:padding="4dp"
                 android:textSize="12sp"/>
 
             <TextView
@@ -154,19 +156,17 @@
                 android:layout_centerVertical="true"
                 android:layout_marginStart="12dp"
                 android:layout_toEndOf="@id/tv_text_com"
+                android:padding="4dp"
                 android:text="@string/main_voice_comments"
                 android:textColor="@color/colorTextUnselected"
                 android:textSize="12sp"/>
-
         </RelativeLayout>
 
         <com.example.xiaomage.xingvoices.custom.view.WrapContentViewPager
             android:id="@+id/vp_comments"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-
         </com.example.xiaomage.xingvoices.custom.view.WrapContentViewPager>
-
 
         <TextView
             android:id="@+id/tv_more_com"
@@ -175,10 +175,9 @@
             android:layout_marginTop="10dp"
             android:text="@string/main_more_comments"
             android:textColor="@color/colorTextUnselected"
-            android:textSize="9sp"/>
-
+            android:textSize="12sp"
+            android:padding="8dp"/>
 
     </LinearLayout>
-
 
 </LinearLayout>

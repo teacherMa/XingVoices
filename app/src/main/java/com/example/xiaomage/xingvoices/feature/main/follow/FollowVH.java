@@ -67,7 +67,7 @@ public class FollowVH extends BaseViewHolder<RemoteVoice> implements OnBottomMen
         OnBottomCommentItemClickListener, OnBottomShareItemClickListener, OnVpScrollListener {
 
     @BindView(R.id.civ_user_avatar)
-    CircleImageView mCivUserAvatar;
+    ImageView mCivUserAvatar;
     @BindView(R.id.tv_user_name)
     TextView mTvUserName;
     @BindView(R.id.iv_follow)

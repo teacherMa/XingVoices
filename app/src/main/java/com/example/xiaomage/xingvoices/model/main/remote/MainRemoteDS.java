@@ -183,10 +183,10 @@ public class MainRemoteDS implements MainDataSource {
 
     @Override
     public void requestComment(final OnResultCallback<List<CommentBean>> resultCallback,
-                               RemoteVoice voice, XingVoiceUser bean, int commentType) {
+                               RemoteVoice voice, XingVoiceUser bean, int commentType,int num) {
         RetrofitClient.buildService(ApiService.class)
                 .getVoiceComment(Constants.XingVoicesParamValue.CHANNEL, bean.getUid(),
-                        voice.getVid(), commentType)
+                        voice.getVid(), commentType,num)
                 .enqueue(new Callback<List<CommentBean>>() {
                     @Override
                     public void onResponse(Call<List<CommentBean>> call,
