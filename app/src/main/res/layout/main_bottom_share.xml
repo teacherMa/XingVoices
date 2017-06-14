@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.example.xiaomage.xingvoices.custom.view.RatioLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
+    android:orientation="vertical"
+    app:ratio="0.45">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/iv_qq_share"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:src="@drawable/ic_tencent_qq"
+            android:padding="32dp"
+            android:contentDescription="@string/iv_con_des"/>
+
+        <ImageView
+            android:id="@+id/iv_dismiss"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:contentDescription="@string/iv_con_des"
+            android:padding="8dp"
+            android:src="@drawable/ic_record_close_record"/>
+
+        <ImageView
+            android:id="@+id/iv_wechat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toStartOf="@id/iv_qq_share"
+            android:layout_centerVertical="true"
+            android:padding="32dp"
+            android:src="@drawable/ic_wechat"
+            android:contentDescription="@string/iv_con_des"/>
+
+        <ImageView
+            android:id="@+id/iv_sina"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/iv_qq_share"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_sina"
+            android:padding="32dp"
+            android:contentDescription="@string/iv_con_des"/>
+
+    </RelativeLayout>
+
+
+
+
+</com.example.xiaomage.xingvoices.custom.view.RatioLayout>

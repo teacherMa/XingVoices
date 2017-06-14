@@ -27,7 +27,7 @@ public class FileUtil {
     public static String VOICE_FILE;
     public static String RECORD_FILE;
     public static String PATH_TEMP;
-
+    public static String AVATAR_FILE;
 
     static {
         if(Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())
@@ -39,6 +39,7 @@ public class FileUtil {
         VOICE_FILE = PATH.concat("/voice");
         RECORD_FILE = PATH.concat("/record");
         PATH_TEMP = PATH.concat("/temp");
+        AVATAR_FILE = PATH.concat("/avatar");
     }
 
     public static String getVoicePath(String vId){

@@ -2,6 +2,8 @@ package com.example.xiaomage.xingvoices.feature.main.popular;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.Drawable;
 import android.support.v4.app.Fragment;
@@ -18,15 +20,25 @@ import android.widget.TextView;
 
 import com.example.xiaomage.xingvoices.R;
 import com.example.xiaomage.xingvoices.api.OnItemClickListener;
+import com.example.xiaomage.xingvoices.api.OnVpScrollListener;
+import com.example.xiaomage.xingvoices.api.main.OnBottomCommentItemClickListener;
 import com.example.xiaomage.xingvoices.api.main.OnBottomMenuItemClickListener;
+import com.example.xiaomage.xingvoices.api.main.OnBottomShareItemClickListener;
 import com.example.xiaomage.xingvoices.custom.view.BottomCommentView;
+import com.example.xiaomage.xingvoices.custom.view.BottomShareView;
 import com.example.xiaomage.xingvoices.custom.view.WrapContentViewPager;
 import com.example.xiaomage.xingvoices.custom.view.BottomMenu;
 import com.example.xiaomage.xingvoices.event.EmptyEvent;
 import com.example.xiaomage.xingvoices.event.ChangeAnimEvent;
+import com.example.xiaomage.xingvoices.event.VH.VHAuditionEvent;
+import com.example.xiaomage.xingvoices.event.VH.VHPublishTextComEvent;
+import com.example.xiaomage.xingvoices.event.VH.VHPublishVoiceComEvent;
+import com.example.xiaomage.xingvoices.event.VH.VHRecordEvent;
 import com.example.xiaomage.xingvoices.feature.main.MainActivity;
-import com.example.xiaomage.xingvoices.feature.main.textComment.TextCommentFragment;
-import com.example.xiaomage.xingvoices.feature.main.voiceComment.VoiceCommentFragment;
+import com.example.xiaomage.xingvoices.feature.main.WatchPicActivity;
+import com.example.xiaomage.xingvoices.feature.main.comment.CommentActivity;
+import com.example.xiaomage.xingvoices.feature.main.textSimpleComment.TextCommentFragment;
+import com.example.xiaomage.xingvoices.feature.main.voiceSimpleComment.VoiceCommentFragment;
 import com.example.xiaomage.xingvoices.feature.personal.PersonalActivity;
 import com.example.xiaomage.xingvoices.framework.BaseViewHolder;
 import com.example.xiaomage.xingvoices.model.bean.RemoteVoice.RemoteVoice;
@@ -43,6 +55,9 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import me.shaohui.shareutil.ShareUtil;
+import me.shaohui.shareutil.share.ShareListener;
+import me.shaohui.shareutil.share.SharePlatform;
 
 import static android.view.View.INVISIBLE;
 import static android.view.View.VISIBLE;
@@ -51,11 +66,9 @@ import static com.example.xiaomage.xingvoices.utils.Constants.BottomMenuItem.COL
 import static com.example.xiaomage.xingvoices.utils.Constants.BottomMenuItem.COMMENT;
 import static com.example.xiaomage.xingvoices.utils.Constants.BottomMenuItem.LOOK_UP_PIC;
 import static com.example.xiaomage.xingvoices.utils.Constants.BottomMenuItem.SHARE;
-import static com.example.xiaomage.xingvoices.utils.Constants.MainPopularItem.FOLLOW;
 
-public class PopularVH extends BaseViewHolder<RemoteVoice> implements OnBottomMenuItemClickListener {
-
-    private static final int DURATION = 500;
+public class PopularVH extends BaseViewHolder<RemoteVoice> implements OnBottomMenuItemClickListener,
+        OnBottomCommentItemClickListener,OnBottomShareItemClickListener, OnVpScrollListener {
 
     @BindView(R.id.civ_user_avatar)
     ImageView mCivUserAvatar;
@@ -87,8 +100,6 @@ public class PopularVH extends BaseViewHolder<RemoteVoice> implements OnBottomMe
     TextView mTvVoiceLength;
     @BindView(R.id.vp_comments)
     WrapContentViewPager mVpComments;
-    @BindView(R.id.iv_play_anim)
-    ImageView mIvPlayAnim;
 
     private OnItemClickListener<RemoteVoice> mOnItemClickListener;
     private RemoteVoice mRemoteVoice;
@@ -108,7 +119,7 @@ public class PopularVH extends BaseViewHolder<RemoteVoice> implements OnBottomMe
         if(null == event){
             return;
         }
-        if(event instanceof ChangeAnimEvent){
+       /* if(event instanceof ChangeAnimEvent){
             ChangeAnimEvent changeAnimEvent = (ChangeAnimEvent)event;
             if(mPosition != changeAnimEvent.getPosition()){
                 return;
@@ -119,7 +130,7 @@ public class PopularVH extends BaseViewHolder<RemoteVoice> implements OnBottomMe
             }
 
             stopAnim();
-        }
+        }*/
     }
 
     @Override
@@ -127,7 +138,7 @@ public class PopularVH extends BaseViewHolder<RemoteVoice> implements OnBottomMe
 
         if (null == mAnimationDrawable) {
             mAnimationDrawable = new AnimationDrawable();
-            initAnimation();
+//            initAnimation();
         }
 
         mOnItemClickListener = listener;
@@ -167,13 +178,19 @@ public class PopularVH extends BaseViewHolder<RemoteVoice> implements OnBottomMe
         xingVoiceUser.setNickname(mRemoteVoice.getUser().getNickname());
         xingVoiceUser.setUid(mRemoteVoice.getUser().getUid());
 
-        Intent intent = PersonalActivity.getNewIntent(xingVoiceUser, getContext());
+        boolean isFollow = mRemoteVoice.getIs_focus() == 1;
+        Intent intent = PersonalActivity.getNewIntent(xingVoiceUser, isFollow,getContext());
         getContext().startActivity(intent);
     }
 
     @OnClick(R.id.iv_follow)
     public void onMIvFollowClicked() {
-        mOnItemClickListener.onItemClick(mRemoteVoice, R.id.iv_follow, FOLLOW);
+        mOnItemClickListener.onItemClick(mRemoteVoice, R.id.iv_follow, 0);
+        if(mRemoteVoice.getIs_focus() == 1){
+            mIvFollow.setVisibility(INVISIBLE);
+            return;
+        }
+        mIvFollow.setVisibility(VISIBLE);
     }
 
     @OnClick(R.id.iv_more)
@@ -200,6 +217,8 @@ public class PopularVH extends BaseViewHolder<RemoteVoice> implements OnBottomMe
 
     @OnClick(R.id.tv_more_com)
     public void onMTvMoreComClicked() {
+        Intent intent = CommentActivity.getNewIntent(mRemoteVoice,getContext());
+        getContext().startActivity(intent);
     }
 
     @OnClick(R.id.iv_pic_of_voice)
@@ -212,6 +231,7 @@ public class PopularVH extends BaseViewHolder<RemoteVoice> implements OnBottomMe
         switch (position) {
             case COMMENT:
                 BottomCommentView bottomCommentView = new BottomCommentView(getContext());
+                bottomCommentView.setItemClickListener(this);
                 View root = LayoutInflater.from(getContext()).inflate(R.layout.main_view, null);
                 bottomCommentView.showAtLocation(root,Gravity.BOTTOM,0,0);
                 break;
@@ -219,10 +239,13 @@ public class PopularVH extends BaseViewHolder<RemoteVoice> implements OnBottomMe
                 mOnItemClickListener.onItemClick(mRemoteVoice, R.id.tv_collection, COLLECTION);
                 break;
             case SHARE:
-                // TODO: 2017/5/14
+                BottomShareView bottomShareView = new BottomShareView(getContext());
+                bottomShareView.setOnBottomShareItemClickListener(this);
+                View shareRoot = LayoutInflater.from(getContext()).inflate(R.layout.main_view, null);
+                bottomShareView.showAtLocation(shareRoot,Gravity.BOTTOM,0,0);
                 break;
             case LOOK_UP_PIC:
-                // TODO: 2017/5/14
+                getContext().startActivity(WatchPicActivity.getIntent(getContext(),mRemoteVoice.getAllbackgrund()));
                 break;
             case ADD_TO_BLACK_LIST:
                 mOnItemClickListener.onItemClick(mRemoteVoice, R.id.tv_add_to_blacklist, ADD_TO_BLACK_LIST);
@@ -287,6 +310,9 @@ public class PopularVH extends BaseViewHolder<RemoteVoice> implements OnBottomMe
         });
 
         mVpComments.setCurrentItem(0);
+
+        mVpComments.setOnVpScrollListener(this);
+
         mTvTextCom.setTextColor(BaseUtil.getColorInt(R.color.colorTextSelected));
     }
 
@@ -295,39 +321,109 @@ public class PopularVH extends BaseViewHolder<RemoteVoice> implements OnBottomMe
         return this;
     }
 
-    private void stopAnim(){
-        mAnimationDrawable.stop();
-        mIvPlayAnim.setVisibility(INVISIBLE);
+
+    @Override
+    public void onBottomCommentItemClick(int position, String content) {
+        switch (position){
+            case Constants.BottomComItem.START_RECORD:
+                EventBus.getDefault().post(new VHRecordEvent(Constants.ViewHolderTag.PopularVH,true));
+                break;
+            case Constants.BottomComItem.STOP_RECORD:
+                EventBus.getDefault().post(new VHRecordEvent(Constants.ViewHolderTag.PopularVH,false));
+                break;
+            case Constants.BottomComItem.TO_AUDITION:
+                EventBus.getDefault().post(new VHAuditionEvent(Constants.ViewHolderTag.PopularVH));
+                break;
+            case Constants.BottomComItem.STOP_AUDITION:
+                EventBus.getDefault().post(new VHAuditionEvent(Constants.ViewHolderTag.PopularVH));
+                break;
+            case Constants.BottomComItem.SEND_TEXT_COM:
+                EventBus.getDefault().post(new VHPublishTextComEvent(Constants.ViewHolderTag.PopularVH,
+                        content,mRemoteVoice));
+                break;
+            case Constants.BottomComItem.SEND_VOICE_COM:
+                EventBus.getDefault().post(new VHPublishVoiceComEvent(Constants.ViewHolderTag.PopularVH,mRemoteVoice,content));
+                break;
+            default:
+                break;
+        }
     }
 
-    private void startAnim(){
+    @Override
+    public void onBottomShareItemClick(int position) {
+        switch (position){
+            case Constants.BottomShareItem.QQ_SHARE:
+                ShareUtil.shareMedia(getContext(), SharePlatform.QQ, mRemoteVoice.getTitle(),
+                        BaseUtil.getString(R.string.vista_share_title), mRemoteVoice.getReurl(),
+                        BitmapFactory.decodeResource(getContext().getResources(),R.drawable.ic_main_voice_down_like),
+                        new ShareListener() {
+                            @Override
+                            public void shareSuccess() {
+                                BaseUtil.showToast(BaseUtil.getString(R.string.main_share_success));
+                            }
 
-        mIvPlayAnim.setVisibility(VISIBLE);
-        mIvPlayAnim.bringToFront();
-        mIvPlayAnim.setBackgroundDrawable(mAnimationDrawable);
+                            @Override
+                            public void shareFailure(Exception e) {
+                                e.printStackTrace();
+                            }
 
-        if (null == mAnimationDrawable){
-            mAnimationDrawable = new AnimationDrawable();
-            initAnimation();
+                            @Override
+                            public void shareCancel() {
+                                BaseUtil.showToast(BaseUtil.getString(R.string.main_share_cancel));
+                            }
+                        });
+                break;
+            case Constants.BottomShareItem.SINA_SHARE:
+                ShareUtil.shareMedia(getContext(), SharePlatform.WEIBO, mRemoteVoice.getTitle(),
+                        BaseUtil.getString(R.string.vista_share_title), mRemoteVoice.getReurl(),
+                        BitmapFactory.decodeResource(getContext().getResources(),R.drawable.ic_main_voice_down_like),
+                        new ShareListener() {
+                            @Override
+                            public void shareSuccess() {
+                                BaseUtil.showToast(BaseUtil.getString(R.string.main_share_success));
+                            }
+
+                            @Override
+                            public void shareFailure(Exception e) {
+                                e.printStackTrace();
+                            }
+
+                            @Override
+                            public void shareCancel() {
+                                BaseUtil.showToast(BaseUtil.getString(R.string.main_share_cancel));
+                            }
+                        });
+                break;
+            case Constants.BottomShareItem.WECHAT_SHARE:
+                ShareUtil.shareMedia(getContext(), SharePlatform.WX, mRemoteVoice.getTitle(),
+                        BaseUtil.getString(R.string.vista_share_title), mRemoteVoice.getReurl(),
+                        BitmapFactory.decodeResource(getContext().getResources(),R.drawable.ic_main_voice_down_like),
+                        new ShareListener() {
+                            @Override
+                            public void shareSuccess() {
+                                BaseUtil.showToast(BaseUtil.getString(R.string.main_share_success));
+                            }
+
+                            @Override
+                            public void shareFailure(Exception e) {
+                                e.printStackTrace();
+                            }
+
+                            @Override
+                            public void shareCancel() {
+                                BaseUtil.showToast(BaseUtil.getString(R.string.main_share_cancel));
+                            }
+                        });
+                break;
         }
-
-        if(mAnimationDrawable.isRunning()){
-            mAnimationDrawable.stop();
-        }
-
-        mAnimationDrawable.run();
     }
 
-    private void initAnimation(){
-        List<Drawable> drawables = new ArrayList<>();
-        drawables.add(BaseUtil.getDrawable(R.drawable.ic_volume_s));
-        drawables.add(BaseUtil.getDrawable(R.drawable.ic_volume_m));
-        drawables.add(BaseUtil.getDrawable(R.drawable.ic_volume_l));
-
-        for (int i = 0; i < drawables.size(); i++) {
-            mAnimationDrawable.addFrame(drawables.get(i), DURATION);
+    @Override
+    public void onVpScroll(boolean isScroll) {
+        if (isScroll) {
+            mOnItemClickListener.onItemClick(mRemoteVoice, Constants.ViewPagerScroll.VP_IS_SCROLL, 0);
+            return;
         }
-        mAnimationDrawable.setOneShot(false);
-        mIvPlayAnim.setBackgroundDrawable(mAnimationDrawable);
+        mOnItemClickListener.onItemClick(mRemoteVoice,Constants.ViewPagerScroll.VP_STOP_SCROLL,0);
     }
 }

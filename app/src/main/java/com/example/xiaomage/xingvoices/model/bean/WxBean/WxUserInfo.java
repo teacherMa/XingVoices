@@ -3,6 +3,8 @@ package com.example.xiaomage.xingvoices.model.bean.WxBean;
 import java.io.Serializable;
 import java.util.List;
 
+import me.shaohui.shareutil.login.result.BaseUser;
+
 /**
  * Created by xiaomage on 2017/5/18.
  */

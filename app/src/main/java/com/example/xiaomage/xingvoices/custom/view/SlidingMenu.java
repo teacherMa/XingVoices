@@ -2,6 +2,7 @@ package com.example.xiaomage.xingvoices.custom.view;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.os.Handler;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;

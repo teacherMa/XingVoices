@@ -1,6 +1,7 @@
 package com.example.xiaomage.xingvoices.feature.main.menu;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -16,9 +17,13 @@ import com.example.xiaomage.xingvoices.custom.view.RatioLayout;
 import com.example.xiaomage.xingvoices.event.EmptyEvent;
 import com.example.xiaomage.xingvoices.event.MenuCloseEvent;
 import com.example.xiaomage.xingvoices.event.MainViewInitEvent;
+import com.example.xiaomage.xingvoices.feature.main.MainActivity;
+import com.example.xiaomage.xingvoices.feature.main.menu.systemMessage.MessageActivity;
+import com.example.xiaomage.xingvoices.feature.personal.PersonalActivity;
 import com.example.xiaomage.xingvoices.framework.BaseBusView;
 import com.example.xiaomage.xingvoices.model.UserManager;
 import com.example.xiaomage.xingvoices.model.bean.User.BasicUserInfo;
+import com.example.xiaomage.xingvoices.model.bean.User.XingVoiceUser;
 import com.example.xiaomage.xingvoices.model.bean.User.XingVoiceUserResp;
 import com.example.xiaomage.xingvoices.utils.BaseUtil;
 import com.example.xiaomage.xingvoices.utils.FileUtil;
@@ -50,8 +55,6 @@ public class MenuView extends BaseBusView<MenuContract.Presenter> implements Men
     RatioLayout mRlPhHead;
     @BindView(R.id.menu_my_publish)
     ImageView mMenuMyPublish;
-    @BindView(R.id.menu_my_draft)
-    ImageView mMenuMyDraft;
     @BindView(R.id.menu_sys_message)
     ImageView mMenuSysMessage;
     @BindView(R.id.menu_my_setting)
@@ -91,7 +94,7 @@ public class MenuView extends BaseBusView<MenuContract.Presenter> implements Men
 
     @OnClick({R.id.iv_back_content, R.id.menu_user_avatar, R.id.menu_user_name,
             R.id.tv_follow_number, R.id.tv_fans_num, R.id.menu_my_publish,
-            R.id.menu_my_draft, R.id.menu_sys_message, R.id.menu_my_setting})
+            R.id.menu_sys_message, R.id.menu_my_setting})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_back_content:
@@ -107,12 +110,21 @@ public class MenuView extends BaseBusView<MenuContract.Presenter> implements Men
             case R.id.tv_fans_num:
                 break;
             case R.id.menu_my_publish:
-                break;
-            case R.id.menu_my_draft:
+                XingVoiceUser xingVoiceUser = new XingVoiceUser();
+
+                xingVoiceUser.setHeadpic(UserManager.getInstance().getCurrentUser().getAvatar());
+                xingVoiceUser.setNickname(UserManager.getInstance().getCurrentUser().getName());
+                xingVoiceUser.setUid(UserManager.getInstance().getCurrentUser().getId());
+
+                boolean isFollow = false;
+                Intent intent = PersonalActivity.getNewIntent(xingVoiceUser,isFollow, getContext());
+                getContext().startActivity(intent);
                 break;
             case R.id.menu_sys_message:
+                getContext().startActivity(MessageActivity.getIntent(getContext()));
                 break;
             case R.id.menu_my_setting:
+                getContext().startActivity(SettingActivity.getIntent(getContext()));
                 break;
         }
     }

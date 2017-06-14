@@ -25,7 +25,6 @@
             android:layout_height="80dp"
             android:layout_below="@id/iv_back_content"
             android:layout_centerInParent="true"
-            android:src="@drawable/avatar"
             android:contentDescription="@string/iv_con_des"/>
 
         <TextView
@@ -102,10 +101,32 @@
 
     </RelativeLayout>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rv_personal_voices"
-        android:layout_width="match_parent"
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/srl_refresh"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content">
-    </android.support.v7.widget.RecyclerView>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_personal_voices"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </android.support.v7.widget.RecyclerView>
+
+            <ProgressBar
+                android:id="@+id/load_bar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:visibility="gone"/>
+
+        </RelativeLayout>
+    </android.support.v4.widget.SwipeRefreshLayout>
+
 
 </LinearLayout>

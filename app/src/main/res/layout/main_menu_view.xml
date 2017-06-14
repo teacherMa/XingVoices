@@ -115,19 +115,10 @@
             android:contentDescription="@string/iv_con_des"/>
 
         <ImageView
-            android:id="@+id/menu_my_draft"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_menu_my_draft"
-            android:layout_below="@id/menu_my_publish"
-            android:layout_marginTop="24dp"
-            android:contentDescription="@string/iv_con_des"/>
-
-        <ImageView
             android:id="@+id/menu_sys_message"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/menu_my_draft"
+            android:layout_below="@id/menu_my_publish"
             android:src="@drawable/ic_menu_sys_message"
             android:layout_marginTop="24dp"
             android:contentDescription="@string/iv_con_des"/>

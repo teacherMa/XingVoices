@@ -41,4 +41,9 @@ public class CollectionFragment extends BaseFragment<CollectionPresenter> {
         return R.layout.main_collection_frag;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        mMainCollectionView.refreshView();
+    }
 }

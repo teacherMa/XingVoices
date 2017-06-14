@@ -14,5 +14,6 @@ public class MainContract {
 
     interface Presenter extends BasePresenterApi {
         void login(WxUserInfo info);
+        void uploadHeadPic(WxUserInfo info);
     }
 }

@@ -127,7 +127,7 @@ public class RecordView extends BaseBusView<RecordContract.Presenter> implements
                         getPresenter().deleteAudio(mCurRecordPath);
                         AlertUtil.showAlert(getContext(),
                                 BaseUtil.getString(R.string.record_time_too_short),
-                                BaseUtil.getString(R.string.record_too_short_to_abandon));
+                                BaseUtil.getString(R.string.record_less_than_ten));
                     }
                     return;
                 }

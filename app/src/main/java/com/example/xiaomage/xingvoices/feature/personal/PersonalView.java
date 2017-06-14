@@ -3,16 +3,19 @@ package com.example.xiaomage.xingvoices.feature.personal;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.NavUtils;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.xiaomage.xingvoices.R;
+import com.example.xiaomage.xingvoices.feature.main.popular.PopularAdapter;
 import com.example.xiaomage.xingvoices.framework.BaseView;
+import com.example.xiaomage.xingvoices.model.UserManager;
 import com.example.xiaomage.xingvoices.model.bean.RemoteVoice.RemoteVoice;
 import com.example.xiaomage.xingvoices.model.bean.User.BasicUserInfo;
 import com.example.xiaomage.xingvoices.model.bean.User.XingVoiceUser;
@@ -39,12 +42,26 @@ public class PersonalView extends BaseView<PersonalContract.Presenter> implement
     TextView mTvFollowNumber;
     @BindView(R.id.tv_fans_num)
     TextView mTvFansNum;
+    @BindView(R.id.srl_refresh)
+    SwipeRefreshLayout mSrlRefresh;
+    @BindView(R.id.load_bar)
+    ProgressBar mLoadBar;
 
+    //这两个User都是被浏览的用户，前者包含id，昵称，头像三个信息，后者包含昵称头像粉丝关注四个信息
+    //后者通过前者获取
     private XingVoiceUser mXingVoiceUser;
     private BasicUserInfo mScanedUser;
 
+    private int mCurIsFollow;
+    private int mCurPage = 1;
+    private boolean mIsloadingMore;
+    private boolean mIsFollow;
+
     public void setXingVoiceUser(XingVoiceUser xingVoiceUser) {
         mXingVoiceUser = xingVoiceUser;
+        if(mXingVoiceUser.getUid().equals(UserManager.getInstance().getCurrentUser().getId())){
+            mIvToFollow.setVisibility(GONE);
+        }
     }
 
     private PersonalAdapter mAdapter;
@@ -55,10 +72,42 @@ public class PersonalView extends BaseView<PersonalContract.Presenter> implement
 
     @Override
     protected void initView(Context context, AttributeSet attrs, int defStyleAttr) {
+
         mAdapter = new PersonalAdapter();
+
         mRvPersonalVoices.setItemAnimator(new DefaultItemAnimator());
         mRvPersonalVoices.setLayoutManager(new LinearLayoutManager(getContext()));
         mRvPersonalVoices.setAdapter(mAdapter);
+
+        mRvPersonalVoices.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+               /* LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+                int enable = linearLayoutManager.findFirstCompletelyVisibleItemPosition();
+                mSrlRefresh.setEnabled(enable == 0);*/
+                if (mIsloadingMore) {
+                    super.onScrolled(recyclerView, dx, dy);
+                    return;
+
+                }
+                if (!recyclerView.canScrollVertically(1)) {
+                    mCurPage++;
+                    mLoadBar.setVisibility(VISIBLE);
+                    mIsloadingMore = true;
+                    getPresenter().requestUserVoices(mXingVoiceUser,mCurPage);
+                }
+                super.onScrolled(recyclerView, dx, dy);
+            }
+        });
+
+        mSrlRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                getPresenter().requestUserVoices(mXingVoiceUser,mCurPage);
+                mIsloadingMore = false;
+            }
+        });
+
     }
 
     @Override
@@ -68,24 +117,55 @@ public class PersonalView extends BaseView<PersonalContract.Presenter> implement
 
     @OnClick(R.id.iv_back_content)
     public void onMIvBackContentClicked() {
-        ((PersonalActivity)getContext()).onBackPressed();
+        ((PersonalActivity) getContext()).onBackPressed();
     }
 
     @OnClick(R.id.iv_to_follow)
     public void onMIvToFollowClicked() {
+        if(mXingVoiceUser.getUid().equals(UserManager.getInstance().getCurrentUser().getId())){
+            mIvToFollow.setVisibility(GONE);
+            return;
+        }
+
+        getPresenter().changeFollowState(mXingVoiceUser.getUid(), mCurIsFollow);
+
+        if (1 == mCurIsFollow) {
+            mCurIsFollow = 0;
+            mIvToFollow.setImageDrawable(BaseUtil.getDrawable(R.drawable.ic_personal_cancle_follow));
+            return;
+        }
+
+        mCurIsFollow = 1;
+        mIvToFollow.setImageDrawable(BaseUtil.getDrawable(R.drawable.ic_personal_to_follow));
     }
 
     @Override
     public void loadData(List<RemoteVoice> voices) {
-        if(null == voices){
+        if (null == voices) {
             return;
         }
 
         mAdapter.refreshData(voices);
 
-        if(0 == voices.get(0).getIs_focus()){
+        mCurIsFollow = 1;
+        if (mIsFollow) {
+            mIvToFollow.setImageDrawable(BaseUtil.getDrawable(R.drawable.ic_personal_cancle_follow));
+            mCurIsFollow = 0;
+        }
+        if(!mXingVoiceUser.getUid().equals(UserManager.getInstance().getCurrentUser().getId())) {
             mIvToFollow.setVisibility(VISIBLE);
         }
+
+        mSrlRefresh.setRefreshing(false);
+        mLoadBar.setVisibility(GONE);
+
+        /*int origin = 0;
+        if(null != mAdapter.getValueList()) {
+            origin = mAdapter.getValueList().size();
+        }
+        if(mIsloadingMore) {
+            mRvPersonalVoices.scrollToPosition(origin - 1);
+        }*/
 
     }
 
@@ -93,16 +173,25 @@ public class PersonalView extends BaseView<PersonalContract.Presenter> implement
     public void loadData(BasicUserInfo userInfo) {
         mScanedUser = userInfo;
 
-        BaseUtil.loadCirclePic(userInfo.getHeadpic()).into(mPersonalUserAvatar);
+        BaseUtil.loadCirclePic(mScanedUser.getHeadpic()).into(mPersonalUserAvatar);
 
-        mPersonalUserName.setText(userInfo.getNickname());
-        mTvFansNum.setText(String.valueOf(userInfo.getFensi()));
-        mTvFollowNumber.setText(String.valueOf(userInfo.getGuanzhu()));
+        mPersonalUserName.setText(mScanedUser.getNickname());
+        mTvFansNum.setText(String.valueOf(mScanedUser.getFensi()));
+        mTvFollowNumber.setText(String.valueOf(mScanedUser.getGuanzhu()));
 
-        getPresenter().requestUserVoices(mXingVoiceUser);
+        getPresenter().requestUserVoices(mXingVoiceUser,1);
     }
 
     public XingVoiceUser getXingVoiceUser() {
         return mXingVoiceUser;
+    }
+
+    @Override
+    public void changeStateSuccess(String info) {
+        BaseUtil.showToast(info);
+    }
+
+    public void setFollow(boolean follow) {
+        mIsFollow = follow;
     }
 }

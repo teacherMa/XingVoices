@@ -2,6 +2,7 @@ package com.example.xiaomage.xingvoices.feature.main;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -22,6 +23,8 @@ import com.example.xiaomage.xingvoices.custom.view.SlidingMenu;
 import com.example.xiaomage.xingvoices.event.MenuCloseEvent;
 import com.example.xiaomage.xingvoices.event.EmptyEvent;
 import com.example.xiaomage.xingvoices.event.MainViewInitEvent;
+import com.example.xiaomage.xingvoices.event.ShowNewMessage;
+import com.example.xiaomage.xingvoices.event.StopPlayVoice;
 import com.example.xiaomage.xingvoices.feature.main.collection.CollectionFragment;
 import com.example.xiaomage.xingvoices.feature.main.follow.FollowFragment;
 import com.example.xiaomage.xingvoices.feature.main.menu.MenuFragment;
@@ -97,12 +100,20 @@ public class MainView extends BaseBusView<MainContract.Presenter> implements Mai
             }
             mMainSlidingMenu.closeMenu();
         }
+
+        if(event instanceof ShowNewMessage){
+            ShowNewMessage newMessage = (ShowNewMessage)event;
+            if(newMessage.isPublishNew()){
+                mNavNewMessage.setVisibility(VISIBLE);
+            }else {
+                mNavNewMessage.setVisibility(GONE);
+            }
+        }
     }
 
     @Override
     protected void initView(Context context, AttributeSet attrs, int defStyleAttr) {
-        prepareFragments();
-        initViewPager();
+
     }
 
     @Override
@@ -136,8 +147,7 @@ public class MainView extends BaseBusView<MainContract.Presenter> implements Mai
                 mTvLastItem = mTvMainCollection;
                 break;
             case R.id.iv_main_record:
-                Intent intent = RecordActivity.getNewIntent(getContext());
-                (getContext()).startActivity(intent);
+                toRecord();
                 break;
             case R.id.content:
                 if (mMainSlidingMenu.isOpen()) {
@@ -190,6 +200,7 @@ public class MainView extends BaseBusView<MainContract.Presenter> implements Mai
 
             @Override
             public void onPageSelected(int position) {
+                EventBus.getDefault().post(new StopPlayVoice(true));
                 switch (position) {
                     case 0:
                         mTvLastItem.setTextColor(BaseUtil.getColorInt(R.color.colorTextUnselected));
@@ -233,7 +244,7 @@ public class MainView extends BaseBusView<MainContract.Presenter> implements Mai
     @Override
     public void initMainUi() {
         mMainSlidingMenu.openMenu();
-
+        toInitFragmentAndVp();
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -246,5 +257,21 @@ public class MainView extends BaseBusView<MainContract.Presenter> implements Mai
                 EventBus.getDefault().post(initEvent);
             }
         }).start();
+    }
+
+    public void toRecord(){
+        Intent intent = RecordActivity.getNewIntent(getContext());
+        (getContext()).startActivity(intent);
+    }
+
+    public void toInitFragmentAndVp(){
+        prepareFragments();
+        initViewPager();
+    }
+
+    public boolean closeMenu(){
+        boolean isOpen = mMainSlidingMenu.isOpen();
+        mMainSlidingMenu.closeMenu();
+        return isOpen;
     }
 }

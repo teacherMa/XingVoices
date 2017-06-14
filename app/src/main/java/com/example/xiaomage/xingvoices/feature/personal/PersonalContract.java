@@ -14,10 +14,12 @@ public class PersonalContract {
         void loadData(List<RemoteVoice> voices);
         void loadData(BasicUserInfo userInfo);
         XingVoiceUser getXingVoiceUser();
+        void changeStateSuccess(String info);
     }
 
     interface Presenter extends BasePresenterApi {
-        void requestUserVoices(XingVoiceUser xingVoiceUser);
+        void requestUserVoices(XingVoiceUser xingVoiceUser,int num);
         void requestUserInfo(XingVoiceUser xingVoiceUser);
+        void changeFollowState(String cid,int state);
     }
 }

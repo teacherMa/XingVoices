@@ -1,41 +1,129 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="horizontal"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-    android:background="@color/colorPrimaryDark">
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorPrimaryDark"
+                android:orientation="horizontal">
 
-    <ImageView
-        android:id="@+id/iv_to_voice_com"
-        android:layout_width="40dp"
-        android:layout_height="wrap_content"
-        android:padding="8dp"
-        android:src="@drawable/ic_mic_blue"
-        android:layout_centerVertical="true"
-        android:contentDescription="@string/iv_con_des"/>
+    <RelativeLayout
+        android:id="@+id/rl_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    <Button
-        android:id="@+id/iv_send_com"
-        android:layout_width="80dp"
-        android:layout_height="40dp"
-        android:layout_margin="4dp"
-        android:layout_alignParentEnd="true"
-        android:text="@string/bottom_text_com_send"
-        android:textColor="@color/colorSendButtonText"
-        android:background="@drawable/bg_cir_rect"/>
+        <ImageView
+            android:id="@+id/iv_to_voice_com"
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:contentDescription="@string/iv_con_des"
+            android:padding="8dp"
+            android:src="@drawable/ic_mic_blue"/>
 
-    <EditText
-        android:id="@+id/et_voice_com_content"
+        <Button
+            android:id="@+id/iv_send_com"
+            android:layout_width="80dp"
+            android:layout_height="40dp"
+            android:layout_alignParentEnd="true"
+            android:layout_margin="4dp"
+            android:background="@drawable/bg_cir_rect"
+            android:text="@string/bottom_text_com_send"
+            android:textColor="@color/colorSendButtonText"/>
+
+        <EditText
+            android:id="@+id/et_voice_com_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="8dp"
+            android:layout_toEndOf="@id/iv_to_voice_com"
+            android:layout_toStartOf="@id/iv_send_com"
+            android:background="@color/colorPrimary"
+            android:hint="@string/bottom_text_com_hint"
+            android:maxLength="30"
+            android:textCursorDrawable="@color/colorMenuOpenContentBackground"/>
+    </RelativeLayout>
+
+    <com.example.xiaomage.xingvoices.custom.view.RatioLayout
+        android:id="@+id/rl_voice_com"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/rl_text"
+        app:ratio="0.5"
+        android:visibility="gone">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/iv_to_com"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_record_start_record"
+                android:layout_centerInParent="true"
+                android:contentDescription="@string/iv_con_des"/>
+
+            <ImageView
+                android:id="@+id/iv_to_audition"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_record_audition"
+                android:layout_centerInParent="true"
+                android:visibility="gone"
+                android:contentDescription="@string/iv_con_des"/>
+
+            <Chronometer
+                android:id="@+id/voice_timer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@id/iv_to_com"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="16dp"
+                android:textColor="@color/colorTextUnselected"
+                android:textSize="18sp"/>
+
+            <TextView
+                android:id="@+id/tv_voice_com_hint"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/iv_to_com"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="16dp"
+                android:text="@string/main_bottom_voice_com_hint"
+                android:textColor="@color/colorTextUnselected"/>
+
+        </RelativeLayout>
+
+    </com.example.xiaomage.xingvoices.custom.view.RatioLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_send_button"
+        android:layout_below="@id/rl_voice_com"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_marginEnd="8dp"
-        android:layout_toEndOf="@id/iv_to_voice_com"
-        android:layout_toStartOf="@id/iv_send_com"
-        android:hint="@string/bottom_text_com_hint"
-        android:maxLength="30"
-        android:background="@color/colorPrimary"
-        android:textCursorDrawable="@color/colorMenuOpenContentBackground"/>
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <Button
+            android:id="@+id/cancel_button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimaryDark"
+            android:text="@string/bottom_menu_cancel"
+            android:textColor="@color/colorSendButtonText"
+            android:layout_weight="1"/>
+
+        <Button
+            android:id="@+id/send_button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimaryDark"
+            android:text="@string/bottom_text_com_send"
+            android:textColor="@color/colorSendButtonText"
+            android:layout_weight="1"/>
+
+    </LinearLayout>
 
 
 

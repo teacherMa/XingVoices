@@ -12,7 +12,9 @@ import android.widget.TextView;
 import com.example.xiaomage.xingvoices.R;
 import com.example.xiaomage.xingvoices.api.main.OnBottomMenuItemClickListener;
 import com.example.xiaomage.xingvoices.feature.main.MainActivity;
+import com.example.xiaomage.xingvoices.utils.BaseUtil;
 
+import static android.view.View.GONE;
 import static com.example.xiaomage.xingvoices.utils.Constants.BottomMenuItem.*;
 
 /**
@@ -29,6 +31,7 @@ public class BottomMenu extends PopupWindow {
     TextView mTvLookupPic;
     TextView mTvAddToBlacklist;
 
+    private int mModel = 0;
     private Context mContext;
     private OnBottomMenuItemClickListener mOnBottomMenuItemClickListener;
 
@@ -150,4 +153,9 @@ public class BottomMenu extends PopupWindow {
         });
     }
 
+    public void setModel(int model) {
+        mModel = model;
+        mTvCollection.setText(BaseUtil.getString(R.string.bottom_menu_cancel_collection));
+        mTvAddToBlacklist.setVisibility(GONE);
+    }
 }

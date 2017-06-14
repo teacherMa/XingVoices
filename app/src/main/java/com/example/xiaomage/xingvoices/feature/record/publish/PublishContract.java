@@ -2,7 +2,7 @@ package com.example.xiaomage.xingvoices.feature.record.publish;
 
 import com.example.xiaomage.xingvoices.framework.BasePresenterApi;
 import com.example.xiaomage.xingvoices.framework.BaseViewApi;
-import com.example.xiaomage.xingvoices.model.bean.upload.UploadResp;
+import com.example.xiaomage.xingvoices.model.bean.Resp.uploadResp.UploadResp;
 
 public class PublishContract {
 

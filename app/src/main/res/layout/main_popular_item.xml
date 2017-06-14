@@ -47,6 +47,7 @@
             android:layout_centerVertical="true"
             android:layout_marginEnd="25dp"
             android:contentDescription="@string/iv_con_des"
+            android:padding="8dp"
             android:src="@drawable/ic_main_btn_follow"/>
 
     </RelativeLayout>
@@ -76,17 +77,6 @@
                 android:layout_marginTop="8dp"
                 android:textColor="@color/colorPrimary"
                 android:layout_centerHorizontal="true"/>
-
-            <ImageView
-                android:id="@+id/iv_play_anim"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toStartOf="@id/tv_voice_length"
-                android:layout_below="@id/tv_voice_name"
-                android:layout_centerVertical="true"
-                android:layout_marginEnd="24dp"
-                android:visibility="invisible"
-                android:contentDescription="@string/iv_con_des"/>
 
             <ImageView
                 android:id="@+id/iv_pic_of_voice"
@@ -133,6 +123,7 @@
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:layout_marginEnd="28dp"
+            android:padding="8dp"
             android:contentDescription="@string/iv_con_des"
             android:src="@drawable/ic_main_btn_more"/>
 
@@ -159,6 +150,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginStart="8dp"
                 android:text="@string/main_text_comments"
+                android:padding="4dp"
                 android:textColor="@color/colorTextUnselected"
                 android:textSize="12sp"/>
 
@@ -168,6 +160,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginStart="12dp"
+                android:padding="4dp"
                 android:layout_toEndOf="@id/tv_text_com"
                 android:text="@string/main_voice_comments"
                 android:textColor="@color/colorTextUnselected"
@@ -186,11 +179,11 @@
             android:id="@+id/tv_more_com"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="4dp"
+            android:padding="8dp"
             android:layout_marginTop="10dp"
             android:text="@string/main_more_comments"
             android:textColor="@color/colorTextUnselected"
-            android:textSize="9sp"
+            android:textSize="12sp"
             android:textStyle="bold"/>
 
 

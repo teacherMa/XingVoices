@@ -11,23 +11,22 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <com.example.xiaomage.xingvoices.custom.view.CircleImageView
-            android:id="@+id/civ_com_user_avatar"
+        <ImageView
+            android:id="@+id/iv_com_user_avatar"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:layout_marginStart="25dp"
-            android:src="@drawable/avatar"/>
+            android:layout_marginStart="25dp"/>
 
         <TextView
             android:id="@+id/tv_com_user_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toEndOf="@id/civ_com_user_avatar"
+            android:layout_toEndOf="@id/iv_com_user_avatar"
             android:layout_marginStart="8dp"
             android:layout_centerVertical="true"
             android:text="@string/app_name"
-            android:textColor="@color/colorTextUnselected"
-            android:textSize="10sp"/>
+            android:textColor="@color/colorTextSelected"
+            android:textSize="12sp"/>
 
         <TextView
             android:id="@+id/tv_com_like_num"
@@ -58,35 +57,36 @@
         android:layout_marginEnd="90dp"
         android:layout_marginTop="8dp">
 
-        <ImageView
-            android:id="@+id/tv_com_content"
-            android:layout_width="match_parent"
-            android:layout_height="12dp"
-            android:layout_toStartOf="@id/tv_voice_com_length"
-            android:background="@drawable/bg_voice_bar"
-            android:layout_centerVertical="true"/>
-
         <TextView
             android:id="@+id/tv_voice_com_length"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            android:layout_marginStart="2dp"
             android:layout_alignParentTop="true"
+            android:layout_marginStart="2dp"
             android:text="@string/main_default_voice_length"
-            android:textSize="10sp"
-            android:textColor="@color/colorTextUnselected"/>
+            android:textColor="@color/colorTextUnselected"
+            android:textSize="12sp"/>
+
+        <ImageView
+            android:id="@+id/iv_com_content"
+            android:layout_width="50dp"
+            android:layout_height="12dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentStart="true"
+            android:background="@drawable/bg_voice_bar"
+            android:contentDescription="@string/iv_con_des"/>
 
     </RelativeLayout>
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="1.5dp"
+        android:layout_height="0.4dp"
         android:layout_below="@id/rl_com_content"
         android:layout_marginTop="8dp"
         android:layout_marginStart="5dp"
         android:layout_marginEnd="5dp"
-        android:background="@color/colorPrimaryDark"/>
+        android:background="@color/colorRecyclerViewItemDivider"/>
 
 
 </RelativeLayout>

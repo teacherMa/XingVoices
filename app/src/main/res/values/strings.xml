@@ -1,29 +1,51 @@
 <resources>
-    <string name="app_name">XingVoices</string>
+    <string name="app_name">星声</string>
 
     <string name="iv_con_des">fuck google</string>
     <string name="alert_ok">好的</string>
+    <string name="alert_cancel">不了</string>
 
     <string name="main_popular">热门</string>
     <string name="main_follow">关注</string>
     <string name="main_collection">收藏</string>
 
-    <string name="main_default_watch_times">666</string>
+    <string name="main_default_watch_times">0</string>
     <string name="main_default_comment">666666666666666666666666666666666666666666666666666666666666666666666666666666666</string>
-    <string name="main_default_voice_length">15</string>
+    <string name="main_default_voice_length">0</string>
 
     <string name="main_text_comments">文字评论</string>
     <string name="main_voice_comments">语音评论</string>
     <string name="main_more_comments">更多评论</string>
+    <string name="main_bottom_voice_com_hint">录制时间最短5s</string>
+
+    <string name="per_need_storage">需要存储权限</string>
+    <string name="per_why_need_storage">为了在本地存储用户数据优化体验，需要访问你的手机内存</string>
+    <string name="per_need_mic">需要录音权限</string>
+    <string name="per_why_need_mic">发布语音需要调用系统麦克风</string>
+    <string name="per_need_read_phone">需要查看您的手机状态</string>
+    <string name="per_why_need_read_phone">某些功能需要查看您的手机状态</string>
+    <string name="per_do_yourself">您拒绝了相关权限，请到应用管理中开启后再重试</string>
 
     <string name="main_menu_default_follow">0</string>
     <string name="main_menu_default_fans">0</string>
     <string name="main_menu_follow">关注</string>
     <string name="main_menu_fans">粉丝</string>
+    <string name="main_like_it_before">你已经点过赞了~</string>
+    <string name="main_like_success">点赞成功~</string>
+    <string name="main_setting_title">设置</string>
+    <string name="main_setting_about_us">关于我们</string>
+    <string name="main_clear_rom">清除缓存</string>
+    <string name="main_clear_success">清除成功</string>
+    <string name="main_message_title">我的消息</string>
+    <string name="main_watch_pic_title">背景图片</string>
+    <string name="main_share_sum">请倾听它的声音</string>
+    <string name="main_share_success">分享成功</string>
+    <string name="main_share_cancel">分享取消</string>
 
     <string name="record_time_hint">录制时间最短10s</string>
     <string name="record_time_too_short">时间太短</string>
-    <string name="record_too_short_to_abandon">不够10s，无法保存</string>
+    <string name="record_less_than_ten">不够10s，无法保存</string>
+    <string name="record_less_than_five">不够5s，无法保存</string>
     <string name="record_init_time">0</string>
     <string name="record_split_time">:</string>
     <string name="record_again">重录</string>
@@ -39,12 +61,15 @@
     <string name="record_publish">上传</string>
     <string name="record_publish_success">上传成功</string>
     <string name="record_is_upload">正在上传</string>
+    <string name="record_com_no_content">没有内容</string>
+    <string name="record_com_need_content">评论需要内容哦~</string>
 
     <string name="personal_follow">关注</string>
     <string name="personal_fans">粉丝</string>
     
     <string name="bottom_menu_comment">评论</string>
     <string name="bottom_menu_collection">收藏</string>
+    <string name="bottom_menu_cancel_collection">取消收藏</string>
     <string name="bottom_menu_share">分享</string>
     <string name="bottom_menu_look_up_pic">查看图片</string>
     <string name="bottom_menu_add_to_blacklist">拉黑并举报</string>

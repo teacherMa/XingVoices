@@ -12,6 +12,10 @@ public class Constants {
     public static String WEXIN_HEAD_PIC = "http://wx.qlogo.cn/mmopen/";
     public static String VOICE_URL = "http://app.starsound.xyz/user/";
     public static String PIC_API;
+    public static String QQ_AAP_ID = "1106189366";
+    public static String QQ_APP_KEY = "dDbHS4KW4rISrnSO";
+    public static String SINA_APP_ID = "792058943";
+    public static String SINA_APP_SECRET = "8e20634801c239d24df21a0934313085";
 
     public interface WxParamValue {
         String APP_ID = "wxc988255a4b16c8cf";
@@ -44,6 +48,13 @@ public class Constants {
         String ADD_VOICE = "addVoice";
         String VOICE_TO_COMMENTS = "voiceToComments";
         String UPLOAD_OSS = "uploadOSS";
+        String LIKE_IT = "dianZan";
+        String ADD_COMMENTS = "addComments";
+        String FOLLOW = "guanzhu";
+        String MY_VOICE_COMMENTS = "myVoiceToComments";
+        String COLLECTION = "favorites";
+        String SHIELD_VOICE = "pbVoice";
+        String EDIT_USER = "editUser";
     }
 
     public interface XingVoicesRequestParam {
@@ -60,16 +71,29 @@ public class Constants {
         String NUM = "num";
         String IS_U = "is_u";
         String TITLE = "title";
+        String STATE = "quxiao";
         String RE_URL = "reurl";
         String LENGTH = "length";
+        String CONTENT = "content";
+        String CLENGTH = "clength";
         String BACKGROUND = "backgrund";
-        String ALL_BACKGROUND= "allbackgrund";
+        String ALL_BACKGROUND = "allbackgrund";
     }
 
     public interface XingVoicesParamValue {
         String CHANNEL = "APP";
         int MAN = 1;
         int WOMEN = 0;
+    }
+
+    public interface ViewHolderTag {
+        String VoiceCommentVH = "VoiceCommentVH";
+        String SimpleTextCommentVH = "SimpleTextCommentVH";
+        String TextCommentVH = "TextCommentVH";
+        String SimpleVoiceCommentVH = "SimpleVoiceCommentVH";
+        String PopularVH = "PopularVH";
+        String FollowVH = "FollowVH";
+        String CollectionVH = "CollectionVH";
     }
 
     public interface VoiceType {
@@ -145,6 +169,10 @@ public class Constants {
         String HEAD_PIC = "headpic";
     }
 
+    /**
+     * BottomMenu的点击事件有可能需要再往外传递给PopularView，RecyclerView的Item点击事件也需要传递
+     * 给PopularView，可能发生冲突，所以这里从0开始赋值
+     */
     public interface BottomMenuItem {
         int COMMENT = 0;
         int COLLECTION = 1;
@@ -155,9 +183,29 @@ public class Constants {
 
     /**
      * BottomMenu的点击事件有可能需要再往外传递给PopularView，RecyclerView的Item点击事件也需要传递
-     * 给PopularView，可能发生冲突，所以这里从10开始赋值
+     * 给PopularView，可能发生冲突，所以这里从20开始赋值
      */
-    public interface MainPopularItem {
-        int FOLLOW = 10;
+    public interface BottomComItem {
+        int SEND_TEXT_COM = 20;
+        int START_RECORD = 21;
+        int STOP_RECORD = 22;
+        int TO_AUDITION = 23;
+        int SEND_VOICE_COM = 24;
+        int STOP_AUDITION = 25;
+    }
+
+    /**
+     * BottomMenu的点击事件有可能需要再往外传递给PopularView，RecyclerView的Item点击事件也需要传递
+     * 给PopularView，可能发生冲突，所以这里从20开始赋值
+     */
+    public interface BottomShareItem {
+        int QQ_SHARE = 30;
+        int WECHAT_SHARE = 31;
+        int SINA_SHARE = 32;
+    }
+
+    public interface ViewPagerScroll{
+        int VP_IS_SCROLL = 40;
+        int VP_STOP_SCROLL = 41;
     }
 }
